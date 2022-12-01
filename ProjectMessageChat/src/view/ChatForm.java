@@ -10,9 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import components.ChatBox;
 import components.PanelChat;
 import img.img;
-
+import inteface.ChatEvent;
+import model.ModelMessage;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.GroupLayout;
@@ -22,6 +24,7 @@ import javax.swing.Icon;
 public class ChatForm extends JFrame {
 	private JPanel panel;
 	private PanelChat chatArea;
+	private img img = new img();
 
 	public ChatForm() {
 
@@ -30,14 +33,13 @@ public class ChatForm extends JFrame {
 
 		chatArea = new PanelChat();
 		chatArea.setSize(getWidth(), getHeight());
-			
+
 		panel.setLayout(new MigLayout("fill"));
 
-		
-		panel.add(chatArea,"push, grow");
-	
+		panel.add(chatArea, "push, grow");
+
 		getContentPane().add(panel);
-		
+
 		pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -45,11 +47,34 @@ public class ChatForm extends JFrame {
 		init();
 	}
 
-	img img = new img();
-
 	public void init() {
 		chatArea.setTitle("Client Chat");
-		
+		chatArea.addChatEvent(new ChatEvent() {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy, hh:mmaa");
+
+			@Override
+			public void mousePressedSendButton(ActionEvent event) {
+				String date = sdf.format(new Date());
+				String name = "You";
+				String message = chatArea.getText().trim();
+				
+				chatArea.addChatBox(new ModelMessage(img.iconSend(), name, date, message), ChatBox.BoxType.RIGHT);
+				
+				chatArea.clearTextAndGrabFocus();
+			}
+
+			@Override
+			public void mousePressedFileButton(ActionEvent event) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyTyped(KeyEvent event) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 	}
 
@@ -59,6 +84,7 @@ public class ChatForm extends JFrame {
 			ChatForm chat = new ChatForm();
 			chat.setVisible(true);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

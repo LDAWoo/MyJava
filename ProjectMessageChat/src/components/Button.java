@@ -29,7 +29,36 @@ public class Button extends JButton{
 	private float alpha;
 	private int round;
 	private int targetSize;
+	private Color effectColor = new Color(173, 173, 173);
 	private boolean paintBackground;
+	
+	public boolean isPaintBackground() {
+        return paintBackground;
+    }
+
+    public void setPaintBackground(boolean paintBackground) {
+        this.paintBackground = paintBackground;
+        repaint();
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+        repaint();
+    }
+
+    public Color getEffectColor() {
+        return effectColor;
+    }
+
+    public void setEffectColor(Color effectColor) {
+        this.effectColor = effectColor;
+        repaint();
+    }
+	
 	
 	public Button() {
 		init();
@@ -83,7 +112,7 @@ public class Button extends JButton{
 		}
 		if(pressedPoint !=null) {
 			Area area = new Area(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), round, round));
-			g2.setColor(new Color(173,173,173));
+			g2.setColor(effectColor);
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha));
 			area.intersect(new Area(new Ellipse2D.Double((pressedPoint.x - animatSize / 2), (pressedPoint.y - animatSize  / 2), animatSize, animatSize)));
 			g2.fill(area);
