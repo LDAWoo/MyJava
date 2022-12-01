@@ -3,11 +3,8 @@ package view;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,26 +13,29 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import components.ChatBox;
-import components.PanelChat;
-import img.img;
-import inteface.ChatEvent;
-import model.ModelMessage;
+import componentsClient.*;
+
+import imgClient.*;
+import intefaceClient.*;
+import modelClient.*;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class ChatForm extends JFrame implements Runnable{
+public class ChatFormClient extends JFrame implements Runnable{
 	private JPanel panel;
 	private PanelChat chatArea;
 	private img img = new img();
+	
 	private DataInputStream inputStream;
 	private DataOutputStream outputStream;
 	private Socket socket;
-
-	public ChatForm() {
+	
+	public ChatFormClient() {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
@@ -58,18 +58,14 @@ public class ChatForm extends JFrame implements Runnable{
 		pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		
 
 		init();
 	}
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy, hh:mmaa");
-	private String message;
-	private ServerSocket serverSocket;
+	String message;
 	public void init() {
-		chatArea.setTitle("Server Chat");
+		chatArea.setTitle("Client Chat");
 		chatArea.addChatEvent(new ChatEvent() {
-			
-
 			
 
 			@Override
@@ -79,8 +75,8 @@ public class ChatForm extends JFrame implements Runnable{
 				message = chatArea.getText().trim();
 				Send();
 				chatArea.addChatBox(new ModelMessage(img.iconSend(), name, date, message), ChatBox.BoxType.RIGHT);
-				chatArea.clearTextAndGrabFocus();
 				
+				chatArea.clearTextAndGrabFocus();
 			}
 
 			@Override
@@ -97,20 +93,27 @@ public class ChatForm extends JFrame implements Runnable{
 		});
 
 	}
-	
-	
-	
+
 	public void Start() {
 		try {
-			serverSocket = new ServerSocket(7676);
-			System.out.println("Sever connecting... ");
-			socket = serverSocket.accept();
-			
-			Thread t1 = new Thread(ChatForm.this);
+			socket = new Socket("localhost", 7676);
+			System.out.println("Client connecting... ");
+			Thread t1 = new Thread(ChatFormClient.this);
 			t1.start();
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	public void Send() {
+		try {
+			outputStream = new DataOutputStream(socket.getOutputStream());
+			outputStream.writeUTF(message);
+			outputStream.flush();
+		
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -118,37 +121,25 @@ public class ChatForm extends JFrame implements Runnable{
 	public void run() {
 		try {
 			inputStream = new DataInputStream(socket.getInputStream());
-		while(true) {
-			if(socket !=null) {
-				String date = sdf.format(new Date());
-				String name = "Client";
-				String message = inputStream.readUTF();
-				chatArea.addChatBox(new ModelMessage(img.iconSend(), name, date, message), ChatBox.BoxType.LEFT);
+			while(true) {
+				if(socket !=null) {
+					String date = sdf.format(new Date());
+					String name = "You";
+					String message = inputStream.readUTF();
+					chatArea.addChatBox(new ModelMessage(img.iconSend(), name, date, message), ChatBox.BoxType.LEFT);
+				}
 			}
-			Thread.sleep(1000);
+			
+		}catch(Exception e) {
+			
 		}
 		
-		}catch(Exception e) {}
 	}
 	
-	
-	public void Send() {
-		try {
-			outputStream = new DataOutputStream(socket.getOutputStream());
-			outputStream.writeUTF(message);
-			outputStream.flush();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	
-
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			ChatForm chat = new ChatForm();
+			ChatFormClient chat = new ChatFormClient();
 			chat.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
