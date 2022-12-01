@@ -97,7 +97,6 @@ public class ChatFormClient extends JFrame implements Runnable{
 	public void Start() {
 		try {
 			socket = new Socket("localhost", 7676);
-			System.out.println("Client connecting... ");
 			Thread t1 = new Thread(ChatFormClient.this);
 			t1.start();
 			
@@ -124,7 +123,7 @@ public class ChatFormClient extends JFrame implements Runnable{
 			while(true) {
 				if(socket !=null) {
 					String date = sdf.format(new Date());
-					String name = "You";
+					String name = "Server";
 					String message = inputStream.readUTF();
 					chatArea.addChatBox(new ModelMessage(img.iconSend(), name, date, message), ChatBox.BoxType.LEFT);
 				}

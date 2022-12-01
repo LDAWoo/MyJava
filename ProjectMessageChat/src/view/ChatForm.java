@@ -103,9 +103,7 @@ public class ChatForm extends JFrame implements Runnable{
 	public void Start() {
 		try {
 			serverSocket = new ServerSocket(7676);
-			System.out.println("Sever connecting... ");
 			socket = serverSocket.accept();
-			
 			Thread t1 = new Thread(ChatForm.this);
 			t1.start();
 			
