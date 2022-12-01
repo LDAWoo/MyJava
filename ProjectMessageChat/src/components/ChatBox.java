@@ -1,6 +1,7 @@
 package components;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -44,6 +45,7 @@ public class ChatBox extends JComponent {
         text.setForeground(new Color(242, 242, 242));
         text.setSelectionColor(new Color(200, 200, 200, 100));
         text.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        text.setFont(new Font("SanSerif",Font.PLAIN,13));
         text.setOpaque(false);
         text.setEditable(false);
         JLabel labelDate = new JLabel(message.getName() + " | " + message.getDate());
