@@ -74,7 +74,7 @@ public class ChatFormClient extends JFrame implements Runnable{
 				String name = "You";
 				message = chatArea.getText().trim();
 				Send();
-				chatArea.addChatBox(new ModelMessage(img.iconSend(), name, date, message), ChatBox.BoxType.RIGHT);
+				chatArea.addChatBox(new ModelMessage(img.iconFace(), name, date, message), ChatBox.BoxType.RIGHT);
 				
 				chatArea.clearTextAndGrabFocus();
 			}
@@ -124,8 +124,8 @@ public class ChatFormClient extends JFrame implements Runnable{
 				if(socket !=null) {
 					String date = sdf.format(new Date());
 					String name = "Server";
-					String message = inputStream.readUTF();
-					chatArea.addChatBox(new ModelMessage(img.iconSend(), name, date, message), ChatBox.BoxType.LEFT);
+					String message = inputStream.readUTF();	
+					chatArea.addChatBox(new ModelMessage(img.iconMess(), name, date, message), ChatBox.BoxType.LEFT);
 				}
 			}
 			

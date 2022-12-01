@@ -20,7 +20,7 @@ public class AnimationFloatingButton {
                 } else {
                     v = (int) ((1f - fraction) * 50);
                 }
-                layout.setComponentConstraints(com, "pos 100%-50 100%-" + v + ",h 40,w 40");
+                layout.setComponentConstraints(com, "pos 58%-50 100%-" + v + ",h 40,w 40");
                 com.revalidate();
             }
         });

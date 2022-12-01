@@ -60,7 +60,7 @@ public class PanelChat extends JPanel {
 		scrollBody = createScroll();
 
 		scrollBody.setViewportView(body);
-		scrollBody.setVerticalScrollBar(new JScrollBar());
+		scrollBody.setVerticalScrollBar(new ScrollBar());
 		scrollBody.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollBody.getViewport().setOpaque(false);
 		scrollBody.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
@@ -103,10 +103,9 @@ public class PanelChat extends JPanel {
 	public Button createFloatingButton() {
 		Button button = new Button();
 		button.setBorder(null);
-		button.setIcon(img.iconSend());
+		button.setIcon(img.iconArrow());
 		button.setRound(40);
-		button.setBackground(new Color(100, 100, 100, 100));
-		button.setBackground(new Color(255, 0, 0));
+		button.setBackground(new Color(0, 0, 0));
 		button.setPaintBackground(true);
 		button.addActionListener(new ActionListener() {
 

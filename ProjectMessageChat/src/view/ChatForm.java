@@ -69,16 +69,13 @@ public class ChatForm extends JFrame implements Runnable{
 		chatArea.setTitle("Server Chat");
 		chatArea.addChatEvent(new ChatEvent() {
 			
-
-			
-
 			@Override
 			public void mousePressedSendButton(ActionEvent event) {
 				String date = sdf.format(new Date());
 				String name = "You";
 				message = chatArea.getText().trim();
 				Send();
-				chatArea.addChatBox(new ModelMessage(img.iconSend(), name, date, message), ChatBox.BoxType.RIGHT);
+				chatArea.addChatBox(new ModelMessage(img.iconMess(), name, date, message), ChatBox.BoxType.RIGHT);
 				chatArea.clearTextAndGrabFocus();
 				
 			}
@@ -121,7 +118,7 @@ public class ChatForm extends JFrame implements Runnable{
 				String date = sdf.format(new Date());
 				String name = "Client";
 				String message = inputStream.readUTF();
-				chatArea.addChatBox(new ModelMessage(img.iconSend(), name, date, message), ChatBox.BoxType.LEFT);
+				chatArea.addChatBox(new ModelMessage(img.iconFace(), name, date, message), ChatBox.BoxType.LEFT);
 			}
 			Thread.sleep(1000);
 		}

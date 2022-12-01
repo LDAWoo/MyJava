@@ -11,6 +11,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
@@ -25,6 +27,7 @@ public class ChatBox extends JComponent {
 	private img img = new img();
 	private final ModelMessage message;
 	private final BoxType boxType;
+	private ImageAvatar avatar;
 
 	public ChatBox(BoxType boxType, ModelMessage message) {
         this.boxType = boxType;
@@ -39,6 +42,10 @@ public class ChatBox extends JComponent {
 	public void initBox() {
 		String rightToLeft = boxType == BoxType.RIGHT ? ",rtl" : "";
         setLayout(new MigLayout("inset 5" + rightToLeft, "[40!]5[]", "[top]"));
+        avatar = new ImageAvatar();
+        avatar.setBorderSize(1);
+        avatar.setBorderSpace(1);
+        avatar.setImage(message.getIcon());
         JTextPane text = new JTextPane();
         text.setText(message.getMessage());
         text.setBackground(new Color(0, 0, 0, 0));
@@ -52,13 +59,13 @@ public class ChatBox extends JComponent {
         labelDate.setForeground(new Color(127, 127, 127));
         JLabel lblImg = new JLabel();
         lblImg.setIcon(img.iconImg());
-        add(lblImg, "height 40,width 40");
+        add(avatar, "height 40,width 40");
        
         add(text, "gapy 20, wrap");
         add(labelDate, "gapx 20,span 2");
 
 	}
-
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g.create();
