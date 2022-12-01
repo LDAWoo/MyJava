@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+import img.img;
 import inteface.ChatEvent;
 import net.miginfocom.swing.MigLayout;
 
@@ -28,7 +29,7 @@ public class PanelChat extends JPanel {
     private JPanel bottom;
     private JScrollPane scrollBody;
     private JLabel labelTitle;
-
+    private img img = new img();
 
     private Button floatingButton;
     private JLayeredPane layeredPane;
@@ -93,6 +94,8 @@ public class PanelChat extends JPanel {
         Button cmdFile = new Button();
         Button cmdSend = new Button();
         
+        cmdFile.setIcon(img.iconImg());
+        cmdSend.setIcon(img.iconSend());
         
         cmdFile.setFocusable(false);
         cmdSend.setFocusable(false);
