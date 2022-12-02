@@ -62,6 +62,7 @@ public class ChatFormClient extends JFrame implements Runnable{
 		init();
 	}
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy, hh:mmaa");
+	
 	String message;
 	public void init() {
 		chatArea.setTitle("Client Chat");

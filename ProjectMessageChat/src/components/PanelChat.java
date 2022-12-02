@@ -7,6 +7,7 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -199,18 +200,17 @@ public class PanelChat extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-
+				
 			}
 
 			@Override
-			public void keyPressed(KeyEvent e) {
-
+			public void keyPressed(KeyEvent e) {		
 				revalidate();
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-
+				
 			}
 
 		});
