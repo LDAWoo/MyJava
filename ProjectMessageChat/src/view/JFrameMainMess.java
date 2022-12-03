@@ -1,6 +1,9 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -15,68 +18,91 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 import componentchat.ChatBox;
 import componentchat.PanelChat;
+import components.PanelChatMessenger;
+import components.PanelMenu;
+import components.PanelMessengerHeader;
 import img.img;
 import inteface.ChatEvent;
 import model.ModelMessage;
 import net.miginfocom.swing.MigLayout;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.Icon;
+public class JFrameMainMess extends JFrame implements Runnable{
 
-public class ChatForm extends JFrame implements Runnable{
 	private JPanel panel;
-	private PanelChat chatArea;
+	private MigLayout layout;
 	private img img = new img();
+	private PanelMenu Menu;
+	private PanelChatMessenger panelMessenger;
+	private PanelMessengerHeader header;
+	
+	private PanelChat bottomChat;
+	
 	private DataInputStream inputStream;
 	private DataOutputStream outputStream;
 	private Socket socket;
 
-	public ChatForm() {
+	public JFrameMainMess() {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
 //				Start();
 			}
 		});
-
-		panel = new JPanel();
-		panel.setPreferredSize(new Dimension(450, 500));
-
-		chatArea = new PanelChat();
-		chatArea.setSize(getWidth(), getHeight());
-
-		panel.setLayout(new MigLayout("fill"));
-
-		panel.add(chatArea, "push, grow");
-
-		getContentPane().add(panel);
-
-		pack();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
 		
+		panel = new JPanel();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBackground(SystemColor.window);
+		getContentPane().setLayout(new BorderLayout());
+		panel.setPreferredSize(new Dimension(1300, 600));
+		panel.setOpaque(false);
+		getContentPane().add(panel);
+		pack();
 
+		setLocationRelativeTo(null);
 		init();
 	}
+
+	public void init() {
+
+		layout = new MigLayout("fill, inset 0", "[]0[]0[fill][]", "[top,fill]0[] ");
+		panel.setLayout(layout);
+
+		Menu = new PanelMenu();
+
+		panelMessenger = new PanelChatMessenger();
+
+		header = new PanelMessengerHeader();
+
+		bottomChat = new PanelChat();
+
+		panel.add(Menu, "cell 0 0 1 2,, width 64!");
+		panel.add(panelMessenger, "cell 1 0 1 2,width 350!");
+		panel.add(header, "cell 2 0,height 70!,w 100%");
+		panel.add(bottomChat, "cell 2 1,width 100%,height 100%");
+
+		initData();
+	}
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy, hh:mmaa");
 	private String message;
 	private ServerSocket serverSocket;
-	public void init() {
-		chatArea.setTitle("Server Chat");
-		chatArea.addChatEvent(new ChatEvent() {
+	
+	
+	public void initData() {
+		bottomChat.addChatEvent(new ChatEvent() {
 			
 			@Override
 			public void mousePressedSendButton(ActionEvent event) {
 				String date = sdf.format(new Date());
 				String name = "You";
-				message = chatArea.getText().trim();
+				message = bottomChat.getText().trim();
 //				Send();
-				chatArea.addChatBox(new ModelMessage(img.iconMess(), name, date, message), ChatBox.BoxType.RIGHT);
-				chatArea.clearTextAndGrabFocus();
+				bottomChat.addChatBox(new ModelMessage(img.iconMess(), name, date, message), ChatBox.BoxType.RIGHT);
+				bottomChat.clearTextAndGrabFocus();
 				
 			}
 
@@ -101,7 +127,7 @@ public class ChatForm extends JFrame implements Runnable{
 		try {
 			serverSocket = new ServerSocket(7676);
 			socket = serverSocket.accept();
-			Thread t1 = new Thread(ChatForm.this);
+			Thread t1 = new Thread(JFrameMainMess.this);
 			t1.start();
 			
 		} catch (Exception e) {
@@ -118,7 +144,7 @@ public class ChatForm extends JFrame implements Runnable{
 				String date = sdf.format(new Date());
 				String name = "Client";
 				String message = inputStream.readUTF();
-				chatArea.addChatBox(new ModelMessage(img.iconFace(), name, date, message), ChatBox.BoxType.LEFT);
+				bottomChat.addChatBox(new ModelMessage(img.iconFace(), name, date, message), ChatBox.BoxType.LEFT);
 			}
 			Thread.sleep(1000);
 		}
@@ -138,15 +164,17 @@ public class ChatForm extends JFrame implements Runnable{
 	}
 	
 	
-	
 
 	public static void main(String[] args) {
+
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			ChatForm chat = new ChatForm();
-			chat.setVisible(true);
+			JFrameMainMess frame = new JFrameMainMess();
+			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
+
 }

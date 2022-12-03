@@ -1,4 +1,4 @@
-package componentsClient;
+package componentchat;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,12 +18,13 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-import imgClient.*;
-import intefaceClient.*;
-import modelClient.*;
+import components.ScrollBarMessenger;
+import img.*;
+import inteface.*;
+import model.*;
 import net.miginfocom.swing.MigLayout;
 
-import componentsClient.*;
+import components.*;
 
 
 public class PanelChat extends JPanel {
@@ -48,10 +49,10 @@ public class PanelChat extends JPanel {
 	public PanelChat() {
 		setOpaque(false);
 
-		layout = new MigLayout("fill, wrap, inset 0", "[fill]", "[fill,40!][fill,100%][shrink 0,::30%]");
+		layout = new MigLayout("fill, wrap, inset 0", "[fill]", "[fill,0!][fill,100%][shrink 0,::30%]");
 
 		header = createHeader();
-
+		
 		body = createBody();
 
 		bottom = createButton();
@@ -60,7 +61,7 @@ public class PanelChat extends JPanel {
 		scrollBody = createScroll();
 
 		scrollBody.setViewportView(body);
-		scrollBody.setVerticalScrollBar(new ScrollBar());
+		scrollBody.setVerticalScrollBar(new ScrollBarMessenger());
 		scrollBody.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollBody.getViewport().setOpaque(false);
 		scrollBody.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
@@ -88,8 +89,8 @@ public class PanelChat extends JPanel {
 		layeredPane.add(floatingButton, "pos 100%-50 100%,h 40,w 40");
 		layeredPane.add(scrollBody);
 
-		setLayout(layout);
 		add(header);
+		setLayout(layout);
 		add(layeredPane);
 		add(bottom);
 		initAnimator();
@@ -105,7 +106,7 @@ public class PanelChat extends JPanel {
 		button.setBorder(null);
 		button.setIcon(img.iconArrow());
 		button.setRound(40);
-		button.setBackground(new Color(0, 0, 0));
+		button.setBackground(new Color(242,242,242));
 		button.setPaintBackground(true);
 		button.addActionListener(new ActionListener() {
 
@@ -150,19 +151,15 @@ public class PanelChat extends JPanel {
 
 	public JPanel createHeader() {
 		RoundPanel panel = new RoundPanel();
-		panel.setLayout(new MigLayout("fill, inset 2"));
-		panel.setBackground(new Color(0,0,0,0));
-		labelTitle = new JLabel();
-		labelTitle.setFont(labelTitle.getFont().deriveFont(14f));
-		labelTitle.setBorder(new EmptyBorder(2, 10, 2, 2));
-		labelTitle.setForeground(new Color(240, 240, 240));
-		panel.add(labelTitle);
+		
+		
 		return panel;
 	}
-
+	
+	
 	private JPanel createBody() {
 		RoundPanel panel = new RoundPanel();
-		panel.setBackground(new Color(0, 0, 0, 0));
+		panel.setBackground(new Color(255, 255, 255));
 		panel.setLayout(new MigLayout("wrap,fillx"));
 		return panel;
 	}
@@ -176,16 +173,24 @@ public class PanelChat extends JPanel {
 
 	private JPanel createButton() {
 		RoundPanel panel = new RoundPanel();
-		panel.setBackground(new Color(255, 255, 255, 20));
-		panel.setLayout(new MigLayout("fill, inset 2", "[fill, 34!]2[fill]2[fill, 34!]", "[bottom]"));
-
-		Button cmdFile = new Button();
+		panel.setBackground(new Color(240,242,245));
+		panel.setLayout(new MigLayout("fill, inset 2", "[fill]", "[bottom]"));
+		
+		Button cmdPlus = new Button();
+		Button cmdImg = new Button();
+		Button cmdSticker = new Button();
+		Button cmdGif = new Button();
 		Button cmdSend = new Button();
-
-		cmdFile.setIcon(img.iconImg());
+		
+		
+		cmdPlus.setIcon(img.iconPlus());
+		cmdImg.setIcon(img.iconImg());
+		cmdSticker.setIcon(img.iconSticker());
+		cmdGif.setIcon(img.iconGif());
+		
 		cmdSend.setIcon(img.iconSend());
 
-		cmdFile.setFocusable(false);
+		cmdImg.setFocusable(false);
 		cmdSend.setFocusable(false);
 
 		textMessage = new TextField();
@@ -226,8 +231,12 @@ public class PanelChat extends JPanel {
 		scroll.getViewport().setOpaque(false);
 		scroll.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
 		scroll.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
-		panel.add(cmdFile, "height 34!");
-		panel.add(scroll);
+		
+		panel.add(cmdPlus,"h 34");
+		panel.add(cmdImg,"h 34");
+		panel.add(cmdSticker,"h 34");
+		panel.add(cmdGif,"h 34");
+		panel.add(scroll,"skip,w 100%");
 		panel.add(cmdSend, "height 34!");
 
 		return panel;
@@ -271,12 +280,4 @@ public class PanelChat extends JPanel {
 		return layer;
 	}
 
-	@Override
-	protected void paintComponent(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
-		GradientPaint gra = new GradientPaint(0, 0, new Color(58, 72, 85), getWidth(), 0, new Color(28, 38, 50));
-		g2.setPaint(gra);
-		g2.fillRect(0, 0, getWidth(), getHeight());
-		super.paintComponent(g);
-	}
 }

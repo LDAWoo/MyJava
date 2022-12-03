@@ -39,7 +39,7 @@ public class Menu extends JPanel{
 	private Animator animator;
 	private boolean enable = true;
 	private boolean showMenu = true;
-	private  EventMenuSelected event;
+	private EventMenuSelected event;
 	private img img = new img();
 	private ShowPopup showPopup;
 	private Profile profile;
@@ -77,15 +77,15 @@ public class Menu extends JPanel{
 		GroupLayout layout = new GroupLayout(this);
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(Alignment.LEADING)
-				.addComponent(profile, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+				.addComponent(profile, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
 		);
 		layout.setVerticalGroup(
 			layout.createParallelGroup(Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup()
 					.addComponent(profile, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
 		);
         this.setLayout(layout);
 		setLayout(layout);

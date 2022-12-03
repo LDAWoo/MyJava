@@ -68,7 +68,6 @@ public class MenuItem extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(menu.getSudMenu().length);
 				if (menu.getSudMenu().length > 0) {
 					if (event.menuPressed(MenuItem.this, !open)) {
 						open = !open;

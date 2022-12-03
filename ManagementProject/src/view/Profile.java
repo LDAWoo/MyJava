@@ -17,7 +17,7 @@ import java.awt.RenderingHints;
 public class Profile extends JPanel{
 	private img img = new img();
 	public Profile() {
-		JLabel lblManagement = new JLabel(" Management");
+		JLabel lblManagement = new JLabel("Management");
 		lblManagement.setForeground(Color.WHITE);
 		lblManagement.setIcon(this.img.iconProfile());
 		lblManagement.setFont(new Font("SansSerif", Font.BOLD, 23));

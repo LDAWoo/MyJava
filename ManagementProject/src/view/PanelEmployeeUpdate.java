@@ -382,6 +382,7 @@ public class PanelEmployeeUpdate extends JPanel {
 		for (String string : comboboxDay) {
 			cbbModelDay.addElement(string);
 		}
+		
 		cbbDayDate.setModel(cbbModelDay);
 
 		cbbModelMonth = new DefaultComboBoxModel();
