@@ -37,7 +37,7 @@ public class ImageAvatar extends JComponent {
 		Graphics2D g2 = (Graphics2D) g.create();
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		createBorder(g2);
+//		createBorder(g2);
 		if (image != null) {
 			int width = getWidth();
 			int height = getHeight();
@@ -65,23 +65,23 @@ public class ImageAvatar extends JComponent {
 		return ((ImageIcon) icon).getImage();
 	}
 
-	public void createBorder(Graphics2D g2) {
-		int width = getWidth();
-		int height = getHeight();
-		int diameter = Math.min(width, height);
-		int x = (width - diameter) / 2;
-		int y = (height - diameter) / 2;
-		if (isOpaque()) {
-			g2.setColor(getBackground());
-			g2.fillOval(x, y, diameter, diameter);
-		}
-
-		Area area = new Area(new Ellipse2D.Double(x, y, diameter, diameter));
-		int s = diameter -= (borderSize * 2);
-		area.subtract(new Area(new Ellipse2D.Double(x + borderSize, y + borderSize, s, s)));
-		g2.setPaint(new GradientPaint(0, 0, gradientColor1, width, height, gradientColor2));
-		g2.fill(area);
-	}
+//	public void createBorder(Graphics2D g2) {
+//		int width = getWidth();
+//		int height = getHeight();
+//		int diameter = Math.min(width, height);
+//		int x = (width - diameter) / 2;
+//		int y = (height - diameter) / 2;
+//		if (isOpaque()) {
+//			g2.setColor(getBackground());
+//			g2.fillOval(x, y, diameter, diameter);
+//		}
+//
+//		Area area = new Area(new Ellipse2D.Double(x, y, diameter, diameter));
+//		int s = diameter -= (borderSize * 2);
+//		area.subtract(new Area(new Ellipse2D.Double(x + borderSize, y + borderSize, s, s)));
+//		g2.setPaint(new GradientPaint(0, 0, gradientColor1, width, height, gradientColor2));
+//		g2.fill(area);
+//	}
 
 	public Rectangle getAutoSize(Icon image, int size) {
 		int w = size;

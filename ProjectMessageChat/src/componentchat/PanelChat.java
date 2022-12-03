@@ -206,7 +206,6 @@ public class PanelChat extends JPanel {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-
 				revalidate();
 			}
 
@@ -240,6 +239,30 @@ public class PanelChat extends JPanel {
 		panel.add(cmdSend, "height 34!");
 
 		return panel;
+	}
+
+	public JPanel getBody() {
+		return body;
+	}
+
+	public void setBody(JPanel body) {
+		this.body = body;
+	}
+
+	public JPanel getBottom() {
+		return bottom;
+	}
+
+	public void setBottom(JPanel bottom) {
+		this.bottom = bottom;
+	}
+	
+	public TextField getTextMessage() {
+		return textMessage;
+	}
+
+	public void setTextMessage(TextField textMessage) {
+		this.textMessage = textMessage;
 	}
 
 	public void runEventMousePressedSendButton(ActionEvent evt) {

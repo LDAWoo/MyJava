@@ -151,6 +151,7 @@ public class FrameView extends JFrame {
 		animator.setResolution(0);
 		animator.setDeceleration(0.5f);
 		animator.setAcceleration(0.5f);
+		
 		header.AddMenuEvent(new ActionListener() {
 			
 			@Override

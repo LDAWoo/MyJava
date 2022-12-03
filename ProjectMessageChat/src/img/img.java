@@ -100,4 +100,43 @@ public class img {
 		return iconSticker;
 	}
 
+	public Icon iconOption() {
+		Icon iconOption = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("option.png")));
+		return iconOption;
+	}
+	
+	public Icon iconVideoPlus() {
+		Icon iconVideoPlus = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("video-plus.png")));
+		return iconVideoPlus;
+	}
+	
+	public Icon iconNote() {
+		Icon iconNote = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("note-edit.png")));
+		return iconNote;
+	}
+	
+	public Icon iconUser() {
+		Icon iconUser = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-user.png")));
+		return iconUser;
+	}
+	
+	public Icon iconMessageBook() {
+		Icon iconMessageBook = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("message-book.png")));
+		return iconMessageBook;
+	}
+	
+	public Icon iconMoonLight() {
+		Icon iconMoonLight = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("moon-light.png")));
+		return iconMoonLight;
+	}
+	
+	public Icon iconMoonDark() {
+		Icon iconMoonDark = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("moon-dark.png")));
+		return iconMoonDark;
+	}
+	
+	public Icon iconMoonBlue() {
+		Icon iconMoonBlue = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("moon-blue.png")));
+		return iconMoonBlue;
+	}
 }

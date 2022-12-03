@@ -2,8 +2,9 @@ package model;
 
 import javax.swing.Icon;
 
-public class ModelMessage {
+public class ModelMessageChat {
 	private Icon icon;
+	private String userName;
 	private String name;
 	private String date;
 	private String message;
@@ -41,14 +42,24 @@ public class ModelMessage {
 		this.message = message;
 	}
 
-	public ModelMessage(Icon icon, String name, String date, String message) {
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public ModelMessageChat(Icon icon,String username, String name, String date, String message) {
+		this.userName = username;
 		this.icon = icon;
 		this.name = name;
 		this.date = date;
 		this.message = message;
 	}
 
-	public ModelMessage() {
+	public ModelMessageChat() {
 
 	}
 }
