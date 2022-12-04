@@ -56,7 +56,7 @@ public class JFrameMainMess extends JFrame implements Runnable {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-//				Start();
+				Start();
 			}
 		});
 
@@ -408,7 +408,7 @@ public class JFrameMainMess extends JFrame implements Runnable {
 				String date = sdf.format(new Date());
 				String name = "You";
 				message = bottomChat.getText().trim();
-//				Send();		
+				Send();		
 				if (message.equals("")) {
 					return;
 				}
