@@ -2,8 +2,10 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +19,7 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -26,6 +29,8 @@ import javax.swing.event.CaretListener;
 
 import componentchat.ChatBox;
 import componentchat.PanelChat;
+import components.ButtonChatHeader;
+import components.MessengerButtonUser;
 import components.PanelChatMessenger;
 import components.PanelMenu;
 import img.img;
@@ -96,12 +101,13 @@ public class JFrameMainMess extends JFrame implements Runnable {
 				Menu.setBackground(new Color(0, 0, 0));
 				panelMessenger.setOpaque(true);
 				panelMessenger.setBackground(new Color(0, 0, 0));
-				panelMessenger.getSearch().setBackground(new Color(127, 127, 127));
+				panelMessenger.getSearch().setBackground(new Color(200, 200, 200));
 				panelMessenger.getSearch().setForeground(new Color(255, 255, 255));
 				panelMessenger.getBody().setBackground(new Color(0, 0, 0));
 				bottomChat.getHeader().setBackground(new Color(0, 0, 0));
 				bottomChat.setOpaque(true);
 				bottomChat.setBackground(new Color(0, 0, 0));
+				bottomChat.getTextMessage().setBackground(new Color(200,200,200));
 				bottomChat.getBody().setOpaque(true);
 				bottomChat.getBody().setBackground(new Color(0, 0, 0));
 				bottomChat.getBottom().setBackground(new Color(0, 0, 0));
@@ -130,7 +136,260 @@ public class JFrameMainMess extends JFrame implements Runnable {
 			}
 		});
 		
+		panelMessenger.addActionBtnPerson1(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bottomChat.getHeader().removeAll();
+				String name = panelMessenger.getName1(); 
+				Icon icon = panelMessenger.getIcon1();
+				String Status = "Đang hoạt động";
+				ButtonChatHeader btnUser1 = new ButtonChatHeader();	
+				btnUser1.add(new MessengerButtonUser(new ModelMessage(icon, name, Status)));			
+				ButtonChatHeader btnPhone = new ButtonChatHeader();
+				ButtonChatHeader btnVideo = new ButtonChatHeader();
+				ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
+				btnPhone.setIcon(img.iconPhone());
+				btnVideo.setIcon(img.iconVideo());
+				btnAlertCircle.setIcon(img.iconAlert());
+
+				bottomChat.getHeader().add(btnUser1,"h 70!");
+				bottomChat.getHeader().add(btnPhone,"skip,h 40!, w 40! , split");
+				bottomChat.getHeader().add(btnVideo,"h 40!, w 40!");
+				bottomChat.getHeader().add(btnAlertCircle,"h 40!, w 40!");
+	
+				bottomChat.getHeader().repaint();
+				bottomChat.getHeader().revalidate();
+				
+				
+			}
+		});
 		
+		panelMessenger.addActionBtnPerson1(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bottomChat.getHeader().removeAll();
+				String name = panelMessenger.getName1(); 
+				Icon icon = panelMessenger.getIcon1();
+				String Status = "Đang hoạt động";
+				ButtonChatHeader btnUser1 = new ButtonChatHeader();	
+				btnUser1.add(new MessengerButtonUser(new ModelMessage(icon, name, Status)));			
+				ButtonChatHeader btnPhone = new ButtonChatHeader();
+				ButtonChatHeader btnVideo = new ButtonChatHeader();
+				ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
+				btnPhone.setIcon(img.iconPhone());
+				btnVideo.setIcon(img.iconVideo());
+				btnAlertCircle.setIcon(img.iconAlert());
+
+				bottomChat.getHeader().add(btnUser1,"h 70!");
+				bottomChat.getHeader().add(btnPhone,"skip,h 40!, w 40! , split");
+				bottomChat.getHeader().add(btnVideo,"h 40!, w 40!");
+				bottomChat.getHeader().add(btnAlertCircle,"h 40!, w 40!");
+	
+				bottomChat.getHeader().repaint();
+				bottomChat.getHeader().revalidate();
+				
+				
+			}
+		});
+		
+		panelMessenger.addActionBtnPerson2(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bottomChat.getHeader().removeAll();
+				String name = panelMessenger.getName2(); 
+				Icon icon = panelMessenger.getIcon2();
+				String Status = "Hoạt động 2 giờ trước";
+				ButtonChatHeader btnUser2 = new ButtonChatHeader();	
+				btnUser2.add(new MessengerButtonUser(new ModelMessage(icon, name, Status)));			
+				ButtonChatHeader btnPhone = new ButtonChatHeader();
+				ButtonChatHeader btnVideo = new ButtonChatHeader();
+				ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
+				btnPhone.setIcon(img.iconPhone());
+				btnVideo.setIcon(img.iconVideo());
+				btnAlertCircle.setIcon(img.iconAlert());
+
+				bottomChat.getHeader().add(btnUser2,"h 70!");
+				bottomChat.getHeader().add(btnPhone,"skip,h 40!, w 40! , split");
+				bottomChat.getHeader().add(btnVideo,"h 40!, w 40!");
+				bottomChat.getHeader().add(btnAlertCircle,"h 40!, w 40!");
+	
+				bottomChat.getHeader().repaint();
+				bottomChat.getHeader().revalidate();
+				
+				
+			}
+		});
+		
+		panelMessenger.addActionBtnPerson3(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bottomChat.getHeader().removeAll();
+				String name = panelMessenger.getName3(); 
+				Icon icon = panelMessenger.getIcon3();
+				String Status = "Đang hoạt động";
+				ButtonChatHeader btnUser3 = new ButtonChatHeader();	
+				btnUser3.add(new MessengerButtonUser(new ModelMessage(icon, name, Status)));			
+				ButtonChatHeader btnPhone = new ButtonChatHeader();
+				ButtonChatHeader btnVideo = new ButtonChatHeader();
+				ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
+				btnPhone.setIcon(img.iconPhone());
+				btnVideo.setIcon(img.iconVideo());
+				btnAlertCircle.setIcon(img.iconAlert());
+
+				bottomChat.getHeader().add(btnUser3,"h 70!");
+				bottomChat.getHeader().add(btnPhone,"skip,h 40!, w 40! , split");
+				bottomChat.getHeader().add(btnVideo,"h 40!, w 40!");
+				bottomChat.getHeader().add(btnAlertCircle,"h 40!, w 40!");
+	
+				bottomChat.getHeader().repaint();
+				bottomChat.getHeader().revalidate();
+				
+				
+			}
+		});
+		
+		
+		panelMessenger.addActionBtnPerson4(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bottomChat.getHeader().removeAll();
+				String name = panelMessenger.getName4(); 
+				Icon icon = panelMessenger.getIcon4();
+				String Status = "Hoạt động 24 giờ trước";
+				ButtonChatHeader btnUser4 = new ButtonChatHeader();	
+				btnUser4.add(new MessengerButtonUser(new ModelMessage(icon, name, Status)));			
+				ButtonChatHeader btnPhone = new ButtonChatHeader();
+				ButtonChatHeader btnVideo = new ButtonChatHeader();
+				ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
+				btnPhone.setIcon(img.iconPhone());
+				btnVideo.setIcon(img.iconVideo());
+				btnAlertCircle.setIcon(img.iconAlert());
+
+				bottomChat.getHeader().add(btnUser4,"h 70!");
+				bottomChat.getHeader().add(btnPhone,"skip,h 40!, w 40! , split");
+				bottomChat.getHeader().add(btnVideo,"h 40!, w 40!");
+				bottomChat.getHeader().add(btnAlertCircle,"h 40!, w 40!");
+	
+				bottomChat.getHeader().repaint();
+				bottomChat.getHeader().revalidate();
+				
+				
+			}
+		});
+		
+		
+		panelMessenger.addActionBtnPerson5(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bottomChat.getHeader().removeAll();
+				String name = panelMessenger.getName5(); 
+				Icon icon = panelMessenger.getIcon5();
+				String Status = "Đang hoạt động";
+				ButtonChatHeader btnUser5 = new ButtonChatHeader();	
+				btnUser5.add(new MessengerButtonUser(new ModelMessage(icon, name, Status)));			
+				ButtonChatHeader btnPhone = new ButtonChatHeader();
+				ButtonChatHeader btnVideo = new ButtonChatHeader();
+				ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
+				btnPhone.setIcon(img.iconPhone());
+				btnVideo.setIcon(img.iconVideo());
+				btnAlertCircle.setIcon(img.iconAlert());
+
+				bottomChat.getHeader().add(btnUser5,"h 70!");
+				bottomChat.getHeader().add(btnPhone,"skip,h 40!, w 40! , split");
+				bottomChat.getHeader().add(btnVideo,"h 40!, w 40!");
+				bottomChat.getHeader().add(btnAlertCircle,"h 40!, w 40!");
+	
+				bottomChat.getHeader().repaint();
+				bottomChat.getHeader().revalidate();
+				
+				
+			}
+		});
+		
+		
+		panelMessenger.addActionBtnPerson6(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bottomChat.getHeader().removeAll();
+				String name = panelMessenger.getName6(); 
+				Icon icon = panelMessenger.getIcon6();
+				String Status = "Đang hoạt động";
+				ButtonChatHeader btnUser6 = new ButtonChatHeader();	
+				btnUser6.add(new MessengerButtonUser(new ModelMessage(icon, name, Status)));			
+				ButtonChatHeader btnPhone = new ButtonChatHeader();
+				ButtonChatHeader btnVideo = new ButtonChatHeader();
+				ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
+				btnPhone.setIcon(img.iconPhone());
+				btnVideo.setIcon(img.iconVideo());
+				btnAlertCircle.setIcon(img.iconAlert());
+
+				bottomChat.getHeader().add(btnUser6,"h 70!");
+				bottomChat.getHeader().add(btnPhone,"skip,h 40!, w 40! , split");
+				bottomChat.getHeader().add(btnVideo,"h 40!, w 40!");
+				bottomChat.getHeader().add(btnAlertCircle,"h 40!, w 40!");
+	
+				bottomChat.getHeader().repaint();
+				bottomChat.getHeader().revalidate();
+				
+				
+			}
+		});
+		
+		panelMessenger.addActionBtnPerson7(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bottomChat.getHeader().removeAll();
+				String name = panelMessenger.getName7(); 
+				Icon icon = panelMessenger.getIcon7();
+				String Status = "Hoạt động 1 ngày trước";
+				ButtonChatHeader btnUser7 = new ButtonChatHeader();	
+				btnUser7.add(new MessengerButtonUser(new ModelMessage(icon, name, Status)));			
+				ButtonChatHeader btnPhone = new ButtonChatHeader();
+				ButtonChatHeader btnVideo = new ButtonChatHeader();
+				ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
+				btnPhone.setIcon(img.iconPhone());
+				btnVideo.setIcon(img.iconVideo());
+				btnAlertCircle.setIcon(img.iconAlert());
+
+				bottomChat.getHeader().add(btnUser7,"h 70!");
+				bottomChat.getHeader().add(btnPhone,"skip,h 40!, w 40! , split");
+				bottomChat.getHeader().add(btnVideo,"h 40!, w 40!");
+				bottomChat.getHeader().add(btnAlertCircle,"h 40!, w 40!");
+	
+				bottomChat.getHeader().repaint();
+				bottomChat.getHeader().revalidate();
+				
+				
+			}
+		});
+		
+		panelMessenger.addActionBtnPerson8(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bottomChat.getHeader().removeAll();
+				String name = panelMessenger.getName8(); 
+				Icon icon = panelMessenger.getIcon8();
+				String Status = "Hoạt động 1 giờ trước";
+				ButtonChatHeader btnUser8 = new ButtonChatHeader();	
+				btnUser8.add(new MessengerButtonUser(new ModelMessage(icon, name, Status)));			
+				ButtonChatHeader btnPhone = new ButtonChatHeader();
+				ButtonChatHeader btnVideo = new ButtonChatHeader();
+				ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
+				btnPhone.setIcon(img.iconPhone());
+				btnVideo.setIcon(img.iconVideo());
+				btnAlertCircle.setIcon(img.iconAlert());
+
+				bottomChat.getHeader().add(btnUser8,"h 70!");
+				bottomChat.getHeader().add(btnPhone,"skip,h 40!, w 40! , split");
+				bottomChat.getHeader().add(btnVideo,"h 40!, w 40!");
+				bottomChat.getHeader().add(btnAlertCircle,"h 40!, w 40!");
+	
+				bottomChat.getHeader().repaint();
+				bottomChat.getHeader().revalidate();
+				
+				
+			}
+		});
 		
 
 	}

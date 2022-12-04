@@ -8,6 +8,7 @@ public class ModelMessage {
 	private String date;
 	private String message;
 	
+	private String status;
 
 	public Icon getIcon() {
 		return icon;
@@ -39,6 +40,20 @@ public class ModelMessage {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public ModelMessage(Icon icon, String name, String status) {
+		this.icon = icon;
+		this.name = name;
+		this.status = status;
 	}
 
 	public ModelMessage(Icon icon, String name, String date, String message) {

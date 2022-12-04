@@ -37,7 +37,7 @@ public class PanelMenu extends JPanel {
 	private ButtonChatHeader btnMoonBlue;
 	private ButtonChatHeader btnMess;
 	private ButtonChatHeader btnStar;
-	private MainFormChat main = new MainFormChat();
+
 
 	public PanelMenu() {
 		setOpaque(false);

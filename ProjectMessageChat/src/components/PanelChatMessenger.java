@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -56,7 +58,6 @@ public class PanelChatMessenger extends JPanel {
 
 	private img img = new img();
 	private TextFieldSearch search;
-	private MainFormChat main;
 
 	private TextFieldSearch textMessage;
 	private ButtonChatHeader cmdMess;
@@ -65,10 +66,10 @@ public class PanelChatMessenger extends JPanel {
 	private ButtonChatHeader cmdVideo;
 
 	private boolean selected;
-	private boolean over ;
+	private boolean over;
 
 	private ArrayList<Component> button = new ArrayList<Component>();
-	
+
 	private ButtonChatHeader btnOption;
 	private JPanel panelBody;
 	private ButtonChatHeader btnVideoEdit;
@@ -80,7 +81,6 @@ public class PanelChatMessenger extends JPanel {
 	private ButtonChatHeader btnPerson6;
 	private ButtonChatHeader btnPerson7;
 	private ButtonChatHeader btnPerson8;
-
 
 	public PanelChatMessenger() {
 		setOpaque(false);
@@ -121,7 +121,7 @@ public class PanelChatMessenger extends JPanel {
 		panel.add(bottom);
 
 		add(panel, "push,grow");
-		
+
 	}
 
 	public JPanel createHeader() {
@@ -226,7 +226,6 @@ public class PanelChatMessenger extends JPanel {
 		return panelBottom;
 	}
 
-
 	public void ActionButton() {
 		cmdMess.addActionListener(new ActionListener() {
 			@Override
@@ -255,6 +254,24 @@ public class PanelChatMessenger extends JPanel {
 		this.body = body;
 	}
 
+	String name1 = "Vũ Lee";
+	String name2 = "Vy Thị Tĩnh";
+	String name3 = "Lê.Đ.A.Tuấn";
+	String name4 = "Nguyễn Anh Khôi";
+	String name5 = "Tí Shop - Quần Áo Nam Cao Cấp";
+	String name6 = "Babeee";
+	String name7 = "7M MEN";
+	String name8 = "Big Phone Quận 9";
+
+	Icon icon1 = img.iconFaceWhite();
+	Icon icon2 = img.iconMessWhite();
+	Icon icon3 = img.iconFaceWhite();
+	Icon icon4 = img.iconMessWhite();
+	Icon icon5 = img.iconFaceWhite();
+	Icon icon6 = img.iconMessWhite();
+	Icon icon7 = img.iconFaceWhite();
+	Icon icon8 = img.iconMessWhite();
+
 	public void addChatbox() {
 		btnPerson1 = new ButtonChatHeader();
 		btnPerson2 = new ButtonChatHeader();
@@ -267,16 +284,16 @@ public class PanelChatMessenger extends JPanel {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 		String data = sdf.format(new Date());
+
 		String message = "Xin chào bạn rất vui được gặp bạn!";
-		btnPerson1.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), "Vũ Lee", data, message)));
-		btnPerson2.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), "Vy Thị Tĩnh", data, message)));
-		btnPerson3.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), "Lê.Đ.A.Tuấn", data, message)));
-		btnPerson4.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), "Nguyễn Anh Khôi", data, message)));
-		btnPerson5.add(new ChatBoxMessenger(
-				new ModelMessage(img.iconFaceWhite(), "Tí Shop - Quần Áo Nam Cao Cấp", data, message)));
-		btnPerson6.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), "Babeee", data, message)));
-		btnPerson7.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), "7M MEN", data, message)));
-		btnPerson8.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), "Big Phone Quận 9", data, message)));
+		btnPerson1.add(new ChatBoxMessenger(new ModelMessage(icon1, name1, data, message)));
+		btnPerson2.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), name2, data, message)));
+		btnPerson3.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), name3, data, message)));
+		btnPerson4.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), name4, data, message)));
+		btnPerson5.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), name5, data, message)));
+		btnPerson6.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), name6, data, message)));
+		btnPerson7.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), name7, data, message)));
+		btnPerson8.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), name8, data, message)));
 
 		button.add(btnPerson1);
 		button.add(btnPerson2);
@@ -286,7 +303,7 @@ public class PanelChatMessenger extends JPanel {
 		button.add(btnPerson6);
 		button.add(btnPerson7);
 		button.add(btnPerson8);
-		ButtonAction();
+
 	}
 
 	public void listMessenger() {
@@ -296,32 +313,185 @@ public class PanelChatMessenger extends JPanel {
 		body.repaint();
 		body.revalidate();
 	}
-	
-	
 
-	public void ButtonAction() {
-
-		btnPerson1.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
+	public String getName1() {
+		return name1;
 	}
-	
-	
-	
+
+	public void setName1(String name1) {
+		this.name1 = name1;
+	}
+
+	public String getName2() {
+		return name2;
+	}
+
+	public void setName2(String name2) {
+		this.name2 = name2;
+	}
+
+	public String getName3() {
+		return name3;
+	}
+
+	public void setName3(String name3) {
+		this.name3 = name3;
+	}
+
+	public String getName4() {
+		return name4;
+	}
+
+	public void setName4(String name4) {
+		this.name4 = name4;
+	}
+
+	public String getName5() {
+		return name5;
+	}
+
+	public void setName5(String name5) {
+		this.name5 = name5;
+	}
+
+	public String getName6() {
+		return name6;
+	}
+
+	public void setName6(String name6) {
+		this.name6 = name6;
+	}
+
+	public String getName7() {
+		return name7;
+	}
+
+	public void setName7(String name7) {
+		this.name7 = name7;
+	}
+
+	public String getName8() {
+		return name8;
+	}
+
+	public void setName8(String name8) {
+		this.name8 = name8;
+	}
+
+	public void setButton(ArrayList<Component> button) {
+		this.button = button;
+	}
+
+	public void addActionBtnPerson1(ActionListener event) {
+		btnPerson1.addActionListener(event);
+	}
+
+	public void addActionBtnPerson2(ActionListener event) {
+		btnPerson2.addActionListener(event);
+	}
+
+	public void addActionBtnPerson3(ActionListener event) {
+		btnPerson3.addActionListener(event);
+	}
+
+	public void addActionBtnPerson4(ActionListener event) {
+		btnPerson4.addActionListener(event);
+	}
+
+	public void addActionBtnPerson5(ActionListener event) {
+		btnPerson5.addActionListener(event);
+	}
+
+	public void addActionBtnPerson6(ActionListener event) {
+		btnPerson6.addActionListener(event);
+	}
+
+	public void addActionBtnPerson7(ActionListener event) {
+		btnPerson7.addActionListener(event);
+	}
+
+	public void addActionBtnPerson8(ActionListener event) {
+		btnPerson8.addActionListener(event);
+	}
+
+	public Icon getIcon1() {
+		return icon1;
+	}
+
+	public void setIcon1(Icon icon1) {
+		this.icon1 = icon1;
+	}
+
+	public Icon getIcon2() {
+		return icon2;
+	}
+
+	public void setIcon2(Icon icon2) {
+		this.icon2 = icon2;
+	}
+
+	public Icon getIcon3() {
+		return icon3;
+	}
+
+	public void setIcon3(Icon icon3) {
+		this.icon3 = icon3;
+	}
+
+	public Icon getIcon4() {
+		return icon4;
+	}
+
+	public void setIcon4(Icon icon4) {
+		this.icon4 = icon4;
+	}
+
+	public Icon getIcon5() {
+		return icon5;
+	}
+
+	public void setIcon5(Icon icon5) {
+		this.icon5 = icon5;
+	}
+
+	public Icon getIcon6() {
+		return icon6;
+	}
+
+	public void setIcon6(Icon icon6) {
+		this.icon6 = icon6;
+	}
+
+	public Icon getIcon7() {
+		return icon7;
+	}
+
+	public void setIcon7(Icon icon7) {
+		this.icon7 = icon7;
+	}
+
+	public Icon getIcon8() {
+		return icon8;
+	}
+
+	public void setIcon8(Icon icon8) {
+		this.icon8 = icon8;
+	}
+
+	public ButtonChatHeader getBtnPerson1() {
+		return btnPerson1;
+	}
+
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 		repaint();
 	}
-	
+
 	public void setOver(boolean over) {
 		this.over = over;
 		repaint();
 	}
-	
+
 	private JScrollPane createScroll() {
 		JScrollPane scroll = new JScrollPane();
 		scroll.setBorder(null);

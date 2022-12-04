@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
+import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -50,7 +51,7 @@ public class PanelChat extends JPanel {
 	public PanelChat() {
 		setOpaque(false);
 
-		layout = new MigLayout("fill, wrap, inset 0", "[fill]", "[fill,50!][fill,100%][shrink 0,::30%]");
+		layout = new MigLayout("fill, wrap, inset 0", "[fill]", "[fill,80!][fill,100%][shrink 0,::30%]");
 
 		header = createHeader();
 		
@@ -60,7 +61,7 @@ public class PanelChat extends JPanel {
 		
 		layeredPane = createLayeredPane();
 		
-		scrollBody =  createScroll();
+		scrollBody = new JScrollPane();
 		scrollBody.setBorder(null);
 		scrollBody.setViewportView(body);
 		scrollBody.setVerticalScrollBar(new ScrollBarMessenger());
@@ -155,17 +156,23 @@ public class PanelChat extends JPanel {
 		JPanel panelHeader = new JPanel();
 		panelHeader.setBackground(new Color(0,150,255));
 
-		panelHeader.setLayout(new MigLayout("fill","[right]"));
-
+		panelHeader.setLayout(new MigLayout("fill","0[]0[]0[right]"));
+		
+		String name = "Vũ Lee"; 
+		Icon icon = img.iconFaceWhite();
+		String Status = "Đang hoạt động";
+		
+		ButtonChatHeader btnUser2 = new ButtonChatHeader();	
+		btnUser2.add(new MessengerButtonUser(new ModelMessage(icon, name, Status)));			
 		ButtonChatHeader btnPhone = new ButtonChatHeader();
 		ButtonChatHeader btnVideo = new ButtonChatHeader();
 		ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
-
 		btnPhone.setIcon(img.iconPhone());
 		btnVideo.setIcon(img.iconVideo());
 		btnAlertCircle.setIcon(img.iconAlert());
 
-		panelHeader.add(btnPhone,"skip, h 40!, w 40! , split");
+		panelHeader.add(btnUser2,"h 70!");
+		panelHeader.add(btnPhone,"skip,h 40!, w 40! , split");
 		panelHeader.add(btnVideo,"h 40!, w 40!");
 		panelHeader.add(btnAlertCircle,"h 40!, w 40!");
 		
