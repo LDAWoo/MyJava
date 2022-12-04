@@ -21,13 +21,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import componentchat.ChatBox;
 import componentchat.PanelChat;
-import components.OptionMenu;
 import components.PanelChatMessenger;
 import components.PanelMenu;
-import components.PanelMessengerHeader;
 import img.img;
 import inteface.ChatEvent;
 import model.ModelMessage;
@@ -40,7 +40,6 @@ public class JFrameMainMess extends JFrame implements Runnable {
 	private img img = new img();
 	private PanelMenu Menu;
 	private PanelChatMessenger panelMessenger;
-	private PanelMessengerHeader header;
 
 	private PanelChat bottomChat;
 
@@ -78,13 +77,10 @@ public class JFrameMainMess extends JFrame implements Runnable {
 
 		panelMessenger = new PanelChatMessenger();
 
-		header = new PanelMessengerHeader();
-
 		bottomChat = new PanelChat();
 
 		panel.add(Menu, "cell 0 0 1 2,, width 64!");
 		panel.add(panelMessenger, "cell 1 0 1 2,width 380!");
-		panel.add(header, "cell 2 0,height 70!,w 100%");
 		panel.add(bottomChat, "cell 2 1,width 100%,height 100%");
 
 		initData();
@@ -100,38 +96,42 @@ public class JFrameMainMess extends JFrame implements Runnable {
 				Menu.setBackground(new Color(0, 0, 0));
 				panelMessenger.setOpaque(true);
 				panelMessenger.setBackground(new Color(0, 0, 0));
-				panelMessenger.getSearch().setBackground(new Color(127,127,127));
-				panelMessenger.getSearch().setForeground(new Color(255,255,255));
-				panelMessenger.getBody().setBackground(new Color(0,0,0));
-				header.setOpaque(true);
-				header.setBackground(new Color(0,0,0));
+				panelMessenger.getSearch().setBackground(new Color(127, 127, 127));
+				panelMessenger.getSearch().setForeground(new Color(255, 255, 255));
+				panelMessenger.getBody().setBackground(new Color(0, 0, 0));
+				bottomChat.getHeader().setBackground(new Color(0, 0, 0));
+				bottomChat.setOpaque(true);
+				bottomChat.setBackground(new Color(0, 0, 0));
 				bottomChat.getBody().setOpaque(true);
-				bottomChat.getBody().setBackground(new Color(0,0,0));
-				bottomChat.getBottom().setBackground(new Color(0,0,0));
-		
-	
+				bottomChat.getBody().setBackground(new Color(0, 0, 0));
+				bottomChat.getBottom().setBackground(new Color(0, 0, 0));
+
 			}
 		});
-		
+
 		Menu.addActionButtonBlue(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Menu.setOpaque(true);
 				Menu.setBackground(new Color(0, 150, 255));
 				panelMessenger.setOpaque(true);
 				panelMessenger.setBackground(Color.decode("#0072ff"));
-				panelMessenger.getSearch().setBackground(new Color(255,255,255));
-				panelMessenger.getSearch().setForeground(new Color(0,0,0));
+				panelMessenger.getSearch().setBackground(new Color(255, 255, 255));
+				panelMessenger.getSearch().setForeground(new Color(0, 0, 0));
 				panelMessenger.getBody().setBackground(Color.decode("#0072ff"));
-				header.setOpaque(true);
-				header.setBackground(new Color(0,150,255));
+				bottomChat.setOpaque(true);
+				bottomChat.setBackground(new Color(255, 255, 255));
+				bottomChat.getHeader().setBackground(new Color(0, 150, 255));
 				bottomChat.getBody().setOpaque(true);
-				bottomChat.getBody().setBackground(new Color(255,255,255));
-				bottomChat.getBottom().setBackground(new Color(240,242,245));
-				
+				bottomChat.getBody().setBackground(new Color(255, 255, 255));
+				bottomChat.getBottom().setBackground(new Color(240, 242, 245));
+
 			}
 		});
+		
+		
+		
 
 	}
 
@@ -140,14 +140,20 @@ public class JFrameMainMess extends JFrame implements Runnable {
 	private ServerSocket serverSocket;
 
 	public void initData() {
+
 		bottomChat.addChatEvent(new ChatEvent() {
 
 			@Override
 			public void mousePressedSendButton(ActionEvent event) {
+
 				String date = sdf.format(new Date());
 				String name = "You";
 				message = bottomChat.getText().trim();
-//				Send();
+//				Send();		
+				if (message.equals("")) {
+					return;
+				}
+
 				bottomChat.addChatBox(new ModelMessage(img.iconMess(), name, date, message), ChatBox.BoxType.RIGHT);
 				bottomChat.clearTextAndGrabFocus();
 

@@ -19,6 +19,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import componentchat.ChatBox;
 import img.img;
@@ -31,6 +33,9 @@ import javax.swing.SwingUtilities;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,23 +50,38 @@ public class PanelChatMessenger extends JPanel {
 	private JPanel body;
 	private JPanel bottom;
 
+	private JPanel panelFind;
+
 	private JScrollPane scrollPaneBody;
 
 	private img img = new img();
 	private TextFieldSearch search;
 	private MainFormChat main;
 
-	private	TextFieldSearch textMessage;
+	private TextFieldSearch textMessage;
 	private ButtonChatHeader cmdMess;
 	private ButtonChatHeader cmdMessBook;
 	private ButtonChatHeader cmdUser;
 	private ButtonChatHeader cmdVideo;
-	
+
+	private boolean selected;
+	private boolean over ;
+
 	private ArrayList<Component> button = new ArrayList<Component>();
+	
 	private ButtonChatHeader btnOption;
 	private JPanel panelBody;
 	private ButtonChatHeader btnVideoEdit;
-	
+	private ButtonChatHeader btnPerson1;
+	private ButtonChatHeader btnPerson2;
+	private ButtonChatHeader btnPerson3;
+	private ButtonChatHeader btnPerson4;
+	private ButtonChatHeader btnPerson5;
+	private ButtonChatHeader btnPerson6;
+	private ButtonChatHeader btnPerson7;
+	private ButtonChatHeader btnPerson8;
+
+
 	public PanelChatMessenger() {
 		setOpaque(false);
 		setBackground(Color.WHITE);
@@ -80,22 +100,18 @@ public class PanelChatMessenger extends JPanel {
 
 		bottom = createBottom();
 
-
 		scrollPaneBody = new JScrollPane(body);
 		scrollPaneBody.setOpaque(false);
 		scrollPaneBody.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneBody.setBorder(null);
-	
+
 		scrollPaneBody.getViewport().setOpaque(false);
 		scrollPaneBody.setVerticalScrollBar(new ScrollBarMessenger());
 		scrollPaneBody.setViewportBorder(null);
-		
-		
+
 		ScrollBarMessenger barCustom = new ScrollBarMessenger();
 		barCustom.setOrientation(JScrollBar.HORIZONTAL);
-		
 
-		
 		scrollPaneBody.setHorizontalScrollBar(barCustom);
 
 		this.setLayout(layoutMain);
@@ -105,6 +121,7 @@ public class PanelChatMessenger extends JPanel {
 		panel.add(bottom);
 
 		add(panel, "push,grow");
+		
 	}
 
 	public JPanel createHeader() {
@@ -134,7 +151,7 @@ public class PanelChatMessenger extends JPanel {
 		btnOption.setIcon(img.iconOption());
 
 		panelHeader.add(btnOption, "cell 0 0,grow,h 40!, w 40!");
-		
+
 		btnVideoEdit = new ButtonChatHeader();
 		btnVideoEdit.setIcon(img.iconVideoPlus());
 		panelHeader.add(btnVideoEdit, "cell 0 0,grow, h 40!, w 40!");
@@ -150,10 +167,18 @@ public class PanelChatMessenger extends JPanel {
 		panelBody.setBackground(Color.decode("#0072ff"));
 		panelBody.setBorder(null);
 		panelBody.setLayout(new MigLayout("wrap, fillx"));
-		
+
 		return panelBody;
 	}
 
+	public JPanel createPanelFind() {
+		panelFind = new JPanel();
+		panelFind.setBackground(new Color(255, 255, 255));
+		panelFind.setBorder(null);
+
+		panelBody.setLayout(new MigLayout("wrap, fillx"));
+		return panelBody;
+	}
 
 	public JPanel createBottom() {
 		JPanel panelBottom = new JPanel();
@@ -200,30 +225,28 @@ public class PanelChatMessenger extends JPanel {
 		listMessenger();
 		return panelBottom;
 	}
-	
+
+
 	public void ActionButton() {
-		cmdMess.addActionListener(new ActionListener() {	
+		cmdMess.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {	
+			public void actionPerformed(ActionEvent e) {
 				listMessenger();
 			}
 		});
-		
+
 		btnVideoEdit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
+
 			}
 		});
 	}
-	
+
 	public void addOptionAction(ActionListener event) {
 		btnOption.addActionListener(event);
 	}
-	
-	
-	
+
 	public JPanel getBody() {
 		return body;
 	}
@@ -231,29 +254,30 @@ public class PanelChatMessenger extends JPanel {
 	public void setBody(JPanel body) {
 		this.body = body;
 	}
-	
+
 	public void addChatbox() {
-		ButtonChatHeader btnPerson1 = new ButtonChatHeader();
-		ButtonChatHeader btnPerson2 = new ButtonChatHeader();
-		ButtonChatHeader btnPerson3 = new ButtonChatHeader();
-		ButtonChatHeader btnPerson4 = new ButtonChatHeader();
-		ButtonChatHeader btnPerson5 = new ButtonChatHeader();
-		ButtonChatHeader btnPerson6 = new ButtonChatHeader();
-		ButtonChatHeader btnPerson7 = new ButtonChatHeader();
-		ButtonChatHeader btnPerson8 = new ButtonChatHeader();
-		
+		btnPerson1 = new ButtonChatHeader();
+		btnPerson2 = new ButtonChatHeader();
+		btnPerson3 = new ButtonChatHeader();
+		btnPerson4 = new ButtonChatHeader();
+		btnPerson5 = new ButtonChatHeader();
+		btnPerson6 = new ButtonChatHeader();
+		btnPerson7 = new ButtonChatHeader();
+		btnPerson8 = new ButtonChatHeader();
+
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 		String data = sdf.format(new Date());
-		String message = "Xin chào bạn rất vui được gặp bạn!";	
+		String message = "Xin chào bạn rất vui được gặp bạn!";
 		btnPerson1.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), "Vũ Lee", data, message)));
 		btnPerson2.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), "Vy Thị Tĩnh", data, message)));
 		btnPerson3.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), "Lê.Đ.A.Tuấn", data, message)));
 		btnPerson4.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), "Nguyễn Anh Khôi", data, message)));
-		btnPerson5.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), "Tí Shop - Quần Áo Nam Cao Cấp", data, message)));
+		btnPerson5.add(new ChatBoxMessenger(
+				new ModelMessage(img.iconFaceWhite(), "Tí Shop - Quần Áo Nam Cao Cấp", data, message)));
 		btnPerson6.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), "Babeee", data, message)));
-		btnPerson7.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), "7m MEN", data, message)));
+		btnPerson7.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), "7M MEN", data, message)));
 		btnPerson8.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), "Big Phone Quận 9", data, message)));
-		
+
 		button.add(btnPerson1);
 		button.add(btnPerson2);
 		button.add(btnPerson3);
@@ -262,17 +286,42 @@ public class PanelChatMessenger extends JPanel {
 		button.add(btnPerson6);
 		button.add(btnPerson7);
 		button.add(btnPerson8);
+		ButtonAction();
 	}
-	
+
 	public void listMessenger() {
 		for (Component component : button) {
-			body.add(component,"wrap");
+			body.add(component, "wrap");
 		}
 		body.repaint();
 		body.revalidate();
 	}
 	
+	
 
+	public void ButtonAction() {
+
+		btnPerson1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+	}
+	
+	
+	
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+		repaint();
+	}
+	
+	public void setOver(boolean over) {
+		this.over = over;
+		repaint();
+	}
+	
 	private JScrollPane createScroll() {
 		JScrollPane scroll = new JScrollPane();
 		scroll.setBorder(null);
@@ -280,8 +329,6 @@ public class PanelChatMessenger extends JPanel {
 		return scroll;
 	}
 
-	
-	
 	public TextFieldSearch getSearch() {
 		return search;
 	}

@@ -139,4 +139,9 @@ public class img {
 		Icon iconMoonBlue = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("moon-blue.png")));
 		return iconMoonBlue;
 	}
+	
+	public Icon iconHeart() {
+		Icon iconHeart = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("heart.png")));
+		return iconHeart;
+	}
 }

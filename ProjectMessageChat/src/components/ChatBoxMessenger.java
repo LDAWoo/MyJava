@@ -9,8 +9,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
@@ -45,6 +47,8 @@ public class ChatBoxMessenger extends JComponent {
 	private Color effectColor = new Color(255, 255, 255);
 	private boolean paintBackground;
 	
+
+
 	public ChatBoxMessenger(ModelMessage message) {
         this.message = message;
         init();
@@ -121,6 +125,7 @@ public class ChatBoxMessenger extends JComponent {
 		animator = new Animator(500,target);
 		animator.setResolution(0);
 	}
+	
 	
 	
 	@Override

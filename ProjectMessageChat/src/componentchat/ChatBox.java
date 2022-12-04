@@ -77,13 +77,13 @@ public class ChatBox extends JComponent {
 			area.subtract(new Area(new Ellipse2D.Double(5, 5, 45, 45)));
 			GradientPaint gra = new GradientPaint(0, 0, new Color(127, 127, 127), width, 0,
 					new Color(127, 127, 127));
-			text.setForeground(new Color(0, 0, 0));
+			text.setForeground(new Color(255, 255, 255));
 			g2.setPaint(gra);
 			g2.fill(area);
 		} else {
 			Area area = new Area(new RoundRectangle2D.Double(0, 25, width - 25, height - 25 - 16 - 10, 5, 5));
 			area.subtract(new Area(new Ellipse2D.Double(width - 50, 5, 45, 45)));
-			g2.setColor(new Color(249, 2, 100));
+			g2.setColor(new Color(255, 94, 98, 240));
 			text.setForeground(new Color(242, 242, 242));
 			g2.fill(area);
 		}

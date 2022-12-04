@@ -9,11 +9,14 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
@@ -31,6 +34,8 @@ public class ButtonChatHeader extends JButton{
 	private int targetSize;
 	private Color effectColor = new Color(255, 255, 255);
 	private boolean paintBackground;
+	private int index;
+	private Point point;
 	
 	public boolean isPaintBackground() {
         return paintBackground;
@@ -64,6 +69,19 @@ public class ButtonChatHeader extends JButton{
 		init();
 	}
 	
+	public ButtonChatHeader(String text) {
+		super(text);
+		init();
+	}
+	
+	public ButtonChatHeader(Icon icon, String name) {
+		super(name);
+		setIcon(icon);
+		init();
+		setBorder(new EmptyBorder(1, 20, 1, 1));
+	}
+	
+	
 	public void init() {
 		setContentAreaFilled(false);
 		setBorder(new EmptyBorder(5,5,5,5));
@@ -72,7 +90,9 @@ public class ButtonChatHeader extends JButton{
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				
 				if(SwingUtilities.isLeftMouseButton(e)) {
+					
 					targetSize = Math.max(getWidth(), getHeight()) * 2;
 					animatSize = 0;
 					pressedPoint = e.getPoint();
@@ -99,6 +119,7 @@ public class ButtonChatHeader extends JButton{
 		};
 		animator = new Animator(500,target);
 		animator.setResolution(0);
+		
 	}
 	
 	@Override
@@ -119,5 +140,13 @@ public class ButtonChatHeader extends JButton{
 		}
 		g2.dispose();
 		super.paintComponent(g);
+	}
+	
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 }

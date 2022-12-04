@@ -17,8 +17,9 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
-import components.ScrollBarMessenger;
 import img.*;
 import inteface.*;
 import model.*;
@@ -49,17 +50,18 @@ public class PanelChat extends JPanel {
 	public PanelChat() {
 		setOpaque(false);
 
-		layout = new MigLayout("fill, wrap, inset 0", "[fill]", "[fill,0!][fill,100%][shrink 0,::30%]");
+		layout = new MigLayout("fill, wrap, inset 0", "[fill]", "[fill,50!][fill,100%][shrink 0,::30%]");
 
 		header = createHeader();
 		
 		body = createBody();
 
-		bottom = createButton();
+		bottom = createBottom();
 		
 		layeredPane = createLayeredPane();
-		scrollBody = createScroll();
-
+		
+		scrollBody =  createScroll();
+		scrollBody.setBorder(null);
 		scrollBody.setViewportView(body);
 		scrollBody.setVerticalScrollBar(new ScrollBarMessenger());
 		scrollBody.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -150,15 +152,29 @@ public class PanelChat extends JPanel {
 	}
 
 	public JPanel createHeader() {
-		RoundPanel panel = new RoundPanel();
+		JPanel panelHeader = new JPanel();
+		panelHeader.setBackground(new Color(0,150,255));
+
+		panelHeader.setLayout(new MigLayout("fill","[right]"));
+
+		ButtonChatHeader btnPhone = new ButtonChatHeader();
+		ButtonChatHeader btnVideo = new ButtonChatHeader();
+		ButtonChatHeader btnAlertCircle = new ButtonChatHeader();
+
+		btnPhone.setIcon(img.iconPhone());
+		btnVideo.setIcon(img.iconVideo());
+		btnAlertCircle.setIcon(img.iconAlert());
+
+		panelHeader.add(btnPhone,"skip, h 40!, w 40! , split");
+		panelHeader.add(btnVideo,"h 40!, w 40!");
+		panelHeader.add(btnAlertCircle,"h 40!, w 40!");
 		
-		
-		return panel;
+		return panelHeader;
 	}
 	
 	
 	private JPanel createBody() {
-		RoundPanel panel = new RoundPanel();
+		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setLayout(new MigLayout("wrap,fillx"));
 		return panel;
@@ -171,8 +187,8 @@ public class PanelChat extends JPanel {
 		return scroll;
 	}
 
-	private JPanel createButton() {
-		RoundPanel panel = new RoundPanel();
+	private JPanel createBottom() {
+		JPanel panel = new JPanel();
 		panel.setBackground(new Color(240,242,245));
 		panel.setLayout(new MigLayout("fill, inset 2", "[fill]", "[bottom]"));
 		
@@ -188,7 +204,7 @@ public class PanelChat extends JPanel {
 		cmdSticker.setIcon(img.iconSticker());
 		cmdGif.setIcon(img.iconGif());
 		
-		cmdSend.setIcon(img.iconSend());
+		cmdSend.setIcon(img.iconHeart());
 
 		cmdImg.setFocusable(false);
 		cmdSend.setFocusable(false);
@@ -197,6 +213,19 @@ public class PanelChat extends JPanel {
 		textMessage.setHint("Aa");
 
 		textMessage.setFont(new Font("SanSerif", Font.PLAIN, 13));
+		
+		textMessage.addCaretListener(new CaretListener() {
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if(!textMessage.getText().trim().equals("")) {
+					cmdSend.setIcon(img.iconSend());
+				}else {
+					cmdSend.setIcon(img.iconHeart());
+				}
+				
+			}
+		});
+		
 		textMessage.addKeyListener(new KeyAdapter() {
 
 			@Override
@@ -239,6 +268,14 @@ public class PanelChat extends JPanel {
 		panel.add(cmdSend, "height 34!");
 
 		return panel;
+	}
+
+	public JPanel getHeader() {
+		return header;
+	}
+
+	public void setHeader(JPanel header) {
+		this.header = header;
 	}
 
 	public JPanel getBody() {
