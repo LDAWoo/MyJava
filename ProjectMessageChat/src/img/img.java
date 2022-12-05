@@ -144,4 +144,39 @@ public class img {
 		Icon iconHeart = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("heart.png")));
 		return iconHeart;
 	}
+	
+	public Icon iconVythiTinh() {
+		Icon iconVythiTinh = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("vythitinh.jpg")));
+		return iconVythiTinh;
+	}
+	
+	public Icon iconKhoi() {
+		Icon iconKhoi = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("khoi.jpg")));
+		return iconKhoi;
+	}
+	
+	public Icon iconTiShop() {
+		Icon iconTiShop = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("Tishop.jpg")));
+		return iconTiShop;
+	}
+	
+	public Icon iconVulee() {
+		Icon iconHeart = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("vulee.jpg")));
+		return iconHeart;
+	}
+	
+	public Icon iconLedatuan() {
+		Icon iconLedatuan = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("ledatuan.jpg")));
+		return iconLedatuan;
+	}
+	
+	public Icon iconBigPhone() {
+		Icon iconBigPhone = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("bigphone.jpg")));
+		return iconBigPhone;
+	}
+	
+	public Icon icon7Men() {
+		Icon icon7Men = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("7men.jpg")));
+		return icon7Men;
+	}
 }

@@ -263,14 +263,14 @@ public class PanelChatMessenger extends JPanel {
 	String name7 = "7M MEN";
 	String name8 = "Big Phone Quận 9";
 
-	Icon icon1 = img.iconFaceWhite();
-	Icon icon2 = img.iconMessWhite();
-	Icon icon3 = img.iconFaceWhite();
-	Icon icon4 = img.iconMessWhite();
-	Icon icon5 = img.iconFaceWhite();
-	Icon icon6 = img.iconMessWhite();
-	Icon icon7 = img.iconFaceWhite();
-	Icon icon8 = img.iconMessWhite();
+	Icon icon1 = img.iconVulee();
+	Icon icon2 = img.iconVythiTinh();
+	Icon icon3 = img.iconLedatuan();
+	Icon icon4 = img.iconKhoi();
+	Icon icon5 = img.iconTiShop();
+	Icon icon6 = img.iconFaceWhite();
+	Icon icon7 = img.icon7Men();
+	Icon icon8 = img.iconBigPhone();
 
 	public void addChatbox() {
 		btnPerson1 = new ButtonChatHeader();
@@ -287,13 +287,13 @@ public class PanelChatMessenger extends JPanel {
 
 		String message = "Xin chào bạn rất vui được gặp bạn!";
 		btnPerson1.add(new ChatBoxMessenger(new ModelMessage(icon1, name1, data, message)));
-		btnPerson2.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), name2, data, message)));
-		btnPerson3.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), name3, data, message)));
-		btnPerson4.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), name4, data, message)));
-		btnPerson5.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), name5, data, message)));
-		btnPerson6.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), name6, data, message)));
-		btnPerson7.add(new ChatBoxMessenger(new ModelMessage(img.iconFaceWhite(), name7, data, message)));
-		btnPerson8.add(new ChatBoxMessenger(new ModelMessage(img.iconMessWhite(), name8, data, message)));
+		btnPerson2.add(new ChatBoxMessenger(new ModelMessage(icon2, name2, data, message)));
+		btnPerson3.add(new ChatBoxMessenger(new ModelMessage(icon3, name3, data, message)));
+		btnPerson4.add(new ChatBoxMessenger(new ModelMessage(icon4, name4, data, message)));
+		btnPerson5.add(new ChatBoxMessenger(new ModelMessage(icon5, name5, data, message)));
+		btnPerson6.add(new ChatBoxMessenger(new ModelMessage(icon6, name6, data, message)));
+		btnPerson7.add(new ChatBoxMessenger(new ModelMessage(icon7, name7, data, message)));
+		btnPerson8.add(new ChatBoxMessenger(new ModelMessage(icon8, name8, data, message)));
 
 		button.add(btnPerson1);
 		button.add(btnPerson2);
