@@ -412,7 +412,6 @@ public class JFrameMainMess extends JFrame implements Runnable {
 				if (message.equals("")) {
 					return;
 				}
-
 				bottomChat.addChatBox(new ModelMessage(img.iconMess(), name, date, message), ChatBox.BoxType.RIGHT);
 				bottomChat.clearTextAndGrabFocus();
 
