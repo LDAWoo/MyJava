@@ -7,25 +7,26 @@ public class ManagerStudentModel {
 	private String PhoneNumber;
 	private boolean Sex;
 	private String Address;
-	private String Img;
+	private byte[] img;
 
 	public ManagerStudentModel() {
-		super();
+	
 	}
 
 	public ManagerStudentModel(String code, String name, String email, String phoneNumber, boolean sex, String address,
-			String img) {
-		super();
+			byte[] img) {
 		Code = code;
 		Name = name;
 		Email = email;
 		PhoneNumber = phoneNumber;
 		Sex = sex;
 		Address = address;
-		Img = img;
+		this.img = img;
 	}
-	
-	public ManagerStudentModel(String code, String name, String email, String phoneNumber, boolean sex, String address
+
+
+
+	public ManagerStudentModel(String code, String name, String email, String phoneNumber, boolean sex, String address,String img
 			) {
 		Code = code;
 		Name = name;
@@ -83,13 +84,15 @@ public class ManagerStudentModel {
 		Address = address;
 	}
 
-	public String getImg() {
-		return Img;
+	public byte[] getImg() {
+		return img;
 	}
 
-	public void setImg(String img) {
-		Img = img;
+	public void setImg(byte[] img) {
+		this.img = img;
 	}
+
+
 	
 	
 }

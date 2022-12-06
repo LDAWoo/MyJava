@@ -5,10 +5,13 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.SystemColor;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,8 +31,12 @@ import controller.ManagerStudentController;
 import controller.PanelManagerStudentController;
 import dao.ManagerStudentDAO;
 import dao.PanelManagerStudentDAO;
+import img.ImageHelper;
 import img.img;
 import model.ManagerStudentModel;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.awt.event.ActionEvent;
 
 public class PanelStudent extends JPanel {
 	private DefaultTableModel tableModel;
@@ -42,7 +50,7 @@ public class PanelStudent extends JPanel {
 	private int index = -1;
 	private boolean _cal = true;
 	private ButtonGroup buttonGroup;
-	private img img = new img(this);
+	public img img = new img(this);
 	private PanelManagerStudentDAO managerStudentDAO = new PanelManagerStudentDAO(this);
 	private PanelManagerStudentController controller = new PanelManagerStudentController(this);
 	private String PhoneNumber = "^0[1-9]{1}[\\d]{8}$";
@@ -65,7 +73,11 @@ public class PanelStudent extends JPanel {
 	private JButton btnNew;
 	private JLabel Roles;
 	private String Role;
-
+	FrameView view = new FrameView();
+	ImageHelper image = new ImageHelper();
+	private byte[] personalImage;
+	
+	
 	public PanelStudent(String role) {
 		this.Role = role;
 		this.setPreferredSize(new Dimension(984, 668));
@@ -271,6 +283,55 @@ public class PanelStudent extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(jTextAreaAddress);
 		scrollPane.setBounds(106, 255, 240, 77);
 		panelCenter.add(scrollPane);
+		
+		
+		
+		JButton btnChooseImage = new JButton("Choose Image");
+		btnChooseImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileFilter(new FileFilter() {
+					
+					@Override
+					public String getDescription() {
+						
+						return "Image File (*.jpg)";
+					}
+					
+					@Override
+					public boolean accept(File f) {
+						if(f.isDirectory()) {
+							return true;
+						}else {
+							return f.getName().toLowerCase().endsWith(".jpg");
+						}
+						
+					}
+				});
+			
+				if(chooser.showOpenDialog(view) == JFileChooser.CANCEL_OPTION) {
+					return;
+				}
+				
+				File file = chooser.getSelectedFile();
+				try {
+					ImageIcon icon = new ImageIcon(file.getPath());
+					Image img = image.resize(icon.getImage(), 135, 189);
+					
+					ImageIcon resizedIcon =new ImageIcon(img);
+					jLabelImg.setIcon(resizedIcon);
+					
+					personalImage = image.toByteArray(img, "jpg");
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+					
+				}
+			}
+		});
+		btnChooseImage.setFont(new Font("SansSerif", Font.BOLD, 15));
+		btnChooseImage.setBounds(546, 260, 135, 36);
+		add(btnChooseImage);
 
 		table();
 
@@ -314,29 +375,9 @@ public class PanelStudent extends JPanel {
 		String Code = this.table.getValueAt(index, 0).toString();
 		this.managerStudentDAO.LoadData(Code);
 		this.btnSave.setEnabled(true);
-		setImage();
 	}
 
-	public void setImage() {
-		index = this.table.getSelectedRow();
-		String Img = this.table.getValueAt(index, 6).toString();
-		String img = this.managerStudentDAO.LoadImage(Img);
 
-		if (img.equals("hoang.png")) {
-			this.jLabelImg.setIcon(this.img.ImageHoang());
-		} else if (img.equals("ha.png")) {
-			this.jLabelImg.setIcon(this.img.ImageHa());
-		} else if (img.equals("linh.png")) {
-			this.jLabelImg.setIcon(this.img.ImageLinh());
-		} else if (img.equals("nhan.png")) {
-			this.jLabelImg.setIcon(this.img.ImageNhan());
-		} else if (img.equals("hieu.png")) {
-			this.jLabelImg.setIcon(this.img.ImageHieu());
-		} else if (img.equals("user.png")) {
-			this.jLabelImg.setIcon(this.img.ImageUser());
-		}
-
-	}
 
 	public void ClearForm() {
 		this.textFieldCode.setText("");
@@ -358,6 +399,7 @@ public class PanelStudent extends JPanel {
 		this.jLabelImg.setIcon(this.img.ImageWhite());
 		this.textFieldCode.requestFocus();
 		_cal = false;
+		jLabelImg.setIcon(img.ImageUser());
 	}
 
 	public boolean Validate() {
@@ -443,7 +485,7 @@ public class PanelStudent extends JPanel {
 			String Phone = this.textFieldPhone.getText();
 			boolean Choose = this.rdbtnMale.isSelected();
 			String Address = this.jTextAreaAddress.getText();
-			String img = "user.png";
+			byte[] img = personalImage;
 			ManagerStudentModel msm = new ManagerStudentModel(Code, Name, Email, Phone, Choose, Address, img);
 			if (this.managerStudentDAO.Insert(msm)) {
 				JOptionPane.showMessageDialog(this, "Insert Succesfully");
@@ -490,7 +532,9 @@ public class PanelStudent extends JPanel {
 		String PhoneNumber = this.textFieldPhone.getText().trim();
 		boolean Sex = this.rdbtnMale.isSelected();
 		String Address = this.jTextAreaAddress.getText().trim();
-		String Img = this.table.getValueAt(index, 6).toString().trim();
+		
+		byte[] Img = personalImage;
+		
 		if (this.managerStudentDAO.Update(Code, Name, Email, PhoneNumber, Sex, Address, Img) > 0) {
 			JOptionPane.showMessageDialog(this, "Update Succesfully");
 			FillTable();
@@ -500,12 +544,23 @@ public class PanelStudent extends JPanel {
 		}
 
 	}
+	
+	
+
+	public byte[] getPersonalImage() {
+		return personalImage;
+	}
+
+	public void setPersonalImage(byte[] personalImage) {
+		this.personalImage = personalImage;
+	}
 
 	public void Click() {
 		index = this.table.getSelectedRow();
 		String Code = this.table.getValueAt(index, 0).toString();
+		
 		this.managerStudentDAO.LoadData(Code);
-		setImage();
+		
 		_cal = true;
 		if (Role.equals("Admin")) {
 			this.btnSave.setEnabled(false);
@@ -523,7 +578,6 @@ public class PanelStudent extends JPanel {
 	public void FocusTable(int index) {
 		this.table.setRowSelectionAllowed(true);
 		this.table.setRowSelectionInterval(index, index);
-		setImage();
 	}
 
 	public JTextField getTextFieldCode() {
@@ -645,5 +699,4 @@ public class PanelStudent extends JPanel {
 	public void setRoles(JLabel roles) {
 		Roles = roles;
 	}
-
 }

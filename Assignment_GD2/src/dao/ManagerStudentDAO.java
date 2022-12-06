@@ -48,7 +48,7 @@ public class ManagerStudentDAO implements DAOInterface<ManagerStudentModel> {
 			ps.setString(4, d.getPhoneNumber());
 			ps.setBoolean(5, d.isSex());
 			ps.setString(6, d.getAddress());
-			ps.setString(7, d.getImg());
+			ps.setBytes(7, d.getImg());
 			if (ps.executeUpdate() > 0) {
 				return true;
 			}

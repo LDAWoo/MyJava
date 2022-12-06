@@ -11,7 +11,7 @@ import view.LoginUserView;
 
 
 public class UserDAO {
-	private LoginUserView view;
+
 	private java.sql.Connection connection = null;
 	
 	public void Connection() {
@@ -40,6 +40,7 @@ public class UserDAO {
 			rs = ps.executeQuery();
 			while(rs.next()){
 				Role = rs.getString("ROLE");
+			
 			}	
 			return Role;
 		} catch (Exception e) {

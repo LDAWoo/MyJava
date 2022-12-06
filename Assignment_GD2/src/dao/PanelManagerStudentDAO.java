@@ -1,18 +1,26 @@
 package dao;
 
+import java.awt.Image;
+import java.sql.Blob;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
+import img.ImageHelper;
 import model.ManagerStudentModel;
 import view.ManagerStudentView;
 import view2.PanelStudent;
 
 public class PanelManagerStudentDAO implements DAOInterface<ManagerStudentModel> {
 	private PanelStudent view;
-	private java.sql.Connection connection = null;
-
+	private Connection connection = null;
+	
+	private ImageHelper image = new ImageHelper();
+	
 	public PanelManagerStudentDAO(PanelStudent view) {
 		this.view = view;
 	}
@@ -49,7 +57,7 @@ public class PanelManagerStudentDAO implements DAOInterface<ManagerStudentModel>
 			ps.setString(4, d.getPhoneNumber());
 			ps.setBoolean(5, d.isSex());
 			ps.setString(6, d.getAddress());
-			ps.setString(7, d.getImg());
+			ps.setBytes(7, d.getImg());	
 			if (ps.executeUpdate() > 0) {
 				return true;
 			}
@@ -98,8 +106,9 @@ public class PanelManagerStudentDAO implements DAOInterface<ManagerStudentModel>
 		return 0;
 	}
 	
-	public int Update (String Code,String Name, String Email, String PhoneNumber,boolean Sex,String Address, String Img) {
+	public int Update (String Code,String Name, String Email, String PhoneNumber,boolean Sex,String Address, byte[] Img) {
 		PreparedStatement ps = null;
+		
 		
 		try {
 			Connection();
@@ -110,7 +119,7 @@ public class PanelManagerStudentDAO implements DAOInterface<ManagerStudentModel>
 			ps.setString(3, PhoneNumber);
 			ps.setBoolean(4, Sex);
 			ps.setString(5, Address);
-			ps.setString(6, Img);
+			ps.setBytes(6, Img);
 			ps.setString(7, Code);
 			ps.execute();
 			return 1;
@@ -180,20 +189,40 @@ public class PanelManagerStudentDAO implements DAOInterface<ManagerStudentModel>
 			ps.setString(1, Code);
 
 			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				this.view.getTextFieldCode().setText(rs.getString("MASV"));
-				this.view.getTextFieldName().setText(rs.getString("HOTEN"));
-				this.view.getTextFieldEmail().setText(rs.getString("EMAIL"));
-				this.view.getTextFieldPhone().setText(rs.getString("SODT"));
-				if (rs.getBoolean("GIOITINH")) {
-					this.view.getRdbtnMale().setSelected(true);
-				} else {
-					this.view.getRdbtnFemale().setSelected(true);
+			
+			while(rs.next()) {
+				ManagerStudentModel st = new ManagerStudentModel();
+				st.setCode(rs.getString("MASV"));
+				st.setName(rs.getString("HOTEN"));
+				st.setEmail(rs.getString("EMAIL"));
+				st.setPhoneNumber(rs.getString("SODT"));
+				st.setSex(rs.getBoolean("GIOITINH"));
+				st.setAddress(rs.getString("DIACHI"));
+				st.setImg(rs.getBytes("HINH"));
+				
+				view.getTextFieldName().setText(st.getName());
+				view.getTextFieldCode().setText(st.getCode());
+				view.getTextFieldEmail().setText(st.getEmail());
+				view.getTextFieldPhone().setText(st.getPhoneNumber());
+				
+				if(st.isSex()) {
+					view.getRdbtnMale().setSelected(true);
+				}else {
+					view.getRdbtnFemale().setSelected(true);
 				}
-				this.view.getjTextAreaAddress().setText(rs.getString("DIACHI"));
-
+				
+				view.getjTextAreaAddress().setText(st.getAddress());
+				
+				if(st.getImg()!=null) {
+					Image img = image.createImageFromByteArray(st.getImg(), "jpg");
+					view.getjLabelImg().setIcon(new ImageIcon(img));
+					view.setPersonalImage(st.getImg());
+				}else {
+					view.getjLabelImg().setIcon(view.img.ImageUser());
+				}
 			}
+
+			
 		} catch (Exception e) {
 			System.out.println("Error:" + e.toString());
 		} finally {
@@ -218,10 +247,13 @@ public class PanelManagerStudentDAO implements DAOInterface<ManagerStudentModel>
 			String sql = "SELECT * FROM dbo.STUDENTS";
 			ps = connection.prepareStatement(sql);
 			rs = ps.executeQuery();
+			
 			while (rs.next()) {
 				ManagerStudentModel msm = new ManagerStudentModel(rs.getString("MASV"), rs.getString("HOTEN"),
 						rs.getString("EMAIL"), rs.getString("SODT"), rs.getBoolean("GIOITINH"), rs.getString("DIACHI"),
 						rs.getString("HINH"));
+				
+				
 				dataModels.add(msm);
 			}
 
@@ -237,6 +269,13 @@ public class PanelManagerStudentDAO implements DAOInterface<ManagerStudentModel>
 			}
 		}
 		return dataModels;
+	}
+
+	@Override
+	public int Update(String Code, String Name, String Email, String PhoneNumber, boolean Sex, String Address,
+			String Img) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

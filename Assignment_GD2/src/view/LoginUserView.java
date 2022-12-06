@@ -31,9 +31,14 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.CookieManager;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.prefs.Preferences;
 
 public class LoginUserView extends JFrame {
-
+	private java.sql.Connection connection = null;
 	private JPanel contentPane;
 	private img img = new img(this);
 	private JLabel Exit;
@@ -45,8 +50,11 @@ public class LoginUserView extends JFrame {
 	private JLabel Show;
 	private UserDAO userDAO = new UserDAO();
 	private JLabel lblCheck;
-	
-	
+
+	private Preferences preferences;
+	boolean remenberPreferences;
+	private JCheckBox RemenberMe;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -62,7 +70,6 @@ public class LoginUserView extends JFrame {
 	}
 
 	public LoginUserView() {
-		
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1054, 557);
@@ -154,12 +161,12 @@ public class LoginUserView extends JFrame {
 		disable.setIcon(this.img.IconEyesInvisible());
 		disable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-		JCheckBox chckbxRemenber = new JCheckBox("Remenber Password ");
-		chckbxRemenber.setForeground(SystemColor.text);
-		chckbxRemenber.setBackground(SystemColor.textHighlight);
-		chckbxRemenber.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		chckbxRemenber.setBounds(37, 310, 163, 23);
-		panel_1.add(chckbxRemenber);
+		RemenberMe = new JCheckBox("Remenber Password ");
+		RemenberMe.setForeground(SystemColor.text);
+		RemenberMe.setBackground(SystemColor.textHighlight);
+		RemenberMe.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		RemenberMe.setBounds(37, 310, 163, 23);
+		panel_1.add(RemenberMe);
 
 		JLabel lblForgetPassword = new JLabel("Forget Password?");
 		lblForgetPassword.addMouseListener(new MouseAdapter() {
@@ -223,6 +230,7 @@ public class LoginUserView extends JFrame {
 		textFieldUser.setBackground(SystemColor.textHighlight);
 		textFieldUser.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		textFieldUser.setBounds(35, 173, 365, 43);
+		textFieldUser.setSelectionColor(new Color(127,127,127));
 		panel_1.add(textFieldUser);
 		textFieldUser.setColumns(10);
 
@@ -230,6 +238,7 @@ public class LoginUserView extends JFrame {
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		passwordField.setCaretColor(SystemColor.text);
 		passwordField.setBorder(null);
+		passwordField.setSelectionColor(new Color(127,127,127));
 		passwordField.setForeground(SystemColor.text);
 		passwordField.setBackground(SystemColor.textHighlight);
 		passwordField.setBounds(35, 250, 365, 43);
@@ -253,7 +262,7 @@ public class LoginUserView extends JFrame {
 		Show.setIcon(this.img.IconEyes());
 
 		panel_1.add(Show);
-		
+
 		lblCheck = new JLabel("");
 		lblCheck.setForeground(Color.ORANGE);
 		lblCheck.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -261,14 +270,17 @@ public class LoginUserView extends JFrame {
 		panel_1.add(lblCheck);
 		lblCheck.setIcon(this.img.IconWarning());
 		lblCheck.setVisible(false);
+
+		remenberMe();
+
 		setVisible(true);
-		
+
 	}
 
 	public void Exit() {
 		System.exit(0);
 	}
-
+	
 	public boolean Validate() {
 		String username = this.textFieldUser.getText();
 		String password = new String(this.passwordField.getPassword());
@@ -289,35 +301,131 @@ public class LoginUserView extends JFrame {
 
 		return true;
 	}
-	
 
+	public void remenberMe() {
+		preferences = Preferences.userNodeForPackage(this.getClass());
+		remenberPreferences = preferences.getBoolean("remenberMe", Boolean.valueOf(""));
+		if (remenberPreferences) {
+			textFieldUser.setText(preferences.get("User", ""));
+			passwordField.setText(preferences.get("Password", ""));
+			RemenberMe.setSelected(remenberPreferences);
+		}
+	}
 
 	public void Login() {
-		if(Validate()) {
-		String username = this.textFieldUser.getText().trim();
-		String password = new String(this.passwordField.getPassword()).trim();
-		String Admin = "Admin";
-		String User = "User";
-		if(this.userDAO.selectAll(username, password).equals(Admin)) {
-			ProgressbarView pbView = new ProgressbarView(username, Admin);
-			pbView.setVisible(true);
-			dispose();
+		if (Validate()) {
+			String username = this.textFieldUser.getText().trim();
+			String password = new String(this.passwordField.getPassword()).trim();
+			String Admin = "Admin";
+			String User = "User";
+			if (selectAll(username, password).equals(Admin)) {
+				ProgressbarView pbView = new ProgressbarView(username, Admin);
+				pbView.setVisible(true);
+				dispose();
 
-		}else if(this.userDAO.selectAll(username, password).equals(User)) {
-			ProgressbarView pbView = new ProgressbarView(username, User);
-			pbView.setVisible(true);
-			dispose();
+			} else if (selectAll(username, password).equals(User)) {
+				ProgressbarView pbView = new ProgressbarView(username, User);
+				pbView.setVisible(true);
+				dispose();
+			} else {
+				lblCheck.setText("Sai Username Hoặc Password Không Đúng!");
+				lblCheck.setVisible(true);
+				this.passwordField.requestFocus();
+			}
+
 		}
-		else {
-			lblCheck.setText("Sai Username Hoặc Password Không Đúng!");
-			lblCheck.setVisible(true);
-			this.passwordField.requestFocus();
-		}
-		
-		}
-		
-	}
-				
+
 	}
 
 
+	public void Connection() {
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			String url = "jdbc:sqlserver://DESKTOP-2UOQ2VS:1433;databaseName=USERPASSWORD;encrypt=false";
+			String userId = "sa";
+			String password = "123456";
+			connection = DriverManager.getConnection(url, userId, password);
+		} catch (Exception e) {
+			System.out.println("Error:" + e.toString());
+		}
+	}
+
+	public String selectAll(String user, String password) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String Role = new String();
+		try {
+			Connection();
+			String sql = "SELECT * FROM LOGINFORM WHERE USERNAME = ? AND PASSWORD = ?";
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, user);
+			ps.setString(2, password);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Role = rs.getString("ROLE");
+				if (RemenberMe.isSelected() && !remenberPreferences) {
+					preferences.put("User", textFieldUser.getText());
+					preferences.put("Password", passwordField.getText());
+					preferences.putBoolean("remenberMe", true);
+
+				} else if (RemenberMe.isSelected() == false && remenberPreferences) {
+
+					preferences.put("User", "");
+					preferences.put("Password", "");
+					preferences.putBoolean("remenberMe", false);
+
+				}
+			}
+			return Role;
+		} catch (Exception e) {
+			System.out.println("Error:" + e.toString());
+		} finally {
+			try {
+				ps.close();
+				rs.close();
+				connection.close();
+			} catch (Exception e2) {
+
+			}
+		}
+		return "";
+
+	}
+
+	public int Insert(String username, String Email, String Password, String Role) {
+		PreparedStatement ps = null;
+		try {
+			Connection();
+			String sql = "INSERT INTO LOGINFORM\r\n" + "VALUES(?,?,?,?)";
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2, Password);
+			ps.setString(3, Email);
+			ps.setString(4, Role);
+			ps.executeUpdate();
+			return 2;
+		} catch (Exception e) {
+			String Error = e.toString();
+			String userError = "com.microsoft.sqlserver.jdbc.SQLServerException: Violation of PRIMARY KEY constraint "
+					+ "'PK__LOGINFOR__B15BE12F7D3F9113'. " + "Cannot insert duplicate key in object 'dbo.LOGINFORM'. "
+					+ "The duplicate key value is (" + username.trim() + ").";
+			String emailError = "com.microsoft.sqlserver.jdbc.SQLServerException: Violation of UNIQUE KEY constraint "
+					+ "'UQ__LOGINFOR__161CF724E080B635'. " + "Cannot insert duplicate key in object 'dbo.LOGINFORM'. "
+					+ "The duplicate key value is (" + Email.trim() + ").";
+			if (userError.equals(Error)) {
+				return 1;
+			} else if (emailError.equals(Error)) {
+				return 0;
+			}
+		} finally {
+			try {
+				ps.close();
+				connection.close();
+			} catch (Exception e2) {
+
+			}
+		}
+		return -1;
+	}
+
+}

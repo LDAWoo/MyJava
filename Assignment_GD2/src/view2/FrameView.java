@@ -38,6 +38,7 @@ public class FrameView extends JFrame implements Runnable{
 	private JLabel lblRole;
 	private JLabel lblTimer;
 	
+	public FrameView() {}
 	
 	public FrameView(String role) {
 		getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
