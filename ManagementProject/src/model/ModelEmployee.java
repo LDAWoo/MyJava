@@ -10,7 +10,7 @@ public class ModelEmployee {
 	private String Role;
 	private String Password;
 	private String DateOpening;
-	private String img;
+	private byte[] img;
 	private String Note;
 	private String DayOfBirth;
 	private String MonthOfBirth;
@@ -19,18 +19,13 @@ public class ModelEmployee {
 	private String DayOpening;
 	private String MonthOpening;
 	private String YearOpening;
-	
-	public Object[] toRowTable(EventActionEmployee event) {
-		return new Object[] {
-			CodeEmployee,Name,Date,Sex,Role,Password,DateOpening,img,Note, new ModelActionEmployee(this, event)	
-		};
-	}
+
 
 	public ModelEmployee() {
 		
 	}
 
-	public ModelEmployee(String codeEmployee, String name, String date, boolean sex,String dateOpening, String role, String password, String img, String note,String dayOfBirth, String monthOfBirth, String yearOfBirth, 
+	public ModelEmployee(String codeEmployee, String name, String date, boolean sex,String dateOpening, String role, String password, byte[] img, String note,String dayOfBirth, String monthOfBirth, String yearOfBirth, 
 			String dayOpening,String monthOpening,String yearOpening) {
 		CodeEmployee = codeEmployee;
 		Name = name;
@@ -50,8 +45,8 @@ public class ModelEmployee {
 	}
 	
 	
-	public ModelEmployee(String codeEmployee, String name, String date, boolean sex, String role, String password,String dateOpening 
-			, String img, String note) {
+	public ModelEmployee(String codeEmployee, String name, String date, boolean sex, String role, String password,String dateOpening,byte[] img
+			,  String note) {
 		CodeEmployee = codeEmployee;
 		Name = name;
 		Date = date;
@@ -104,10 +99,10 @@ public class ModelEmployee {
 	public void setDateOpening(String dateOpening) {
 		DateOpening = dateOpening;
 	}
-	public String getImg() {
+	public byte[] getImg() {
 		return img;
 	}
-	public void setImg(String img) {
+	public void setImg(byte[] img) {
 		this.img = img;
 	}
 	public String getNote() {

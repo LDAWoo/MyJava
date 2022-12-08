@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import javax.swing.table.TableCellRenderer;
 
 import dao.EmployeeDAO;
 import interfaces.EventActionEmployee;
+import interfaces.IEvent;
 import model.ModelActionEmployee;
 import model.ModelEmployee;
 
@@ -25,15 +27,15 @@ public class TableEmployee extends JTable {
 	private EmployeeDAO dao = new EmployeeDAO();
 	private int index = -1;
 	
+	
 	private ArrayList<ModelEmployee> datas = new ArrayList<ModelEmployee>();
 
-	public TableEmployee() {
+	public TableEmployee(Employee employee) {
 		setModel(new DefaultTableModel(new Object[][] {}, new String[] { "MÃ NV", "HỌ VÀ TÊN", "NGÀY SINH", "GIỚI TÍNH",
-				"VAI TRÒ", "MẬT KHẨU", "NGÀY T GIA", "HÌNH", "GHI CHÚ", "Edit/Delete"
+				"VAI TRÒ", "MẬT KHẨU", "NGÀY T GIA","GHI CHÚ"
 
 		}));
-	
-		
+		tableModel = (DefaultTableModel) getModel();
 		setRowHeight(40);
 		getTableHeader().setReorderingAllowed(false);
 		getTableHeader().setFont(new Font("SanSerif", Font.PLAIN, 15));
@@ -70,10 +72,16 @@ public class TableEmployee extends JTable {
 			}
 
 		});
+		IEvent<ArrayList<ModelEmployee>> a = this::OnModelEmployeeChanged;
+		employee.ModelEmployeeChanged.subscribe(a);
 	}
 
+	public void OnModelEmployeeChanged(Object source, ArrayList<ModelEmployee> eventArgs) {
+		datas = eventArgs;
+		initData();
+	}
+	
 	public void addRow(Object[] row) {
-		tableModel = (DefaultTableModel) getModel();
 		tableModel.addRow(row);
 	}
 
@@ -101,33 +109,32 @@ public class TableEmployee extends JTable {
 
 			}
 		};
-		initData();
+		
 	}
 
 	
 	private void initData() {
-		for (ModelEmployee data : dao.SellectALl()) {
+		
+		tableModel.getDataVector().removeAllElements();
+		for (ModelEmployee data : datas) {
 			Object[] rows = new Object[10];
 			rows[0] = data.getCodeEmployee();
-			rows[1] = data.getName();
-			rows[2] = data.getDate();
-			rows[3] = data.isSex();
+			rows[1] = data.getName();	
+			rows[2] = data.getDate();	
+			if(data.isSex()) {
+				rows[3] = "Nam";
+			}else {
+				rows[3] = "Nữ";
+			}
 			rows[4] = data.getRole();
 			rows[5] = data.getPassword();
 			rows[6] = data.getDateOpening();
-			rows[7] = data.getImg();
-			rows[8] = data.getNote();
-			datas.add(data);
-			
-			addRow(new ModelEmployee(rows[0].toString(), rows[1].toString(), rows[2].toString(),
-					Boolean.parseBoolean(rows[3].toString()), rows[4].toString(), rows[5].toString(),
-					rows[6].toString(), rows[7].toString(), rows[8].toString())
-					.toRowTable(eventEmployee));
+			rows[7] = data.getNote();	
+			addRow(rows);
 		}
 
+	
 	}
-	
-	
 	
 	public int getIndex() {
 		return index;

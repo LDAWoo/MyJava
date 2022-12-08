@@ -212,9 +212,11 @@ public class PanelManagerStudentDAO implements DAOInterface<ManagerStudentModel>
 				}
 				
 				view.getjTextAreaAddress().setText(st.getAddress());
+
 				
 				if(st.getImg()!=null) {
 					Image img = image.createImageFromByteArray(st.getImg(), "jpg");
+					System.out.println(img);
 					view.getjLabelImg().setIcon(new ImageIcon(img));
 					view.setPersonalImage(st.getImg());
 				}else {

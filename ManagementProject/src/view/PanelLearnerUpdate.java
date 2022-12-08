@@ -210,28 +210,28 @@ public class PanelLearnerUpdate extends JPanel {
 		btnLast.setBorder(null);
 		btnLast.setBackground(new Color(60, 22, 173));
 
-		btnNew = new JButton("New");
+		btnNew = new JButton("New",img.iconNew());
 		btnNew.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNew.setForeground(SystemColor.menu);
 		btnNew.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnNew.setBorder(null);
 		btnNew.setBackground(new Color(60, 22, 173));
 
-		btnAdd = new JButton("Add");
+		btnAdd = new JButton("Add",img.iconAdd());
 		btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdd.setForeground(SystemColor.menu);
 		btnAdd.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnAdd.setBorder(null);
 		btnAdd.setBackground(new Color(60, 22, 173));
 
-		btnUpdate = new JButton("Update");
+		btnUpdate = new JButton("Update",img.iconEditWhite());
 		btnUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnUpdate.setForeground(SystemColor.menu);
 		btnUpdate.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnUpdate.setBorder(null);
 		btnUpdate.setBackground(new Color(60, 22, 173));
 
-		btnDelete = new JButton("Delete");
+		btnDelete = new JButton("Delete",img.iconDeleteWhite());
 		btnDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDelete.setForeground(SystemColor.menu);
 		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 18));

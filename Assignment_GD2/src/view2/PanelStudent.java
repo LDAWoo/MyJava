@@ -322,6 +322,7 @@ public class PanelStudent extends JPanel {
 					jLabelImg.setIcon(resizedIcon);
 					
 					personalImage = image.toByteArray(img, "jpg");
+				
 					
 				} catch (Exception e2) {
 					e2.printStackTrace();

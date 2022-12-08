@@ -16,6 +16,7 @@ import java.awt.SystemColor;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import img.img;
+import interfaces.IEvent;
 import model.ModelEmployee;
 
 import java.awt.Cursor;
@@ -33,14 +34,19 @@ public class PanelEmployeeList extends JPanel {
 	private SearchStudent find;
 	private int index = -1;
 
-	
-	public PanelEmployeeList() {
-		setBackground(SystemColor.infoText);
+	private Employee employee;
+
+	public int IndexSelectedEmployee =-1;
+		
+
+	public PanelEmployeeList(Employee employee) {
 		setOpaque(false);
+		setBackground(SystemColor.infoText);
+		
 		JPanel panelCenter = new JPanel();
 		
 		find = new SearchStudent();
-		table = new TableEmployee();
+		table = new TableEmployee(employee);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		
@@ -82,50 +88,35 @@ public class PanelEmployeeList extends JPanel {
 		JLabel lblIconFind = new JLabel(img.iconSearch());
 		lblIconFind.setBorder(null);
 		lblIconFind.setBackground(Color.WHITE);
-		
-		JButton btnRefresh = new JButton(img.iconRefresh());
-		btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnRefresh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
-		JLabel lblNewLabel = new JLabel("Refresh");
-		lblNewLabel.setForeground(new Color(93,58,196));
-		lblNewLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));
 		GroupLayout gl_panelNorth = new GroupLayout(panelNorth);
 		gl_panelNorth.setHorizontalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addGroup(gl_panelNorth.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblIconFind, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panelNorth.createSequentialGroup()
-							.addGap(38)
-							.addComponent(find, GroupLayout.PREFERRED_SIZE, 764, GroupLayout.PREFERRED_SIZE)))
-					.addGap(5)
-					.addComponent(btnRefresh, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-					.addGap(3)
-					.addComponent(lblNewLabel))
+					.addComponent(lblIconFind, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addGap(89))
+				.addGroup(gl_panelNorth.createSequentialGroup()
+					.addGap(38)
+					.addComponent(find, GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_panelNorth.setVerticalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.LEADING)
-				.addComponent(lblIconFind, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addGap(2)
-					.addComponent(find, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-				.addComponent(btnRefresh, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addGap(3)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panelNorth.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblIconFind, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelNorth.createSequentialGroup()
+							.addGap(2)
+							.addComponent(find, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
 		);
 		panelNorth.setLayout(gl_panelNorth);
 		setLayout(groupLayout);
 		table.initTable();
 		Action();
+		
 	}
 
-	
+
 	
 	public void Action() {
 		table.addMouseListener(new MouseListener() {
@@ -155,15 +146,15 @@ public class PanelEmployeeList extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				index = table.getSelectedRow();
-				PanelEmployeeUpdate update = new PanelEmployeeUpdate(index);
-				update.setIndex(index);
+				index = table.getSelectedRow();	
+				IndexSelectedEmployee =index;
 
-				System.out.println(update.getIndex());
 				
 			}
 		});
 	}
+	
+	
 	
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -184,5 +175,8 @@ public class PanelEmployeeList extends JPanel {
 	}
 
 
+	public void setSelectedRowEmployee(int index) {
+		table.setRowSelectionInterval(index, index);
+	}
 
 }

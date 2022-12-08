@@ -1,15 +1,18 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -20,24 +23,43 @@ import java.util.List;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.table.DefaultTableModel;
 
 import dao.EmployeeDAO;
+import img.ImageHelper;
 import img.img;
+import interfaces.IEvent;
 import model.ModelEmployee;
 
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import java.awt.Cursor;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class PanelEmployeeUpdate extends JPanel {
+
 	private ArrayList<ModelEmployee> datas = new ArrayList<ModelEmployee>();
+
+	FrameView view = new FrameView();
 
 	private JComboBox cbbDayDate;
 	private JComboBox cbbMonthDate;
@@ -59,7 +81,8 @@ public class PanelEmployeeUpdate extends JPanel {
 	private JTextField txtCodeEmplo;
 	private EmployeeDAO dao = new EmployeeDAO();
 
-	private int index;
+	private byte[] personalImage = null;
+	private ImageHelper image = new ImageHelper();
 
 	private JButton btnAdd;
 
@@ -84,13 +107,44 @@ public class PanelEmployeeUpdate extends JPanel {
 	private JTextArea textAreaNote;
 
 	private ButtonGroup buttonGroup;
-	
-	public PanelEmployeeUpdate(int index) {
-		this.index = index;
-	}
 
-	public PanelEmployeeUpdate() {
+	private JLabel lblimg;
 
+	public int IndexSelectedEmployee = -1;
+
+	private Employee employee;
+
+	private String Note;
+
+	private String MonthOfOpening;
+
+	private String Code;
+
+	private String Name;
+
+	private String DayOfBirth;
+
+	private String MonthOfBirth;
+
+	private String YearOfBirth;
+
+	private String DayBirth;
+
+	private boolean sex;
+
+	private String Role;
+
+	private String Password;
+
+	private String DayOfOpening;
+
+	private String YearOfOpening;
+
+	private String DayOpening;
+
+	public PanelEmployeeUpdate(Employee employee) {
+
+		this.employee = employee;
 		setOpaque(false);
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(93, 58, 196));
@@ -187,8 +241,8 @@ public class PanelEmployeeUpdate extends JPanel {
 		txtName.setFont(new Font("SansSerif", Font.PLAIN, 13));
 		txtName.setColumns(10);
 
-		 buttonGroup = new ButtonGroup();
-		
+		buttonGroup = new ButtonGroup();
+
 		rdbtnMale = new JRadioButton("Nam");
 		rdbtnMale.setBounds(57, 258, 55, 27);
 		rdbtnMale.setForeground(Color.WHITE);
@@ -203,7 +257,7 @@ public class PanelEmployeeUpdate extends JPanel {
 
 		buttonGroup.add(rdbtnMale);
 		buttonGroup.add(rdbtnFemale);
-		
+
 		txtPassword = new JPasswordField();
 		txtPassword.setBounds(512, 110, 354, 24);
 		txtPassword.setFont(new Font("SansSerif", Font.PLAIN, 11));
@@ -219,8 +273,8 @@ public class PanelEmployeeUpdate extends JPanel {
 		JPanel panelNote = new JPanel();
 		panelNote.setBounds(512, 258, 214, 88);
 		textAreaNote = new JTextArea();
-		textAreaNote.setFont(new Font("SansSerif",Font.PLAIN,13));
-		
+		textAreaNote.setFont(new Font("SansSerif", Font.PLAIN, 13));
+
 		JScrollPane scrollPane = new JScrollPane(textAreaNote);
 		GroupLayout gl_panelNote = new GroupLayout(panelNote);
 		gl_panelNote.setHorizontalGroup(gl_panelNote.createParallelGroup(Alignment.LEADING).addComponent(scrollPane,
@@ -230,38 +284,83 @@ public class PanelEmployeeUpdate extends JPanel {
 		panelNote.setLayout(gl_panelNote);
 		panelImg.setLayout(null);
 
-		JLabel lblimg = new JLabel("");
-		lblimg.setIcon(img.ImageWhite());
-
+		lblimg = new JLabel("");
 		lblimg.setBounds(0, 0, 130, 162);
+
+		lblimg.addMouseListener(new MouseAdapter() {
+
+			public void mousePressed(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setFileFilter(new FileFilter() {
+
+						@Override
+						public String getDescription() {
+
+							return "Image File (*.jpg)";
+						}
+
+						@Override
+						public boolean accept(File f) {
+							if (f.isDirectory()) {
+								return true;
+							} else {
+								return f.getName().toLowerCase().endsWith(".jpg");
+							}
+
+						}
+					});
+
+					if (fileChooser.showOpenDialog(view) == JFileChooser.CANCEL_OPTION) {
+						return;
+					}
+
+					File file = fileChooser.getSelectedFile();
+					try {
+
+						ImageIcon icon = new ImageIcon(file.getPath());
+						Image img = image.resize(icon.getImage(), 130, 162);
+
+						ImageIcon resizedIcon = new ImageIcon(img);
+						lblimg.setIcon(resizedIcon);
+
+						personalImage = image.toByteArray(img, "jpg");
+
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
+				}
+			};
+		});
+
 		panelImg.add(lblimg);
 
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setOpaque(true);
 		layeredPane.setBackground(SystemColor.control);
 
-		btnNew = new JButton("New");
+		btnNew = new JButton("New", img.iconNew());
 		btnNew.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNew.setForeground(SystemColor.menu);
 		btnNew.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnNew.setBorder(null);
 		btnNew.setBackground(new Color(60, 22, 173));
 
-		btnDelete = new JButton("Delete");
+		btnDelete = new JButton("Delete", img.iconDeleteWhite());
 		btnDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDelete.setForeground(SystemColor.menu);
 		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnDelete.setBorder(null);
 		btnDelete.setBackground(new Color(60, 22, 173));
 
-		btnUpdate = new JButton("Update");
+		btnUpdate = new JButton("Update", img.iconEditWhite());
 		btnUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnUpdate.setForeground(SystemColor.menu);
 		btnUpdate.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnUpdate.setBorder(null);
 		btnUpdate.setBackground(new Color(60, 22, 173));
 
-		btnAdd = new JButton("Add");
+		btnAdd = new JButton("Add", img.iconAdd());
 		btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdd.setForeground(SystemColor.menu);
 		btnAdd.setFont(new Font("SansSerif", Font.BOLD, 18));
@@ -369,9 +468,8 @@ public class PanelEmployeeUpdate extends JPanel {
 		layeredPane.setLayout(gl_layeredPane);
 		setLayout(groupLayout);
 		initFillComboboxDate();
-		initData();
 		ActionButton();
-		
+
 	}
 
 	public void initFillComboboxDate() {
@@ -382,7 +480,7 @@ public class PanelEmployeeUpdate extends JPanel {
 		for (String string : comboboxDay) {
 			cbbModelDay.addElement(string);
 		}
-		
+
 		cbbDayDate.setModel(cbbModelDay);
 
 		cbbModelMonth = new DefaultComboBoxModel();
@@ -429,35 +527,36 @@ public class PanelEmployeeUpdate extends JPanel {
 		}
 		cbbYear.setModel(cbbModelYearCreate);
 
+		IEvent<ArrayList<ModelEmployee>> event = this::OnModelEmployeeChanged;
+		employee.ModelEmployeeChanged.subscribe(event);
+
 	}
 
-	public void initData() {
-		for (ModelEmployee data : dao.SellectALlDayMonthYear()) {
-			datas.add(data);
-		}
-
+	public void OnModelEmployeeChanged(Object source, ArrayList<ModelEmployee> eventArgs) {
+		datas = eventArgs;
 	}
 
 	public void Display(int index) {
 		String Code = datas.get(index).getCodeEmployee();
 		String Name = datas.get(index).getName();
-		boolean Sex = datas.get(index).isSex(); 
+
+		boolean Sex = datas.get(index).isSex();
 		String Role = datas.get(index).getRole();
 		String Password = datas.get(index).getPassword();
 		String Note = datas.get(index).getNote();
-		
+
 		txtCodeEmplo.setText(Code);
 		txtName.setText(Name);
 		txtRole.setText(Role);
 		txtPassword.setText(Password);
 		textAreaNote.setText(Note);
-		
-		if(Sex) {
+
+		if (Sex) {
 			rdbtnMale.setSelected(true);
-		}else {
+		} else {
 			rdbtnFemale.setSelected(true);
 		}
-		
+
 		String DayOfBirth = datas.get(index).getDayOfBirth();
 		String MonthOfBirth = datas.get(index).getMonthOfBirth();
 		String YearOfBirth = datas.get(index).getYearOfBirth();
@@ -473,7 +572,7 @@ public class PanelEmployeeUpdate extends JPanel {
 				cbbYearDate.setSelectedIndex(i);
 			}
 		}
-		
+
 		String DayOpening = datas.get(index).getDayOpening();
 		String MonthOpening = datas.get(index).getMonthOpening();
 		String YearOpening = datas.get(index).getYearOpening();
@@ -490,46 +589,81 @@ public class PanelEmployeeUpdate extends JPanel {
 			}
 		}
 
-	}
-	
+		if (datas.get(index).getImg() != null) {
+			byte[] img = datas.get(index).getImg();
 
-	
+			try {
+				Image icon = image.createImageFromByteArray(img, "jpg");
+				lblimg.setIcon(new ImageIcon(icon));
+				personalImage = datas.get(index).getImg();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} else {
+			lblimg.setIcon(img.ImageWhite());
+		}
+	}
+
 	public void ActionButton() {
+		btnNew.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ClearForm();
+
+			}
+		});
+
+		btnAdd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Add();
+			}
+		});
+
+		btnUpdate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Update();
+			}
+		});
+
+		btnDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Delete();
+
+			}
+		});
+
 		btnFirst.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				First();
 			}
 		});
-		
+
 		btnPrev.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Prev();
 			}
 		});
-		
+
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Next();
 			}
 		});
-		
+
 		btnLast.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Last();
 			}
 		});
-		
-		btnNew.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ClearForm();
-				
-			}
-		});
+
 	}
-	
-	
+
 	public void ClearForm() {
 		buttonGroup.clearSelection();
 		txtCodeEmplo.setText("");
@@ -537,38 +671,133 @@ public class PanelEmployeeUpdate extends JPanel {
 		txtRole.setText("");
 		txtPassword.setText("");
 		textAreaNote.setText("");
-		
+
 		cbbDay.setSelectedIndex(0);
 		cbbMonth.setSelectedIndex(0);
 		cbbYear.setSelectedIndex(0);
-		
+
 		cbbDayDate.setSelectedIndex(0);
 		cbbMonthDate.setSelectedIndex(0);
 		cbbYearDate.setSelectedIndex(0);
+
+		lblimg.setText("");
+	}
+
+	public void getTextField() {
+		Code = txtCodeEmplo.getText();
+		Name = txtName.getText();
+		DayOfBirth = cbbDayDate.getSelectedItem().toString();
+		MonthOfBirth = cbbMonthDate.getSelectedItem().toString();
+		YearOfBirth = cbbYearDate.getSelectedItem().toString();
+		DayBirth = YearOfBirth + MonthOfBirth + DayOfBirth;
+		sex = true;
+		if (rdbtnMale.isSelected()) {
+			sex = true;
+		} else if (rdbtnFemale.isSelected()) {
+			sex = false;
+		}
+
+		Role = txtRole.getText();
+		Password = new String(txtPassword.getPassword());
+
+		DayOfOpening = cbbDay.getSelectedItem().toString();
+		MonthOfOpening = cbbMonth.getSelectedItem().toString();
+		YearOfOpening = cbbYear.getSelectedItem().toString();
+
+		DayOpening = YearOfOpening + MonthOfOpening + DayOfOpening;
+
+		Note = textAreaNote.getText();
+	}
+
+	public void Update() {
+		getTextField();
+
+		byte[] Img = personalImage;
+
+		if (dao.Update(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note) > 0) {
+			JOptionPane.showMessageDialog(view, "Update Successfully");
+
+		} else {
+			JOptionPane.showMessageDialog(view, "Update Faied");
+		}
+		employee.getModelEmployees();
+	}
+
+	public void Add() {
+		getTextField();
+		byte[] Img = personalImage;
+
+		if (lblimg == null) {
+			try {
+				ImageIcon icon = new ImageIcon(getClass().getResource("default-user.png"));
+
+				Image ig = image.resize(icon.getImage(), 130, 162);
+				Img = image.toByteArray(ig, "jpg");
+
+				if (dao.Insert(new ModelEmployee(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note))) {
+					JOptionPane.showMessageDialog(view, "Insert Successfully");
+
+				}
+			} catch (Exception errorImg) {
+				System.out.println("Error: " + errorImg.toString());
+			}
+		} else {
+			if (dao.Insert(new ModelEmployee(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note))) {
+				JOptionPane.showMessageDialog(view, "Insert Successfully");
+
+			}
+		}
+		employee.getModelEmployees();
+	}
+
+	public void Delete() {
+		String CodeEmployee = txtCodeEmplo.getText();
+		if (CodeEmployee.equals("")) {
+			JOptionPane.showMessageDialog(view, "Chưa Nhập Mã Nhân Viên Để Xóa !", "Message",
+					JOptionPane.INFORMATION_MESSAGE, img.iconDelete());
+			return;
+		}
+
+		int choice = JOptionPane.showConfirmDialog(view, "Bạn Có Chắc Chắn Muốn Xóa Không?", "Choose Option",
+				JOptionPane.YES_NO_OPTION, 0, img.iconDelete());
+
+		if (choice == JOptionPane.YES_OPTION) {
+			if (dao.Delete(CodeEmployee) > 0) {
+				JOptionPane.showMessageDialog(view, "Delete Successfully");
+				ClearForm();
+			} else {
+				JOptionPane.showMessageDialog(view, "Delete Failed");
+			}
+			employee.getModelEmployees();
+		}
 	}
 
 	public void First() {
-		index = 0;
-		Display(index);
+		IndexSelectedEmployee = 0;
+		Display(IndexSelectedEmployee);
 	}
 
 	public void Prev() {
-		if (index > 0) {
-			index--;
+		if (IndexSelectedEmployee > 0) {
+			IndexSelectedEmployee--;
+		} else {
+			Last();
 		}
-		Display(index);
+		Display(IndexSelectedEmployee);
 	}
 
 	public void Next() {
-		if (index < datas.size()-1) {
-			index++;
+		if (IndexSelectedEmployee < datas.size() - 1) {
+			IndexSelectedEmployee++;
+		} else {
+			First();
 		}
-		Display(index);
+		Display(IndexSelectedEmployee);
 	}
 
 	public void Last() {
-		index = datas.size() - 1;
-		Display(index);
+		IndexSelectedEmployee = datas.size() - 1;
+		Display(IndexSelectedEmployee);
 	}
 
 	@Override
@@ -583,7 +812,6 @@ public class PanelEmployeeUpdate extends JPanel {
 		super.paintComponent(g);
 	}
 
-	
 	public void setCbbModelYearCreate(DefaultComboBoxModel cbbModelYearCreate) {
 		this.cbbModelYearCreate = cbbModelYearCreate;
 	}
@@ -621,10 +849,10 @@ public class PanelEmployeeUpdate extends JPanel {
 	}
 
 	public int getIndex() {
-		return index;
+		return IndexSelectedEmployee;
 	}
 
 	public void setIndex(int index) {
-		this.index = index;
+		this.IndexSelectedEmployee = index;
 	}
 }

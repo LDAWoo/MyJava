@@ -189,25 +189,25 @@ public class PanelCourseUpdate extends JPanel {
 		btnLast.setBorder(null);
 		btnLast.setBackground(new Color(60, 22, 173));
 		
-		JButton btnNew = new JButton("New");
+		JButton btnNew = new JButton("New",img.iconNew());
 		btnNew.setForeground(SystemColor.menu);
 		btnNew.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnNew.setBorder(null);
 		btnNew.setBackground(new Color(60, 22, 173));
 		
-		JButton btnAdd = new JButton("Add");
+		JButton btnAdd = new JButton("Add",img.iconAdd());
 		btnAdd.setForeground(SystemColor.menu);
 		btnAdd.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnAdd.setBorder(null);
 		btnAdd.setBackground(new Color(60, 22, 173));
 		
-		JButton btnUpdate = new JButton("Update");
+		JButton btnUpdate = new JButton("Update",img.iconEditWhite());
 		btnUpdate.setForeground(SystemColor.menu);
 		btnUpdate.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnUpdate.setBorder(null);
 		btnUpdate.setBackground(new Color(60, 22, 173));
 		
-		JButton btnDelete = new JButton("Delete");
+		JButton btnDelete = new JButton("Delete",img.iconDeleteWhite());
 		btnDelete.setForeground(SystemColor.menu);
 		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnDelete.setBorder(null);

@@ -184,4 +184,34 @@ public class img {
 		return ImageWhite;
 	}
 	
+	public ImageIcon ImageUser() {
+		ImageIcon ImageUser = new ImageIcon(new ImageIcon(getClass().getResource("default-user.png")).getImage()
+				.getScaledInstance(130, 162, Image.SCALE_SMOOTH));
+		return ImageUser;
+	}
+	
+	public Icon iconNew() {
+		Icon iconNew= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("folder-plus.png")));
+		return iconNew;
+	}
+	
+	public Icon iconAdd() {
+		Icon iconAdd= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("account-plus.png")));
+		return iconAdd;
+	}
+	
+	public Icon iconEditWhite() {
+		Icon iconEditWhite= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("text-box-edit.png")));
+		return iconEditWhite;
+	}
+	
+	public Icon iconDeleteWhite() {
+		Icon iconDeleteWhite= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("delete-white.png")));
+		return iconDeleteWhite;
+	}
+	
 }

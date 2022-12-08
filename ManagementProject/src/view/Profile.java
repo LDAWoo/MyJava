@@ -41,7 +41,7 @@ public class Profile extends JPanel{
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 //		GradientPaint gra = new GradientPaint(0, 0, new Color(33,105,249), 250, 0, new Color(93,58,196));
-		GradientPaint gra = new GradientPaint(0, 0, Color.decode("#DBD65C"), 250, 0, Color.decode("#5614B0"));
+		GradientPaint gra = new GradientPaint(0, 0, Color.decode("#8E2DE2"), 250, 0, Color.decode("#4A00E0"));
 		g2.setPaint(gra);
 		
 		g2.fillRect(0, 0, getWidth(), getHeight());
