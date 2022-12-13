@@ -13,7 +13,6 @@ import view.Header;
 import view.LoginUserView;
 import view.Menu;
 import view.PanelFind;
-import view.PanelLearnerList;
 import view.Profile;
 import view.SignUpView;
 
@@ -180,7 +179,7 @@ public class img {
 	
 	public ImageIcon ImageWhite() {
 		ImageIcon ImageWhite = new ImageIcon(new ImageIcon(getClass().getResource("white.png")).getImage()
-				.getScaledInstance(130, 162, Image.SCALE_SMOOTH));
+				.getScaledInstance(217, 257, Image.SCALE_SMOOTH));
 		return ImageWhite;
 	}
 	
@@ -214,4 +213,27 @@ public class img {
 		return iconDeleteWhite;
 	}
 	
+	public Icon iconDelete64x64() {
+		Icon iconDelete64x64= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("delete64x64.png")));
+		return iconDelete64x64;
+	}
+	
+	public Icon iconDelete32x32() {
+		Icon iconDelete32x32= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("delete32x32.png")));
+		return iconDelete32x32;
+	}
+	
+	public Icon iconEdit32x32() {
+		Icon iconEdit32x32= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("edit32x32.png")));
+		return iconEdit32x32;
+	}
+	
+	public Icon iconAdd32x32() {
+		Icon iconAdd32x32= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("add32x32.png")));
+		return iconAdd32x32;
+	}
 }

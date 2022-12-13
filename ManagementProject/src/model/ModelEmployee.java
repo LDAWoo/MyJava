@@ -1,6 +1,5 @@
 package model;
 
-import interfaces.EventActionEmployee;
 
 public class ModelEmployee {
 	private String CodeEmployee;

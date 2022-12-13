@@ -14,7 +14,7 @@ public class ScrollBarEmployee extends JScrollBar{
 	public ScrollBarEmployee() {
 		setBackground(Color.WHITE);
 		setUI(new ModelScrollBarUIEmployee());
-		setPreferredSize(new Dimension(5,8));
+		setPreferredSize(new Dimension(2,8));
 		setForeground(new Color(144,144,144));
 		setUnitIncrement(20);
 		setOpaque(true);

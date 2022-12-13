@@ -16,6 +16,10 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+import componentsCourse.Course;
+import componentsEmployee.Employee;
+import componentsLearner.Learner;
+import componentsTopic.Topic;
 import date.CurrendarCustom;
 import event.EventMenuSelected;
 import net.miginfocom.swing.MigLayout;
@@ -37,7 +41,7 @@ public class FrameView extends JFrame {
 	private ForgotPasswordView forgot;
 
 	public FrameView() {
-//		this.setUndecorated(true);
+		this.setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBackground(SystemColor.window);
 		getContentPane().setLayout(new BorderLayout());
@@ -62,7 +66,7 @@ public class FrameView extends JFrame {
 		header = new Header();
 
 		main = new MainForm();
-
+		main.setOpaque(false);
 		menu.addEvent(new EventMenuSelected() {
 
 			@Override

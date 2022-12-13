@@ -2,21 +2,19 @@ package interfaces;
 
 import java.util.ArrayList;
 
-public interface DAOInterfaceLearner<M>{
+public interface DAOInterfaceLearner<EntityType, Keytype>{
 	
-	public ArrayList<M> SelectAll();
+	public int Insert(EntityType E);
 	
-	public ArrayList<M> SellectALlDayMonthYear();
+	public int Update(EntityType E);
 	
-	public boolean Insert(M m);
+	public int Delete(Keytype K);
 	
-	public boolean Update(Object... arg);
+	public ArrayList<EntityType> SelectAll();
 	
-	public boolean Delete(String Code);
+	public ArrayList<EntityType> FindById(Keytype K);
 	
-	public ArrayList<M> FindByCode(String Code);
-	
-	public void LoadData(String Code);
+	public ArrayList<EntityType> SelectBySql(String sql, Object... args);
 	
 	
  }

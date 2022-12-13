@@ -1,30 +1,19 @@
 package model;
 
-import interfaces.EventActionTopic;
 
 public class ModelTopic {
 	private String CodeTopic;
 	private String NameTopic;
-	private Double Tuition;
-	private Integer Time;
+	private double Tuition;
+	private int Time;
 	private String Describer;
-	private String Logo;
-
-	
-	public Object[] toRowTable(EventActionTopic event) {
-		return new Object[] {
-				CodeTopic, NameTopic, Tuition, Time, Describer, Logo, new ModelActionTopic(this, event)
-		};
-	}
+	private byte[] Logo;
 		
-
-	
 	public ModelTopic() {
 		
 	}
 	
-	
-	public ModelTopic(String codeTopic, String nameTopic, Double tuition, Integer time, String describer, String logo) {
+	public ModelTopic(String codeTopic, String nameTopic, double tuition, int time, String describer, byte[] logo) {
 		CodeTopic = codeTopic;
 		NameTopic = nameTopic;
 		Tuition = tuition;
@@ -34,62 +23,52 @@ public class ModelTopic {
 	}
 
 
+
 	public String getCodeTopic() {
 		return CodeTopic;
 	}
-
 
 	public void setCodeTopic(String codeTopic) {
 		CodeTopic = codeTopic;
 	}
 
-
 	public String getNameTopic() {
 		return NameTopic;
 	}
-
 
 	public void setNameTopic(String nameTopic) {
 		NameTopic = nameTopic;
 	}
 
-
-	public Double getTuition() {
+	public double getTuition() {
 		return Tuition;
 	}
 
-
-	public void setTuition(Double tuition) {
+	public void setTuition(double tuition) {
 		Tuition = tuition;
 	}
 
-
-	public Integer getTime() {
+	public int getTime() {
 		return Time;
 	}
 
-
-	public void setTime(Integer time) {
+	public void setTime(int time) {
 		Time = time;
 	}
-
 
 	public String getDescriber() {
 		return Describer;
 	}
 
-
 	public void setDescriber(String describer) {
 		Describer = describer;
 	}
 
-
-	public String getLogo() {
+	public byte[] getLogo() {
 		return Logo;
 	}
 
-
-	public void setLogo(String logo) {
+	public void setLogo(byte[] logo) {
 		Logo = logo;
 	}
 	

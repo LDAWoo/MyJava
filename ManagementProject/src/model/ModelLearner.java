@@ -2,7 +2,6 @@ package model;
 
 import java.util.Date;
 
-import interfaces.EventActionLeaner;
 
 public class ModelLearner {
 	private String personCode;
@@ -22,13 +21,8 @@ public class ModelLearner {
 	private String MonthOfRegister;
 	private String YearOfRegister;
 	
-	public Object[] toRowTable(EventActionLeaner event) {
-		return new Object[] {
-				personCode,name,date,sex,phoneNumber,email,dateOfRegister,note, new ModelActionLearner(this,event)
-		};
-	}
 	
-	public ModelLearner(String personCode, String name, String date, boolean sex, String phoneNumber, String email,
+	public ModelLearner(String personCode, String name, String date, boolean sex, String phoneNumber, String email,String dateOfRegister,
 			String note, String dayOfBirth,String monthOfBirth, String yearOfBirth, String dayOfRegister,String monthOfRegister, String yearOfRegister) {
 		this.personCode = personCode;
 		this.name = name;
@@ -36,6 +30,7 @@ public class ModelLearner {
 		this.sex = sex;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
+		this.dateOfRegister = dateOfRegister;
 		this.note = note;
 		this.DayOfBirth = dayOfBirth;
 		this.MonthOfBirth = monthOfBirth;
