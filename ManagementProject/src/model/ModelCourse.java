@@ -20,8 +20,24 @@ public class ModelCourse {
 	
 	
 	public ModelCourse() {
+		
 	}
 	
+	public ModelCourse(String codeCourse, String codeTopic,String createPerson, Double tuition, Integer time, String dayOpening,
+			String dayCreate, String note) {
+		super();
+		CodeCourse = codeCourse;
+		CodeTopic = codeTopic;
+		Tuition = tuition;
+		Time = time;
+		DayOpening = dayOpening;
+		DayCreate = dayCreate;
+		Note = note;
+		CreatePerson = createPerson;
+	}
+
+
+
 	public ModelCourse(String codeCourse, String codeTopic, Double tuition, Integer time, String dayOpening, String dayCreate, String note,
 			String createPerson, String dayOfOpening, String monthOfOpening, String yearOfOpening,
 			String dayOfCreatePerson, String monthOfCreatePerson, String yearOfCreatePerson) {

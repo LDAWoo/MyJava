@@ -19,8 +19,8 @@ public class TableCourse extends JTable {
 	private ArrayList<ModelCourse> datas = new ArrayList<ModelCourse>();
 	public TableCourse(Course course) {
 		this.course = course;
-		setModel(new DefaultTableModel(new Object[][] {}, new String[] { "MÃ KHÓA HỌC", "CHUYÊN ĐỀ", "HỌC PHÍ",
-				"THỜI LƯỢNG", "NGÀY KHAI GIẢNG", "NGƯỜI TẠO", "GHI CHÚ"}));
+		setModel(new DefaultTableModel(new Object[][] {}, new String[] { "MÃ KHÓA HỌC", "MÃ CHUYÊN ĐỀ", "HỌC PHÍ",
+				"THỜI LƯỢNG", "NGÀY KHAI GIẢNG","NGÀY TẠO", "NGƯỜI TẠO", "GHI CHÚ"}));
 		tableModel = (DefaultTableModel) getModel();
 		setRowHeight(40);
 		getTableHeader().setReorderingAllowed(false);

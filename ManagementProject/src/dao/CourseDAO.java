@@ -14,22 +14,24 @@ public class CourseDAO implements DAOInterfaceCourse<ModelCourse, Object>{
 	
 	final String SELECT_BY_CODE_SQL = "SELECT MACHUYENDE FROM CHUYENDE";
 	
+	final String INSERT_SQL = "INSERT INTO KHOAHOC(MAKHOAHOC,MACHUYENDE,HOCPHI,THOILUONG,NGAYKHAIGIANG,NGAYTAO,MANHANVIEN,GHICHU)\r\n"
+			+ "VALUES(?,?,?,?,?,?,?,?);\r\n";
+	final String UPDATE_SQL = "UPDATE KHOAHOC SET MACHUYENDE = ?, HOCPHI = ?, THOILUONG = ?, NGAYKHAIGIANG = ?, NGAYTAO = ? , MANHANVIEN = ?, GHICHU = ? WHERE MAKHOAHOC= ?";
+	
+	final String DELETE_SQL = "DELETE TABLE KHOAHOC WHERE MAKHOAHOC = ?";
 	@Override
 	public int Insert(ModelCourse E) {
-		// TODO Auto-generated method stub
-		return 0;
+		return JDBCHelper.executeUpdate(INSERT_SQL, E.getCodeCourse(), E.getCodeTopic(), E.getTuition(), E.getTime() ,E.getDayOpening(), E.getDayCreate(), E.getCreatePerson(), E.getNote());
 	}
 
 	@Override
 	public int Update(ModelCourse E) {
-		// TODO Auto-generated method stub
-		return 0;
+		return JDBCHelper.executeUpdate(UPDATE_SQL, E.getCodeTopic(), E.getTuition(), E.getTime() ,E.getDayOpening(), E.getDayCreate(), E.getCreatePerson(), E.getNote(), E.getCodeCourse());
 	}
 
 	@Override
 	public int Delete(Object K) {
-		// TODO Auto-generated method stub
-		return 0;
+		return JDBCHelper.executeUpdate(DELETE_SQL, K);
 	}
 
 	@Override
@@ -56,8 +58,8 @@ public class CourseDAO implements DAOInterfaceCourse<ModelCourse, Object>{
 						rs.getInt("THOILUONG"), 
 						rs.getString("NGAYKHAIGIANG"), 
 						rs.getString("NGAYTAO"), 
-						rs.getString("MANHANVIEN"), 
 						rs.getString("GHICHU"), 
+						rs.getString("MANHANVIEN"), 
 						rs.getString("DAYOFOPENING"), 
 						rs.getString("MONTHOFOPENING"), 
 						rs.getString("YEAROFOPENING"), 

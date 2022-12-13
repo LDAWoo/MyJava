@@ -138,10 +138,10 @@ public class Course extends JPanel {
 		);
 		panelNorth.setLayout(gl_panelNorth);
 		setLayout(groupLayout);
-		getModelChanged();
+		getModelCourseChanged();
 	}
 	
-	public void getModelChanged() {
+	public void getModelCourseChanged() {
 		modelCourse = dao.SelectAll();
 		ModelCourseChanged.invoke(this, modelCourse);
 	}

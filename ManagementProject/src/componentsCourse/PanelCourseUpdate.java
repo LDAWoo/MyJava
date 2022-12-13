@@ -27,8 +27,10 @@ import img.img;
 import interfaces.IEvent;
 import model.ModelCodeTopic;
 import model.ModelCourse;
+import model.ModelEmployee;
 
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -466,19 +468,100 @@ public class PanelCourseUpdate extends JPanel {
 	}
 
 	public void ClearForm() {
+		txtCodeCourse.setText("");
+		cbbTopic.setSelectedIndex(0);
 
+		cbbDay.setSelectedIndex(0);
+		cbbMonth.setSelectedIndex(0);
+		cbbYear.setSelectedIndex(0);
+
+		txtCreatePerson.setText("");
+		txtTuition.setText("");
+		txtTime.setText("");
+
+		cbbDayCreate.setSelectedIndex(0);
+		cbbMonthCreate.setSelectedIndex(0);
+		cbbYearCreate.setSelectedIndex(0);
+
+		textAreaNote.setText("");
 	}
 
 	public void Add() {
+		String CodeCourse = txtCodeCourse.getText();
+		String CodeTopic = cbbTopic.getSelectedItem().toString();
+
+		String CreatePerson = txtCreatePerson.getText();
+		double Tuition = Double.parseDouble(txtTuition.getText());
+		int Time = Integer.parseInt(txtTime.getText());
+
+		String DayOpening = cbbYear.getSelectedItem().toString() + cbbMonth.getSelectedItem().toString()
+				+ cbbDay.getSelectedItem().toString();
+		String DayCreate = cbbYearCreate.getSelectedItem().toString() + cbbMonthCreate.getSelectedItem().toString()
+				+ cbbDayCreate.getSelectedItem().toString();
+
+		String Note = textAreaNote.getText();
+
+		if (dao.Insert(
+				new ModelCourse(CodeCourse, CodeTopic, CreatePerson, Tuition, Time, DayOpening, DayCreate, Note)) > 0) {
+			JOptionPane.showMessageDialog(course, "Insert Successfully", "Insert", JOptionPane.INFORMATION_MESSAGE,
+					img.iconAdd32x32());
+
+		} else if (dao.Insert(
+				new ModelCourse(CodeCourse, CodeTopic, CreatePerson, Tuition, Time, DayOpening, DayCreate, Note)) > 0) {
+			JOptionPane.showMessageDialog(course, "Insert Successfully", "Insert", JOptionPane.INFORMATION_MESSAGE,
+					img.iconAdd32x32());
+
+		}
+		course.getModelCourseChanged();
 
 	}
 
 	public void Delete() {
+		String CodeCourse = txtCodeCourse.getText();
+		if (CodeCourse.equals("")) {
+			JOptionPane.showMessageDialog(course, "Chưa Nhập Mã Khóa Học Để Xóa !", "Message",
+					JOptionPane.WARNING_MESSAGE, img.iconDelete32x32());
+			return;
+		}
+		int choice = JOptionPane.showConfirmDialog(course, "Bạn Có Chắc Chắn Muốn Xóa Không?", "Choose Option",
+				JOptionPane.YES_NO_OPTION, 0, img.iconDelete32x32());
 
+		if (choice == JOptionPane.YES_OPTION) {
+			if (dao.Delete(CodeCourse) > 0) {
+				JOptionPane.showMessageDialog(course, "Delete Successfully", "Delete", JOptionPane.INFORMATION_MESSAGE,
+						img.iconDelete32x32());
+				ClearForm();
+			} else {
+				JOptionPane.showMessageDialog(course, "Delete Failed", "Delete", JOptionPane.WARNING_MESSAGE,
+						img.iconDelete32x32());
+			}
+			
+		}
+		course.getModelCourseChanged();
 	}
 
 	public void Update() {
+		String CodeCourse = txtCodeCourse.getText();
+		String CodeTopic = cbbTopic.getSelectedItem().toString();
 
+		String CreatePerson = txtCreatePerson.getText();
+		double Tuition = Double.parseDouble(txtTuition.getText());
+		int Time = Integer.parseInt(txtTime.getText());
+
+		String DayOpening = cbbYear.getSelectedItem().toString() + cbbMonth.getSelectedItem().toString()
+				+ cbbDay.getSelectedItem().toString();
+		String DayCreate = cbbYearCreate.getSelectedItem().toString() + cbbMonthCreate.getSelectedItem().toString()
+				+ cbbDayCreate.getSelectedItem().toString();
+
+		String Note = textAreaNote.getText();
+		
+		if (dao.Update(new ModelCourse(CodeCourse, CodeTopic, CreatePerson, Tuition, Time, DayOpening, DayCreate, Note)) > 0) {
+			JOptionPane.showMessageDialog(course, "Update Successfully","Update",JOptionPane.INFORMATION_MESSAGE,img.iconEdit32x32());
+
+		} else {
+			JOptionPane.showMessageDialog(course, "Update Faied","Update",JOptionPane.WARNING_MESSAGE,img.iconEdit32x32());
+		}
+		course.getModelCourseChanged();
 	}
 
 	public void First() {

@@ -121,7 +121,7 @@ public class FrameView extends JFrame {
 				PopupMenu popupMenu = new PopupMenu(FrameView.this, item.getIndex(), item.getEventMenuSelected(),
 						item.getMenu().getSudMenu());
 				int x = FrameView.this.getX() + 52;
-				int y = FrameView.this.getY() + com.getY() + 126;
+				int y = FrameView.this.getY() + com.getY() + 96;
 
 				popupMenu.setLocation(x, y);
 				popupMenu.setVisible(true);
