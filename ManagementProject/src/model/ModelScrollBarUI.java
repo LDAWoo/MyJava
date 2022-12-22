@@ -15,7 +15,7 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class ModelScrollBarUI extends BasicScrollBarUI {
 
-	private int THUMB_SIZE = 80;
+	private int THUMB_SIZE = 150;
 	
 	@Override
 	protected Dimension getMaximumThumbSize() {
@@ -45,32 +45,7 @@ public class ModelScrollBarUI extends BasicScrollBarUI {
 	        return new ScrollBarButton();
 	    }
 	
-	public void paintTrack(Graphics g, JComponent jcom, Rectangle rectangle) {
-//		Graphics2D g2 = (Graphics2D) g;
-//		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//
-//		int orientation = scrollbar.getOrientation();
-//		int size;
-//		int x;
-//		int y;
-//		int width;
-//		int height;
-//		if (orientation == JScrollBar.VERTICAL) {
-//			size = rectangle.width / 2;
-//			x = rectangle.x + ((rectangle.width - size) / 2);
-//			y = rectangle.y;
-//			width = size;
-//			height = rectangle.height;
-//		} else {
-//			size = rectangle.height / 2;
-//			y = rectangle.y + ((rectangle.height - size) / 2);
-//			x = 0;
-//			width = rectangle.width;
-//			height = size;
-//		}
-//		g2.setColor(new Color(240,240,240));
-//		g2.fillRect(x, y, width, height);
-	}
+
 	
 	@Override
 	protected void paintThumb(Graphics g, JComponent c, Rectangle rectangle) {

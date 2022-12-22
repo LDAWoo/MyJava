@@ -4,6 +4,7 @@ package model;
 public class ModelCourse {
 	private String CodeCourse;
 	private String CodeTopic;
+	private String NameTopic;
 	private Double Tuition;
 	private Integer Time;
 	private String DayOpening;
@@ -38,11 +39,12 @@ public class ModelCourse {
 
 
 
-	public ModelCourse(String codeCourse, String codeTopic, Double tuition, Integer time, String dayOpening, String dayCreate, String note,
+	public ModelCourse(String codeCourse, String codeTopic,String nameTopic, Double tuition, Integer time, String dayOpening, String dayCreate, String note,
 			String createPerson, String dayOfOpening, String monthOfOpening, String yearOfOpening,
 			String dayOfCreatePerson, String monthOfCreatePerson, String yearOfCreatePerson) {
 		CodeCourse = codeCourse;
 		CodeTopic = codeTopic;
+		NameTopic = nameTopic;
 		Tuition = tuition;
 		Time = time;
 		DayOpening = dayOpening;
@@ -144,6 +146,15 @@ public class ModelCourse {
 	public void setNote(String note) {
 		Note = note;
 	}
+
+	public String getNameTopic() {
+		return NameTopic;
+	}
+
+	public void setNameTopic(String nameTopic) {
+		NameTopic = nameTopic;
+	}
+	
 	
 	
 	

@@ -1,7 +1,12 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -79,7 +84,15 @@ public class FormHome extends JPanel {
 		card4.setData(new ModelCard("Course", 21, 100, null));
 	}
 	
-	
+	@Override
+	protected void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		GradientPaint gra = new GradientPaint(0, 0, new Color(60, 60, 60), 250, 0, new Color(60, 60, 60));
+		g2.setPaint(gra);
+		g2.fillRoundRect(0, 0, getWidth(), getHeight(),15,15);
+		super.paintComponent(g);
+	}
 	
 	
 	

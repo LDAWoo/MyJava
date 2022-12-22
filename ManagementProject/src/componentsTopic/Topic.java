@@ -15,6 +15,8 @@ import javax.swing.SwingConstants;
 
 import animation.AnimationButton;
 import animation.AnimationButtonList;
+import componentsEmployee.PanelEmployeeList;
+import componentsEmployee.PanelEmployeeUpdate;
 import dao.TopicDAO;
 import event.EventHandler;
 import img.img;
@@ -47,107 +49,127 @@ public class Topic extends JPanel {
 		JPanel panelNorth = new JPanel();
 		panelNorth.setOpaque(false);
 		panelCenter = new JPanel();
-		panelCenter.setBackground(new Color(60,22,173));
+		panelCenter.setBackground(new Color(50,50,50));
+
+		panelUpdate = new PanelTopicUpdate(this);
+
+		panelList = new PanelTopicList(this);	
+		
+		JLabel lblManagerCourse = new JLabel("QUẢN LÝ CHUYÊN ĐỀ");
+		lblManagerCourse.setForeground(new Color(191,191,191));
+		lblManagerCourse.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblManagerCourse.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(panelNorth, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(panelNorth, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
+				.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
+					.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE))
 		);
-		
-		panelUpdate = new PanelTopicUpdate(this);
-		panelUpdate.setBounds(0,0,932,543);
-		panelCenter.add(panelUpdate); 
-		
-		panelList = new PanelTopicList(this);
-		panelList.setBounds(0,0,932,543);
-		panelCenter.add(panelList); 
-		
-		panelList.setVisible(false);
 		
 		GroupLayout gl_panelCenter = new GroupLayout(panelCenter);
 		gl_panelCenter.setHorizontalGroup(
 			gl_panelCenter.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 912, Short.MAX_VALUE)
+				.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
 		);
 		gl_panelCenter.setVerticalGroup(
 			gl_panelCenter.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 514, Short.MAX_VALUE)
+				.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
 		);
-		panelCenter.setLayout(null);
 		
-		JLabel lblManagerTopic = new JLabel("QUẢN LÝ CHUYÊN ĐỀ\r\n");
-		lblManagerTopic.setForeground(Color.WHITE);
-		lblManagerTopic.setFont(new Font("SansSerif", Font.BOLD, 20));
-		lblManagerTopic.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		AnimationButtonList btnUpdate = new AnimationButtonList(img.iconEditWhite(),"Update");
-		btnUpdate.setOpaque(false);
+		AnimationButtonList btnUpdate = new AnimationButtonList(img.iconEditWhite(), "Update");
 		btnUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnUpdate.setForeground(new Color(191,191,191));
+		btnUpdate.setFont(new Font("SansSerif", Font.PLAIN, 25));
+		btnUpdate.setBorder(null);
 		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				gl_panelCenter.setHorizontalGroup(
+						gl_panelCenter.createParallelGroup(Alignment.LEADING)
+							.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
+							.addComponent(panelList, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+					);
+					gl_panelCenter.setVerticalGroup(
+						gl_panelCenter.createParallelGroup(Alignment.LEADING)
+							.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
+							.addComponent(panelList, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+					);
+				
 				
 				panelUpdate.setVisible(true);
 				panelList.setVisible(false);
-				
 				panelUpdate.indexSelectedTopic = panelList.indexSelectedTopic;
-				panelUpdate.Display(panelUpdate.indexSelectedTopic);
-				
+				panelUpdate.Display(panelList.indexSelectedTopic);
+			} catch (Exception error) {
 			}
-		});
-		btnUpdate.setForeground(SystemColor.menu);
-		btnUpdate.setFont(new Font("SansSerif", Font.PLAIN, 25));
-		btnUpdate.setBorder(null);
-		btnUpdate.setBackground(new Color(93, 58, 196));
-		
-		AnimationButtonList btnList = new AnimationButtonList(img.iconLibrary(),"List Topic");
-		btnList.setOpaque(false);
+		}
+	});
+
+		AnimationButtonList btnList = new AnimationButtonList(img.iconLibrary(), "List Employee");
 		btnList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnList.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				panelList.setVisible(true);
-				panelUpdate.setVisible(false);
-				panelList.setSelectedRowTopic(panelUpdate.indexSelectedTopic);
-				panelList.indexSelectedTopic = panelUpdate.indexSelectedTopic;
-							
-			}
-		});
-		btnList.setForeground(SystemColor.menu);
+		btnList.setForeground(new Color(191,191,191));
 		btnList.setFont(new Font("SansSerif", Font.PLAIN, 25));
 		btnList.setBorder(null);
-		btnList.setBackground(new Color(93, 58, 196));
+		btnList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					
+					gl_panelCenter.setHorizontalGroup(
+							gl_panelCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+								.addComponent(panelList, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
+						);
+						gl_panelCenter.setVerticalGroup(
+							gl_panelCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+								.addComponent(panelList, GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
+						);
+					
+					
+					panelList.setVisible(true);
+					panelUpdate.setVisible(false);
+					panelList.setSelectedRowTopic(panelUpdate.indexSelectedTopic);
+					panelList.indexSelectedTopic = panelUpdate.indexSelectedTopic;
+				} catch (Exception error) {
+				}
+			}
+		});
+		
 		GroupLayout gl_panelNorth = new GroupLayout(panelNorth);
 		gl_panelNorth.setHorizontalGroup(
-			gl_panelNorth.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panelNorth.createSequentialGroup()
-					.addGap(22)
-					.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(gl_panelNorth.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblManagerTopic, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnList, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(295, Short.MAX_VALUE))
+			gl_panelNorth.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelNorth.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnList, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+				.addComponent(lblManagerCourse, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
 		);
 		gl_panelNorth.setVerticalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addContainerGap(27, Short.MAX_VALUE)
-					.addComponent(lblManagerTopic, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblManagerCourse, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panelNorth.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnList, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnList, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 		panelNorth.setLayout(gl_panelNorth);
+		add(panelCenter);
+		
+		panelCenter.setLayout(gl_panelCenter);
 		setLayout(groupLayout);
+		add(panelNorth);
 		getModelTopic();
 		Action();
 	}
@@ -183,7 +205,7 @@ public class Topic extends JPanel {
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		GradientPaint gra = new GradientPaint(0, 0, new Color(60,22,173), 0, 0, new Color(191,60,234));
+		GradientPaint gra = new GradientPaint(0, 0, new Color(60,60,60), 0, 0, new Color(60,60,60));
 		g2.setPaint(gra);
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		super.paintComponent(g);

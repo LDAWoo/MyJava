@@ -22,12 +22,14 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import animation.AnimationButton;
+import componentsStudent.PanelTableStudents;
 import dao.CourseDAO;
 import img.img;
 import interfaces.IEvent;
 import model.ModelCodeTopic;
 import model.ModelCourse;
 import model.ModelEmployee;
+import view.Main;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
@@ -37,6 +39,10 @@ import javax.swing.JComponent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.Cursor;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.Icon;
 
 public class PanelCourseUpdate extends JPanel {
 	private JTextField txtTuition;
@@ -79,125 +85,129 @@ public class PanelCourseUpdate extends JPanel {
 	private CourseDAO dao = new CourseDAO();
 	private Course course;
 	private JTextArea textAreaNote;
+	private AnimationButton btnStudent;
 
 	public PanelCourseUpdate(Course course) {
 		this.course = course;
 		setOpaque(false);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(93, 58, 196));
+		panel.setBorder(null);
+
+		panel.setBackground(new Color(60, 60, 60));
 
 		JLabel lbldescribe = new JLabel("Ghi chú:\r\n\r\n");
-		lbldescribe.setBounds(472, 230, 126, 22);
-		lbldescribe.setForeground(SystemColor.menu);
+		lbldescribe.setForeground(new Color(200, 200, 200));
 		lbldescribe.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		JLabel lblTime = new JLabel("Thời lượng (giờ):");
-		lblTime.setBounds(472, 82, 124, 22);
-		lblTime.setForeground(SystemColor.menu);
+		lblTime.setForeground(new Color(200, 200, 200));
 		lblTime.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		JLabel lblCodeCourse = new JLabel("Mã khóa học:\r\n");
-		lblCodeCourse.setBounds(20, 8, 118, 22);
-		lblCodeCourse.setForeground(SystemColor.menu);
+		lblCodeCourse.setForeground(new Color(200, 200, 200));
 		lblCodeCourse.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		JLabel lblTopic = new JLabel("Chuyên đề:");
-		lblTopic.setBounds(20, 82, 80, 22);
-		lblTopic.setForeground(SystemColor.menu);
+		lblTopic.setForeground(new Color(200, 200, 200));
 		lblTopic.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		JLabel lblTuition = new JLabel("Học phí:");
-		lblTuition.setBounds(472, 8, 58, 22);
-		lblTuition.setForeground(SystemColor.menu);
+		lblTuition.setForeground(new Color(200, 200, 200));
 		lblTuition.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		JLabel lblPerson = new JLabel("Người tạo:");
-		lblPerson.setBounds(20, 230, 76, 22);
-		lblPerson.setForeground(SystemColor.menu);
+		lblPerson.setForeground(new Color(200, 200, 200));
 		lblPerson.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		txtTuition = new JTextField();
-		txtTuition.setBounds(502, 36, 357, 28);
 		txtTuition.setFont(new Font("SansSerif", Font.PLAIN, 13));
-		txtTuition.setColumns(10);
+		txtTuition.setBorder(null);
+		txtTuition.setForeground(new Color(191, 191, 191));
+		txtTuition.setBackground(new Color(50, 50, 50));
+		txtTuition.setCaretColor(new Color(200, 200, 200));
 
 		txtCodeCourse = new JTextField();
-		txtCodeCourse.setBounds(60, 36, 357, 28);
 		txtCodeCourse.setFont(new Font("SansSerif", Font.PLAIN, 13));
-		txtCodeCourse.setColumns(10);
+		txtCodeCourse.setBorder(null);
+		txtCodeCourse.setForeground(new Color(191, 191, 191));
+		txtCodeCourse.setBackground(new Color(50, 50, 50));
+		txtCodeCourse.setCaretColor(new Color(200, 200, 200));
 
 		textAreaNote = new JTextArea();
 		textAreaNote.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		textAreaNote.setBorder(null);
+		textAreaNote.setForeground(new Color(191, 191, 191));
+		textAreaNote.setBackground(new Color(50, 50, 50));
+		textAreaNote.setCaretColor(new Color(200, 200, 200));
 
 		JScrollPane scrollPane = new JScrollPane(textAreaNote);
-		scrollPane.setBounds(502, 255, 357, 97);
+		scrollPane.setBorder(null);
 
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setBounds(60, 501, 0, 0);
 
 		cbbTopic = new JComboBox();
-		cbbTopic.setForeground(SystemColor.controlShadow);
+		cbbTopic.setForeground(new Color(60, 60, 60));
 		cbbTopic.setFont(new Font("SansSerif", Font.BOLD, 13));
-		cbbTopic.setBounds(61, 111, 357, 28);
 
 		JLabel lblDay = new JLabel("Ngày khai giảng:");
-		lblDay.setBounds(20, 156, 115, 22);
-		lblDay.setForeground(SystemColor.menu);
+		lblDay.setForeground(new Color(200, 200, 200));
 		lblDay.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		cbbDay = new JComboBox();
-		cbbDay.setBounds(61, 184, 55, 26);
-		cbbDay.setForeground(SystemColor.controlShadow);
+		cbbDay.setForeground(new Color(60, 60, 60));
 		cbbDay.setFont(new Font("SansSerif", Font.BOLD, 13));
 		cbbDay.setBorder(null);
-		cbbDay.setBackground(Color.WHITE);
 
 		cbbMonth = new JComboBox();
-		cbbMonth.setBounds(119, 184, 65, 26);
-		cbbMonth.setForeground(SystemColor.controlShadow);
+		cbbMonth.setForeground(new Color(60, 60, 60));
 		cbbMonth.setFont(new Font("SansSerif", Font.BOLD, 13));
 
 		cbbYear = new JComboBox();
-		cbbYear.setBounds(187, 184, 55, 26);
-		cbbYear.setForeground(SystemColor.controlShadow);
+		cbbYear.setForeground(new Color(60, 60, 60));
 		cbbYear.setFont(new Font("SansSerif", Font.BOLD, 13));
 
 		txtTime = new JTextField();
-		txtTime.setBounds(502, 110, 357, 28);
 		txtTime.setFont(new Font("SansSerif", Font.PLAIN, 13));
-		txtTime.setColumns(10);
+		txtTime.setBorder(null);
+		txtTime.setForeground(new Color(191, 191, 191));
+		txtTime.setBackground(new Color(50, 50, 50));
+		txtTime.setCaretColor(new Color(200, 200, 200));
 
 		txtCreatePerson = new JTextField();
-		txtCreatePerson.setBounds(61, 253, 357, 28);
 		txtCreatePerson.setFont(new Font("SansSerif", Font.PLAIN, 13));
-		txtCreatePerson.setColumns(10);
+		txtCreatePerson.setBorder(null);
+		txtCreatePerson.setForeground(new Color(191, 191, 191));
+		txtCreatePerson.setBackground(new Color(50, 50, 50));
+		txtCreatePerson.setCaretColor(new Color(200, 200, 200));
 
 		JLabel lblDayCreate = new JLabel("Ngày tạo:");
-		lblDayCreate.setBounds(472, 156, 80, 22);
-		lblDayCreate.setForeground(SystemColor.menu);
+		lblDayCreate.setForeground(new Color(200, 200, 200));
 		lblDayCreate.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		cbbDayCreate = new JComboBox();
-		cbbDayCreate.setBounds(502, 184, 50, 26);
-		cbbDayCreate.setForeground(SystemColor.controlShadow);
+		cbbDayCreate.setForeground(new Color(60, 60, 60));
 		cbbDayCreate.setFont(new Font("SansSerif", Font.BOLD, 13));
 		cbbDayCreate.setBorder(null);
 		cbbDayCreate.setBackground(Color.WHITE);
 
 		cbbMonthCreate = new JComboBox();
-		cbbMonthCreate.setBounds(555, 184, 65, 26);
-		cbbMonthCreate.setForeground(SystemColor.controlShadow);
+		cbbMonthCreate.setForeground(new Color(60, 60, 60));
 		cbbMonthCreate.setFont(new Font("SansSerif", Font.BOLD, 13));
 
 		cbbYearCreate = new JComboBox();
-		cbbYearCreate.setBounds(623, 184, 55, 26);
-		cbbYearCreate.setForeground(SystemColor.controlShadow);
+		cbbYearCreate.setForeground(new Color(60, 60, 60));
 		cbbYearCreate.setFont(new Font("SansSerif", Font.BOLD, 13));
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(panel,
+				GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addGap(23)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(47, Short.MAX_VALUE)));
 
 		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setOpaque(true);
-		layeredPane.setBackground(SystemColor.menu);
+		layeredPane.setOpaque(false);
 
 		btnFirst = new AnimationButton(img.iconFisrt(), "");
 		btnFirst.setForeground(SystemColor.menu);
@@ -246,78 +256,168 @@ public class PanelCourseUpdate extends JPanel {
 		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnDelete.setBorder(null);
 		btnDelete.setBackground(new Color(60, 22, 173));
+
+		btnStudent = new AnimationButton((Icon) null, "Delete");
+		btnStudent.setText("Student");
+		btnStudent.setForeground(SystemColor.menu);
+		btnStudent.setFont(new Font("SansSerif", Font.BOLD, 18));
+		btnStudent.setBorder(null);
+		btnStudent.setBackground(new Color(60, 22, 173));
 		GroupLayout gl_layeredPane = new GroupLayout(layeredPane);
-		gl_layeredPane.setHorizontalGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 900, Short.MAX_VALUE)
-				.addGroup(gl_layeredPane.createSequentialGroup().addGap(158).addGroup(gl_layeredPane
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_layeredPane.createSequentialGroup()
-								.addComponent(btnFirst, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+		gl_layeredPane
+				.setHorizontalGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_layeredPane.createSequentialGroup().addGap(187)
+								.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnFirst, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 125,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnNew, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 125,
+												GroupLayout.PREFERRED_SIZE))
 								.addGap(28)
-								.addComponent(btnPrev, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING)
+										.addComponent(btnPrev, GroupLayout.PREFERRED_SIZE, 125,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 125,
+												GroupLayout.PREFERRED_SIZE))
 								.addGap(29)
-								.addComponent(btnNext, GroupLayout.PREFERRED_SIZE, 125,
-										GroupLayout.PREFERRED_SIZE)
-								.addGap(28)
-								.addComponent(btnLast, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_layeredPane.createSequentialGroup()
-								.addComponent(btnNew, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-								.addGap(28)
-								.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING)
+										.addComponent(btnNext, GroupLayout.PREFERRED_SIZE, 125,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 125,
+												GroupLayout.PREFERRED_SIZE))
 								.addGap(29)
-								.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-								.addGap(28).addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 125,
-										GroupLayout.PREFERRED_SIZE)))));
+								.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING)
+										.addComponent(btnLast, GroupLayout.PREFERRED_SIZE, 125,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 125,
+												GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+								.addComponent(btnStudent, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap()));
 		gl_layeredPane.setVerticalGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 103, Short.MAX_VALUE)
-				.addGroup(gl_layeredPane.createSequentialGroup().addGap(11).addGroup(gl_layeredPane
-						.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnFirst, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnPrev, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNext, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnLast, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)).addGap(11)
+				.addGroup(gl_layeredPane.createSequentialGroup().addGap(11)
 						.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnNew, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))));
+								.addComponent(btnFirst, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnPrev, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNext, GroupLayout.PREFERRED_SIZE, 35,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnLast, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(
+								gl_layeredPane.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_layeredPane.createSequentialGroup()
+												.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnNew,
+														GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+										.addGroup(gl_layeredPane.createSequentialGroup().addGap(6)
+												.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
+														.addComponent(btnStudent, GroupLayout.PREFERRED_SIZE, 35,
+																GroupLayout.PREFERRED_SIZE)
+														.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
+																.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 35,
+																		GroupLayout.PREFERRED_SIZE)
+																.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 35,
+																		GroupLayout.PREFERRED_SIZE)
+																.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 35,
+																		GroupLayout.PREFERRED_SIZE)))))
+						.addContainerGap()));
 		layeredPane.setLayout(gl_layeredPane);
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 923, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup().addGap(10)
-						.addComponent(layeredPane, GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE).addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addGap(23)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup().addGap(60).addComponent(lblLogo).addGap(890))
+				.addGroup(gl_panel.createSequentialGroup().addGap(61)
+						.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(63, Short.MAX_VALUE)));
-		panel.setLayout(null);
-		panel.add(lblLogo);
-		panel.add(lblCodeCourse);
-		panel.add(lblTopic);
-		panel.add(lblDay);
-		panel.add(lblDayCreate);
-		panel.add(lblTuition);
-		panel.add(lblTime);
-		panel.add(lblPerson);
-		panel.add(lbldescribe);
-		panel.add(txtCodeCourse);
-		panel.add(txtCreatePerson);
-		panel.add(cbbTopic);
-		panel.add(cbbDay);
-		panel.add(cbbMonth);
-		panel.add(cbbYear);
-		panel.add(cbbDayCreate);
-		panel.add(cbbMonthCreate);
-		panel.add(cbbYearCreate);
-		panel.add(txtTuition);
-		panel.add(txtTime);
-		panel.add(scrollPane);
+						.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE).addGap(338)
+						.addComponent(cbbDayCreate, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cbbMonthCreate, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cbbYearCreate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(188, Short.MAX_VALUE))
+				.addGroup(gl_panel.createSequentialGroup().addGap(62)
+						.addComponent(txtTuition, GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE).addContainerGap())
+				.addGroup(gl_panel.createSequentialGroup().addGap(61)
+						.addComponent(txtCreatePerson, GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
+						.addContainerGap())
+				.addGroup(gl_panel.createSequentialGroup().addGap(62)
+						.addComponent(txtTime, GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE).addContainerGap())
+				.addGroup(gl_panel.createSequentialGroup().addGap(33)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup().addGap(28)
+										.addComponent(cbbTopic, 0, 890, Short.MAX_VALUE).addContainerGap())
+								.addGroup(gl_panel.createSequentialGroup().addComponent(lblTime).addContainerGap())
+								.addGroup(gl_panel.createSequentialGroup().addComponent(lblDay)
+										.addPreferredGap(ComponentPlacement.RELATED, 400, Short.MAX_VALUE)
+										.addComponent(lblDayCreate, GroupLayout.PREFERRED_SIZE, 80,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(333))
+								.addGroup(gl_panel.createSequentialGroup().addComponent(lblPerson).addContainerGap())
+								.addGroup(gl_panel.createSequentialGroup()
+										.addComponent(lbldescribe, GroupLayout.PREFERRED_SIZE, 126,
+												GroupLayout.PREFERRED_SIZE)
+										.addContainerGap())
+								.addGroup(gl_panel.createSequentialGroup().addComponent(lblTuition).addContainerGap())
+								.addGroup(gl_panel.createSequentialGroup()
+										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblCodeCourse, GroupLayout.PREFERRED_SIZE, 118,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblTopic))
+										.addGap(810))))
+				.addGroup(gl_panel.createSequentialGroup().addGap(60)
+						.addComponent(txtCodeCourse, GroupLayout.DEFAULT_SIZE, 891, Short.MAX_VALUE).addContainerGap())
+				.addGroup(gl_panel.createSequentialGroup().addGap(61)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE).addContainerGap())
+				.addComponent(layeredPane, GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup().addGap(8)
+						.addComponent(lblCodeCourse, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtCodeCourse, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblTopic, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cbbTopic, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblDay, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDayCreate, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(cbbDayCreate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(cbbMonthCreate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(cbbYearCreate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblTuition, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtTuition, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtTime, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE).addGap(15)
+						.addComponent(lblPerson, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtCreatePerson, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lbldescribe, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+						.addGap(53).addComponent(lblLogo).addGap(19)));
+		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
 		initFillComboboxDate();
 		ActionButton();
+		
 	}
 
 	public void initFillComboboxDate() {
@@ -376,8 +476,9 @@ public class PanelCourseUpdate extends JPanel {
 
 		cbbModelTopic = new DefaultComboBoxModel();
 		cbbModelTopic.addElement("");
+
 		for (ModelCodeTopic data : dao.SelectCodeTopicAddCombobox()) {
-			cbbModelTopic.addElement(data.getCodeTopic());
+			cbbModelTopic.addElement(data.getCodeTopic() + " - " + data.getNameTopic());
 		}
 		cbbTopic.setModel(cbbModelTopic);
 
@@ -392,10 +493,10 @@ public class PanelCourseUpdate extends JPanel {
 
 	public void Display(int index) {
 		txtCodeCourse.setText(datas.get(index).getCodeCourse());
-		cbbModelTopic.setSelectedItem(datas.get(index).getCodeTopic());
+		cbbModelTopic.setSelectedItem(datas.get(index).getCodeTopic() + " - " + datas.get(index).getNameTopic());
 
 		cbbDay.setSelectedItem(datas.get(index).getDayOfOpening());
-		cbbMonth.setSelectedItem(datas.get(index).getMonthOfOpening());
+		cbbMonth.setSelectedIndex(Integer.parseInt(datas.get(index).getMonthOfOpening()));
 		cbbYear.setSelectedItem(datas.get(index).getYearOfOpening());
 
 		txtCreatePerson.setText(datas.get(index).getCreatePerson());
@@ -403,7 +504,7 @@ public class PanelCourseUpdate extends JPanel {
 		txtTime.setText(datas.get(index).getTime() + "");
 
 		cbbDayCreate.setSelectedItem(datas.get(index).getDayOfCreatePerson());
-		cbbMonthCreate.setSelectedItem(datas.get(index).getMonthOfCreatePerson());
+		cbbMonthCreate.setSelectedIndex(Integer.parseInt(datas.get(index).getMonthOfCreatePerson()));
 		cbbYearCreate.setSelectedItem(datas.get(index).getYearOfCreatePerson());
 
 		textAreaNote.setText(datas.get(index).getNote());
@@ -464,6 +565,29 @@ public class PanelCourseUpdate extends JPanel {
 				Last();
 			}
 		});
+		
+		
+		txtCodeCourse.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if(txtCodeCourse.getText().equals("")) {
+					btnStudent.setEnabled(false);
+				}else {
+					btnStudent.setEnabled(true);
+				}
+				
+			}
+		});
+		
+		btnStudent.addActionListener(new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String codeCourse = txtCodeCourse.getText();
+				Main.showForm(new PanelTableStudents(codeCourse));
+				
+			}
+		});
 
 	}
 
@@ -487,12 +611,14 @@ public class PanelCourseUpdate extends JPanel {
 	}
 
 	public void Add() {
-		String CodeCourse = txtCodeCourse.getText();
-		String CodeTopic = cbbTopic.getSelectedItem().toString();
+		String CodeCourse = txtCodeCourse.getText().trim();
+		String EmlementCodeTopic = cbbTopic.getSelectedItem().toString();
 
-		String CreatePerson = txtCreatePerson.getText();
-		double Tuition = Double.parseDouble(txtTuition.getText());
-		int Time = Integer.parseInt(txtTime.getText());
+		String CodeTopic = EmlementCodeTopic.substring(0, EmlementCodeTopic.indexOf(" "));
+
+		String CreatePerson = txtCreatePerson.getText().trim();
+		double Tuition = Double.parseDouble(txtTuition.getText().trim());
+		int Time = Integer.parseInt(txtTime.getText().trim());
 
 		String DayOpening = cbbYear.getSelectedItem().toString() + cbbMonth.getSelectedItem().toString()
 				+ cbbDay.getSelectedItem().toString();
@@ -535,7 +661,7 @@ public class PanelCourseUpdate extends JPanel {
 				JOptionPane.showMessageDialog(course, "Delete Failed", "Delete", JOptionPane.WARNING_MESSAGE,
 						img.iconDelete32x32());
 			}
-			
+
 		}
 		course.getModelCourseChanged();
 	}
@@ -554,12 +680,15 @@ public class PanelCourseUpdate extends JPanel {
 				+ cbbDayCreate.getSelectedItem().toString();
 
 		String Note = textAreaNote.getText();
-		
-		if (dao.Update(new ModelCourse(CodeCourse, CodeTopic, CreatePerson, Tuition, Time, DayOpening, DayCreate, Note)) > 0) {
-			JOptionPane.showMessageDialog(course, "Update Successfully","Update",JOptionPane.INFORMATION_MESSAGE,img.iconEdit32x32());
+
+		if (dao.Update(
+				new ModelCourse(CodeCourse, CodeTopic, CreatePerson, Tuition, Time, DayOpening, DayCreate, Note)) > 0) {
+			JOptionPane.showMessageDialog(course, "Update Successfully", "Update", JOptionPane.INFORMATION_MESSAGE,
+					img.iconEdit32x32());
 
 		} else {
-			JOptionPane.showMessageDialog(course, "Update Faied","Update",JOptionPane.WARNING_MESSAGE,img.iconEdit32x32());
+			JOptionPane.showMessageDialog(course, "Update Faied", "Update", JOptionPane.WARNING_MESSAGE,
+					img.iconEdit32x32());
 		}
 		course.getModelCourseChanged();
 	}
@@ -610,7 +739,7 @@ public class PanelCourseUpdate extends JPanel {
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setPaint(new Color(93, 58, 196));
+		g2.setPaint(new Color(60, 60, 60));
 		g2.fillRect(0, 20, getSize().width, getSize().height - 20);
 
 		g2.fillRect(45, 1, 142, 19);

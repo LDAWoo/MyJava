@@ -22,64 +22,64 @@ public class img {
 		
 	}
 
-	public Icon iconArr() {
+	public static Icon iconArr() {
 		Icon iconArr = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("arrow32x32.png")));
 		return iconArr;
 	}
 
-	public Icon iconHome() {
+	public static Icon iconHome() {
 		Icon iconHome = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("home.png")));
 		return iconHome;
 	}
 
-	public Icon iconManager() {
+	public static Icon iconManager() {
 		Icon iconManager = new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("bookmark.png")));
 		return iconManager;
 	}
 
-	public Icon iconCalendar() {
+	public static Icon iconCalendar() {
 		Icon iconCalendar = new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("calendar.png")));
 		return iconCalendar;
 	}
 
-	public Icon iconHelp() {
+	public static Icon iconHelp() {
 		Icon iconHelp = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("help.png")));
 		return iconHelp;
 	}
 
-	public Icon iconLibrary() {
+	public static Icon iconLibrary() {
 		Icon iconLibrary = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("library.png")));
 		return iconLibrary;
 	}
 
-	public Icon iconSystem() {
+	public static Icon iconSystem() {
 		Icon iconSystem = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("system.png")));
 		return iconSystem;
 	}
 
-	public Icon iconMenu() {
+	public static Icon iconMenu() {
 		Icon iconMenu = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("menu.png")));
 		return iconMenu;
 	}
 
-	public Icon iconProfile() {
+	public static Icon iconProfile() {
 		Icon iconProfile = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("logo.png")));
 		return iconProfile;
 	}
 
-	public Icon iconSearch() {
+	public static Icon iconSearch() {
 		Icon iconSearch = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("search.png")));
 		return iconSearch;
 	}
 
-	public Icon iconPrev() {
+	public static Icon iconPrev() {
 		Icon iconPrev = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("back.png")));
 		return iconPrev;
 	}
 
-	public Icon iconNext() {
+	public static Icon iconNext() {
 		Icon iconNext = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("next.png")));
 		return iconNext;
 	}
@@ -90,88 +90,88 @@ public class img {
 		return imageLogin;
 	}
 	
-	public Icon IconUser() {
+	public static Icon IconUser() {
 		Icon iconUser = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("icons8_user_20px_1.png")));
 		return iconUser;
 	}
 	
-	public Icon IconEyesInvisible() {
+	public static Icon IconEyesInvisible() {
 		Icon iconEyesInvisible = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("icons8_invisible_20px_1.png")));
 		return iconEyesInvisible;
 	}
 	
-	public Icon IconEyes() {
+	public static Icon IconEyes() {
 		Icon iconEyes = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("icons8_eye_20px_1.png")));
 		return iconEyes;
 	}
 	
-	public Icon IconWarning() {
+	public static Icon IconWarning() {
 		Icon iconWarning= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icons8-error-30.png")));
 		return iconWarning;
 	}
 	
-	public ImageIcon ImageSignUp() {
+	public  ImageIcon ImageSignUp() {
 		ImageIcon imageSignUp = new ImageIcon(new ImageIcon(getClass().getResource("signup_bg.png")).getImage()
 				.getScaledInstance(565, 374, Image.SCALE_SMOOTH));
 		return imageSignUp;
 	}
 	
-	public Icon IconUserSignUp() {
+	public static Icon IconUserSignUp() {
 		Icon iconUserSignUp= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon_usersignup.png")));
 		return iconUserSignUp;
 	}
 	
-	public Icon IconEmail() {
+	public static Icon IconEmail() {
 		Icon iconEmail= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("email_icon.png")));
 		return iconEmail;
 	}
 	
-	public Icon IconLock() {
+	public static Icon IconLock() {
 		Icon iconLock= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("lock_icon.png")));
 		return iconLock;
 	}
 	
-	public Icon iconFisrt() {
+	public static Icon iconFisrt() {
 		Icon iconFisrt= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-first.png")));
 		return iconFisrt;
 	}
 	
-	public Icon iconPrev1() {
+	public static Icon iconPrev1() {
 		Icon iconPrev1= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-prev.png")));
 		return iconPrev1;
 	}
 	
-	public Icon iconNext1() {
+	public static Icon iconNext1() {
 		Icon iconNext1= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-next.png")));
 		return iconNext1;
 	}
 	
-	public Icon iconLast() {
+	public static Icon iconLast() {
 		Icon iconLast= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-last.png")));
 		return iconLast;
 	}
 	
-	public Icon iconEdit() {
+	public static Icon iconEdit() {
 		Icon iconEdit= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("edit.png")));
 		return iconEdit;
 	}
 	
-	public Icon iconDelete() {
+	public static Icon iconDelete() {
 		Icon iconDelete= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("delete.png")));
 		return iconDelete;
 	}
 	
-	public Icon iconRefresh() {
+	public static Icon iconRefresh() {
 		Icon iconRefresh= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-refresh.png")));
 		return iconRefresh;
@@ -189,51 +189,113 @@ public class img {
 		return ImageUser;
 	}
 	
-	public Icon iconNew() {
+	public static Icon iconNew() {
 		Icon iconNew= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("folder-plus.png")));
 		return iconNew;
 	}
 	
-	public Icon iconAdd() {
+	public static Icon iconAdd() {
 		Icon iconAdd= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("account-plus.png")));
 		return iconAdd;
 	}
 	
-	public Icon iconEditWhite() {
+	public static Icon iconEditWhite() {
 		Icon iconEditWhite= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("text-box-edit.png")));
 		return iconEditWhite;
 	}
 	
-	public Icon iconDeleteWhite() {
+	public static Icon iconDeleteWhite() {
 		Icon iconDeleteWhite= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("delete-white.png")));
 		return iconDeleteWhite;
 	}
 	
-	public Icon iconDelete64x64() {
+	public static Icon iconDelete64x64() {
 		Icon iconDelete64x64= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("delete64x64.png")));
 		return iconDelete64x64;
 	}
 	
-	public Icon iconDelete32x32() {
+	public static Icon iconDelete32x32() {
 		Icon iconDelete32x32= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("delete32x32.png")));
 		return iconDelete32x32;
 	}
 	
-	public Icon iconEdit32x32() {
+	public static Icon iconEdit32x32() {
 		Icon iconEdit32x32= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("edit32x32.png")));
 		return iconEdit32x32;
 	}
 	
-	public Icon iconAdd32x32() {
+	public static Icon iconAdd32x32() {
 		Icon iconAdd32x32= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("add32x32.png")));
 		return iconAdd32x32;
 	}
+	
+	public static Icon iconCancel() {
+		Icon iconCancel= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("cancel.png")));
+		return iconCancel;
+	}
+	
+
+	public static Icon iconStudent2() {
+		Icon iconStudent2= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-student2.png")));
+		return iconStudent2;
+	}
+	
+	public static Icon iconHome2() {
+		Icon iconHome2= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-home.png")));
+		return iconHome2;
+	}
+	
+	public static Icon iconEmployee() {
+		Icon iconEmployee= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-employee.png")));
+		return iconEmployee;
+	}
+	
+	public static Icon iconTopic() {
+		Icon iconTopic= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-topic.png")));
+		return iconTopic;
+	}
+	
+	public static Icon iconCourse() {
+		Icon iconCourse= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-course.png")));
+		return iconCourse;
+	}
+	
+	public static Icon iconLogin() {
+		Icon iconLogin= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-login.png")));
+		return iconLogin;
+	}
+	
+	public static Icon iconFoget() {
+		Icon iconFoget= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-forget.png")));
+		return iconFoget;
+	}
+	
+	public static Icon iconLogout() {
+		Icon iconLogout= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-logout.png")));
+		return iconLogout;
+	}
+	
+	public static Icon iconExit() {
+		Icon iconExit= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-exit.png")));
+		return iconExit;
+	}
+	
 }

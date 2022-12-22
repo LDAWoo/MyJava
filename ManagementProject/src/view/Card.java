@@ -146,7 +146,7 @@ public class Card extends JPanel {
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		GradientPaint gra = new GradientPaint(0, getHeight(), getBackground(), getWidth(), 0, color1);
+		GradientPaint gra = new GradientPaint(0, getHeight(), new Color(60,60,60), getWidth(), 0, new Color(200,200,200));
 		g2.setPaint(gra);
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		super.paintComponent(g);

@@ -87,6 +87,7 @@ public class AnimationButtonList extends JButton{
 		setBorder(new EmptyBorder(5,5,5,5));
 		setBackground(null);
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
+		setFocusPainted(false);
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -128,7 +129,7 @@ public class AnimationButtonList extends JButton{
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		if(paintBackground) {
-			g2.setColor(new Color(93, 58, 196));
+			g2.setColor(new Color(50,50,50));
 			g2.fillRoundRect(0, 0, getWidth(), getHeight(), round, round);
 		}
 		if(pressedPoint !=null) {

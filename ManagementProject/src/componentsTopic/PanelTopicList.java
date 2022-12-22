@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
@@ -40,12 +41,21 @@ public class PanelTopicList extends JPanel {
 		setBackground(SystemColor.infoText);
 		setOpaque(false);
 		JPanel panelCenter = new JPanel();
+		panelCenter.setOpaque(false);
+		panelCenter.setBorder(null);
 		
 		table = new TableTopic(topic);
+		table.setShowGrid(false);
 		
+		
+		table.setBorder(null);
 		JScrollPane scrollPane = new JScrollPane(table);
 		
-		scrollPane.setVerticalScrollBar(new ScrollBarEmployee());
+		scrollPane.setOpaque(false);
+		table.addTableStyle(scrollPane);
+		
+		
+
 		
 		GroupLayout gl_panelCenter = new GroupLayout(panelCenter);
 		gl_panelCenter.setHorizontalGroup(
@@ -59,22 +69,27 @@ public class PanelTopicList extends JPanel {
 		panelCenter.setLayout(gl_panelCenter);
 		
 		JPanel panelNorth = new JPanel();
-		panelNorth.setBackground(Color.WHITE);
+		panelNorth.setBackground(new Color(60,60,60));
+		
+		find = new SearchStudent();
+		find.setBackground(new Color(60,60,60));
+		find.setForeground(new Color(200,200,200));
+		find.setCaretColor(new Color(200,200,200));
+		
 		
 		JLabel lblIconFind = new JLabel(img.iconSearch());
 		lblIconFind.setBorder(null);
 		lblIconFind.setBackground(Color.WHITE);
 		
-		find = new SearchStudent();
+		
+	
+		
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelCenter, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 911, Short.MAX_VALUE)
-						.addComponent(panelNorth, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 911, Short.MAX_VALUE))
-					.addContainerGap())
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)
+				.addComponent(panelNorth, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -82,8 +97,7 @@ public class PanelTopicList extends JPanel {
 					.addGap(30)
 					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 427, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(25, Short.MAX_VALUE))
+					.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE))
 		);
 		GroupLayout gl_panelNorth = new GroupLayout(panelNorth);
 		gl_panelNorth.setHorizontalGroup(
@@ -134,7 +148,7 @@ public class PanelTopicList extends JPanel {
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setColor(new Color(93,58,196));
+		g2.setColor(new Color(60,60,60));
 		g2.fillRect(0, 20, getSize().width, getSize().height-20);
 		g2.fillRect(255, 1, 142, 19);
 		super.paintComponent(g);

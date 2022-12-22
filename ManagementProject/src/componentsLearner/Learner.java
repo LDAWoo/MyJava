@@ -16,6 +16,8 @@ import javax.swing.event.CaretListener;
 
 import animation.AnimationButton;
 import animation.AnimationButtonList;
+import componentsCourse.PanelCourseList;
+import componentsCourse.PanelCourseUpdate;
 import dao.LearnerDAO;
 import event.EventHandler;
 import img.img;
@@ -33,8 +35,8 @@ import java.awt.CardLayout;
 import javax.swing.SwingConstants;
 
 public class Learner extends JPanel {
-	private PanelLearnerUpdate updateLearner;
-	private PanelLearnerList listLearner;
+	private PanelLearnerUpdate panelUpdate;
+	private PanelLearnerList panelList;
 	
 	private JPanel panelCenter;
 	private img img = new img();
@@ -49,101 +51,127 @@ public class Learner extends JPanel {
 		JPanel panelNorth = new JPanel();
 		panelNorth.setOpaque(false);
 		panelCenter = new JPanel();
-		panelCenter.setBackground(new Color(60,22,173));
+		panelCenter.setBackground(new Color(50,50,50));
+
+		panelUpdate = new PanelLearnerUpdate(this);
+
+		panelList = new PanelLearnerList(this);	
+		
+		JLabel lblManagerCourse = new JLabel("QUẢN LÝ NGƯỜI ĐĂNG KÝ HỌC");
+		lblManagerCourse.setForeground(new Color(191,191,191));
+		lblManagerCourse.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblManagerCourse.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(panelNorth, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(panelNorth, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
+				.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
+					.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE))
 		);
-		
-		updateLearner = new PanelLearnerUpdate(this);
-		updateLearner.setBounds(0,0,932,543);
-		panelCenter.add(updateLearner); 
-		
-		listLearner = new PanelLearnerList(this);
-		listLearner.setBounds(0,0,932,543);
-		panelCenter.add(listLearner); 
-		listLearner.setVisible(false);
 		
 		GroupLayout gl_panelCenter = new GroupLayout(panelCenter);
 		gl_panelCenter.setHorizontalGroup(
 			gl_panelCenter.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 912, Short.MAX_VALUE)
+				.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
 		);
 		gl_panelCenter.setVerticalGroup(
 			gl_panelCenter.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 514, Short.MAX_VALUE)
+				.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
 		);
-		panelCenter.setLayout(null);
-		
-		JLabel lblManagerCourse = new JLabel("QUẢN LÝ NGƯỜI ĐĂNG KÝ HỌC\r\n");
-		lblManagerCourse.setForeground(Color.WHITE);
-		lblManagerCourse.setFont(new Font("SansSerif", Font.BOLD, 20));
-		lblManagerCourse.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		AnimationButtonList btnUpdate = new AnimationButtonList(img.iconEditWhite(), "Update");
 		btnUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listLearner.setVisible(false);
-				updateLearner.setVisible(true);
-				updateLearner.indexSelectedLearner = listLearner.indexSelectedLearner;
-				updateLearner.Display(updateLearner.indexSelectedLearner);
-				
-			}
-		});
-		btnUpdate.setForeground(SystemColor.menu);
+		btnUpdate.setForeground(new Color(191,191,191));
 		btnUpdate.setFont(new Font("SansSerif", Font.PLAIN, 25));
 		btnUpdate.setBorder(null);
-		btnUpdate.setBackground(new Color(93, 58, 196));
-		
-		AnimationButtonList btnList = new AnimationButtonList(img.iconLibrary(), "List Student");
-		btnList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnList.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listLearner.setVisible(true);
-				updateLearner.setVisible(false);
-				listLearner.indexSelectedLearner = updateLearner.indexSelectedLearner;
-				listLearner.setSelectedTableLearner(listLearner.indexSelectedLearner);
+		btnUpdate.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				gl_panelCenter.setHorizontalGroup(
+						gl_panelCenter.createParallelGroup(Alignment.LEADING)
+							.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
+							.addComponent(panelList, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+					);
+					gl_panelCenter.setVerticalGroup(
+						gl_panelCenter.createParallelGroup(Alignment.LEADING)
+							.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
+							.addComponent(panelList, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+					);
 				
+				
+				panelUpdate.setVisible(true);
+				panelList.setVisible(false);
+				panelUpdate.indexSelectedLearner = panelList.indexSelectedLearner;
+				panelUpdate.Display(panelList.indexSelectedLearner);
+			} catch (Exception error) {
 			}
-		});
-		btnList.setForeground(SystemColor.menu);
+		}
+	});
+
+		AnimationButtonList btnList = new AnimationButtonList(img.iconLibrary(), "List Course");
+		btnList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnList.setForeground(new Color(191,191,191));
 		btnList.setFont(new Font("SansSerif", Font.PLAIN, 25));
 		btnList.setBorder(null);
-		btnList.setBackground(new Color(93, 58, 196));
+		btnList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					
+					gl_panelCenter.setHorizontalGroup(
+							gl_panelCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+								.addComponent(panelList, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
+						);
+						gl_panelCenter.setVerticalGroup(
+							gl_panelCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+								.addComponent(panelList, GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
+						);
+					
+					
+					panelList.setVisible(true);
+					panelUpdate.setVisible(false);
+					panelList.setSelectedTableLearner(panelUpdate.indexSelectedLearner);
+					panelList.indexSelectedLearner = panelUpdate.indexSelectedLearner;
+				} catch (Exception error) {
+				}
+			}
+		});
+		
 		GroupLayout gl_panelNorth = new GroupLayout(panelNorth);
 		gl_panelNorth.setHorizontalGroup(
-			gl_panelNorth.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panelNorth.createSequentialGroup()
-					.addGap(22)
-					.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(gl_panelNorth.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblManagerCourse, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnList, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(295, Short.MAX_VALUE))
+			gl_panelNorth.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelNorth.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnList, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+				.addComponent(lblManagerCourse, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
 		);
 		gl_panelNorth.setVerticalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addContainerGap(27, Short.MAX_VALUE)
-					.addComponent(lblManagerCourse, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblManagerCourse, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panelNorth.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnList, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnList, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 		panelNorth.setLayout(gl_panelNorth);
+		add(panelCenter);
+		
+		panelCenter.setLayout(gl_panelCenter);
 		setLayout(groupLayout);
+		add(panelNorth);
 		getModelLearner();
 		FindStudentAction();
 	}
@@ -155,10 +183,10 @@ public class Learner extends JPanel {
 	}
 	
 	public void FindStudentAction() {
-		listLearner.addCaretListener(new CaretListener() {		
+		panelList.addCaretListener(new CaretListener() {		
 			@Override
 			public void caretUpdate(CaretEvent e) {
-				String Name = listLearner.find.getText();		
+				String Name = panelList.find.getText();		
 				if(Name.equals("")) {
 					getModelLearner();
 				}else if(Name.length()>0) {
@@ -179,7 +207,7 @@ public class Learner extends JPanel {
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		GradientPaint gra = new GradientPaint(0, 0, new Color(60,22,173), 0, 0, new Color(191,60,234));
+		GradientPaint gra = new GradientPaint(0, 0, new Color(60,60,60), 0, 0, new Color(60,60,60));
 		g2.setPaint(gra);
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		super.paintComponent(g);

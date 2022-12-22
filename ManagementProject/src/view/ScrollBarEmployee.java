@@ -12,9 +12,9 @@ import model.ModelScrollBarUILearner;
 public class ScrollBarEmployee extends JScrollBar{
 	
 	public ScrollBarEmployee() {
-		setBackground(Color.WHITE);
+		setBackground(new Color(60,60,60));
 		setUI(new ModelScrollBarUIEmployee());
-		setPreferredSize(new Dimension(2,8));
+		setPreferredSize(new Dimension(0,8));
 		setForeground(new Color(144,144,144));
 		setUnitIncrement(20);
 		setOpaque(true);

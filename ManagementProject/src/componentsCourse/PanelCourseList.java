@@ -16,6 +16,7 @@ import java.awt.SystemColor;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.CaretListener;
 
+import componentsEmployee.TableEmployee;
 import img.img;
 import view.SearchStudent;
 
@@ -27,44 +28,62 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class PanelCourseList extends JPanel {
-	private TableCourse table;
 	private img img = new img();
 	public SearchStudent find;
 	private int index = -1;
 	public int indexSelectedCourse = -1;
 	
+	TableCourse table;
 	
 	public PanelCourseList(Course course) {
-		setBackground(SystemColor.infoText);
+		setBorder(null);
 		setOpaque(false);
-		JPanel panelCenter = new JPanel();
+		
+	
 		
 		find = new SearchStudent();
-		table = new TableCourse(course);
 		
+		table = new TableCourse(course);
+		table.setBorder(null);
 		JScrollPane scrollPane = new JScrollPane(table);
+		
+		scrollPane.setBorder(null);
+		scrollPane.setOpaque(false);
+		table.addTableStyle(scrollPane);
+		
+		
+		JPanel panelNorth = new JPanel();
+		panelNorth.setBackground(new Color(60,60,60));
+		find.setBackground(new Color(60,60,60));
+		find.setForeground(new Color(200,200,200));
+		find.setCaretColor(new Color(200,200,200));
+		
+		JPanel panelCenter = new JPanel();
+		panelCenter.setOpaque(false);
+		panelCenter.setBorder(null);
+		panelCenter.setBackground(new Color(60, 60, 60));
+		
+	
+		
+		
 		GroupLayout gl_panelCenter = new GroupLayout(panelCenter);
 		gl_panelCenter.setHorizontalGroup(
 			gl_panelCenter.createParallelGroup(Alignment.LEADING)
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE)
+				.addGap(0, 1051, Short.MAX_VALUE)
+				.addComponent(scrollPane)
 		);
 		gl_panelCenter.setVerticalGroup(
 			gl_panelCenter.createParallelGroup(Alignment.LEADING)
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+				.addGap(0, 526, Short.MAX_VALUE)
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
 		);
 		panelCenter.setLayout(gl_panelCenter);
 		
-		JPanel panelNorth = new JPanel();
-		panelNorth.setBackground(Color.WHITE);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panelCenter, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 891, Short.MAX_VALUE)
-						.addComponent(panelNorth, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addContainerGap())
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(panelNorth, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1027, Short.MAX_VALUE)
+				.addComponent(panelCenter, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1359, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -72,13 +91,14 @@ public class PanelCourseList extends JPanel {
 					.addGap(32)
 					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panelCenter, GroupLayout.PREFERRED_SIZE, 420, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(21, Short.MAX_VALUE))
+					.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE))
 		);
 		
 		JLabel lblIconFind = new JLabel(img.iconSearch());
 		lblIconFind.setBorder(null);
 		lblIconFind.setBackground(Color.WHITE);
+		
+		
 		GroupLayout gl_panelNorth = new GroupLayout(panelNorth);
 		gl_panelNorth.setHorizontalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.LEADING)
@@ -87,7 +107,7 @@ public class PanelCourseList extends JPanel {
 					.addGap(89))
 				.addGroup(gl_panelNorth.createSequentialGroup()
 					.addGap(38)
-					.addComponent(find, GroupLayout.DEFAULT_SIZE, 959, Short.MAX_VALUE)
+					.addComponent(find, GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_panelNorth.setVerticalGroup(
@@ -102,19 +122,10 @@ public class PanelCourseList extends JPanel {
 		);
 		panelNorth.setLayout(gl_panelNorth);
 		setLayout(groupLayout);
-		Action();
+		Action();	
 	}
 	
 	public void Action() {
-		table.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				index = table.getSelectedRow();
-				indexSelectedCourse = index;
-			}
-			
-		});
 	}
 	
 	public void setRowSelectionInterval(int index) {
@@ -130,7 +141,7 @@ public class PanelCourseList extends JPanel {
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setColor(new Color(93,58,196));
+		g2.setColor(new Color(60,60,60));
 		g2.fillRect(0, 20, getSize().width, getSize().height-20);
 		g2.fillRect(255, 1, 142, 19);
 		super.paintComponent(g);

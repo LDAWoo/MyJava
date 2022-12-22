@@ -19,6 +19,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 import componentsCourse.Course;
 import componentsEmployee.Employee;
 import componentsLearner.Learner;
+import componentsStudent.PanelTableStudents;
 import componentsTopic.Topic;
 import date.CurrendarCustom;
 import event.EventMenuSelected;
@@ -41,7 +42,7 @@ public class FrameView extends JFrame {
 	private ForgotPasswordView forgot;
 
 	public FrameView() {
-		this.setUndecorated(true);
+//		this.setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBackground(SystemColor.window);
 		getContentPane().setLayout(new BorderLayout());
@@ -89,6 +90,8 @@ public class FrameView extends JFrame {
 				} else if (menuIndex == 2) {
 					if (subMenuIndex == 0) {
 						main.showForm(new StudentTableScore());
+					}else if(subMenuIndex == 1) {
+						
 					}
 				} else if (menuIndex == 3) {
 					if (subMenuIndex == 0) {

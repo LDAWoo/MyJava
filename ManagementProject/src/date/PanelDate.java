@@ -1,9 +1,14 @@
 package date;
 
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 
@@ -16,48 +21,48 @@ public class PanelDate extends JPanel {
 	private Cell thu;
 	private Cell fri;
 	private Cell sat;
-	private Cell cell8;
-	private Cell cell9;
-	private Cell cell10;
-	private Cell cell11;
-	private Cell cell12;
-	private Cell cell13;
-	private Cell cell14;
-	private Cell cell15;
-	private Cell cell16;
-	private Cell cell17;
-	private Cell cell18;
-	private Cell cell19;
-	private Cell cell20;
-	private Cell cell21;
-	private Cell cell22;
-	private Cell cell23;
-	private Cell cell24;
-	private Cell cell25;
-	private Cell cell26;
-	private Cell cell27;
-	private Cell cell28;
-	private Cell cell29;
-	private Cell cell30;
-	private Cell cell31;
-	private Cell cell32;
-	private Cell cell33;
-	private Cell cell34;
-	private Cell cell35;
-	private Cell cell36;
-	private Cell cell37;
-	private Cell cell38;
-	private Cell cell39;
-	private Cell cell40;
-	private Cell cell41;
-	private Cell cell42;
-	private Cell cell43;
-	private Cell cell44;
-	private Cell cell45;
-	private Cell cell46;
-	private Cell cell47;
-	private Cell cell48;
-	private Cell cell49;
+	public Cell cell8;
+	public Cell cell9;
+	public Cell cell10;
+	public Cell cell11;
+	public Cell cell12;
+	public Cell cell13;
+	public Cell cell14;
+	public Cell cell15;
+	public Cell cell16;
+	public Cell cell17;
+	public Cell cell18;
+	public Cell cell19;
+	public Cell cell20;
+	public Cell cell21;
+	public Cell cell22;
+	public Cell cell23;
+	public Cell cell24;
+	public Cell cell25;
+	public Cell cell26;
+	public Cell cell27;
+	public Cell cell28;
+	public Cell cell29;
+	public Cell cell30;
+	public Cell cell31;
+	public Cell cell32;
+	public Cell cell33;
+	public Cell cell34;
+	public Cell cell35;
+	public Cell cell36;
+	public Cell cell37;
+	public Cell cell38;
+	public Cell cell39;
+	public Cell cell40;
+	public Cell cell41;
+	public Cell cell42;
+	public Cell cell43;
+	public Cell cell44;
+	public Cell cell45;
+	public Cell cell46;
+	public Cell cell47;
+	public Cell cell48;
+	public Cell cell49;
 	
 	private int month;
 	private int year;
@@ -70,208 +75,211 @@ public class PanelDate extends JPanel {
 		sun = new Cell();
 		sun.setText("Su");
 		add(sun);
-		sun.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
 
 		mon = new Cell();
 		mon.setText("Mo");
 		add(mon);
-		mon.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
 
 		tue = new Cell();
 		tue.setText("Tu");
 		add(tue);
-		tue.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
 		wed = new Cell();
 		wed.setText("We");
 		add(wed);
-		wed.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
 
 		thu = new Cell();
 		thu.setText("Th");
 		add(thu);
-		thu.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
 
 		fri = new Cell();
 		fri.setText("Fr");
 		add(fri);
-		fri.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
 
 		sat = new Cell();
 		sat.setText("Sa");
 		add(sat);
-		sat.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
 
 		cell8 = new Cell();
 		add(cell8);
-		cell8.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	
 
 		cell9 = new Cell();
 		add(cell9);
-		cell9.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell10 = new Cell();
 		add(cell10);
-		cell10.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell11 = new Cell();
 		add(cell11);
-		cell11.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell12 = new Cell();
 		add(cell12);
-		cell12.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell13 = new Cell();
 		add(cell13);
-		cell13.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	
 
 		cell14 = new Cell();
 		add(cell14);
-		cell14.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell15 = new Cell();
 		add(cell15);
-		cell15.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell16 = new Cell();
 		add(cell16);
-		cell16.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell17 = new Cell();
 		add(cell17);
-		cell17.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell18 = new Cell();
 		add(cell18);
-		cell18.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell19 = new Cell();
 		add(cell19);
-		cell19.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell20 = new Cell();
 		add(cell20);
-		cell20.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell21 = new Cell();
 		add(cell21);
-		cell21.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell22 = new Cell();
 		add(cell22);
-		cell22.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell23 = new Cell();
 		add(cell23);
-		cell23.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell24 = new Cell();
 		add(cell24);
-		cell24.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell25 = new Cell();
 		add(cell25);
-		cell25.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell26 = new Cell();
 		add(cell26);
-		cell26.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell27 = new Cell();
 		add(cell27);
-		cell27.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell28 = new Cell();
 		add(cell28);
-		cell28.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell29 = new Cell();
 		add(cell29);
-		cell29.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell30 = new Cell();
 		add(cell30);
-		cell30.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell31 = new Cell();
 		add(cell31);
-		cell31.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell32 = new Cell();
 		add(cell32);
-		cell32.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell33 = new Cell();
 		add(cell33);
-		cell33.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell34 = new Cell();
 		add(cell34);
-		cell34.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell35 = new Cell();
 		add(cell35);
-		cell35.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell36 = new Cell();
 		add(cell36);
-		cell36.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell37 = new Cell();
 		add(cell37);
-		cell37.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell38 = new Cell();
 		add(cell38);
-		cell38.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell39 = new Cell();
 		add(cell39);
-		cell39.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell40 = new Cell();
 		add(cell40);
-		cell40.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell41 = new Cell();
 		add(cell41);
-		cell41.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell42 = new Cell();
 		add(cell42);
-		cell42.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell43 = new Cell();
 		add(cell43);
-		cell43.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell44 = new Cell();
 		add(cell44);
-		cell44.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell45 = new Cell();
 		add(cell45);
-		cell45.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	
 
 		cell46 = new Cell();
 		add(cell46);
-		cell46.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		
 
 		cell47 = new Cell();
 		add(cell47);
-		cell47.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	
 
 		cell48 = new Cell();
 		add(cell48);
-		cell48.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	
 
 		cell49 = new Cell();
 		add(cell49);
-		cell49.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
+		
+		
+		setBackground(new Color(60,60,60));
 		init();
+
 	}
+	
 
 	public void init() {
 		mon.asTitle();

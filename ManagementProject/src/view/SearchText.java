@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -34,5 +35,6 @@ public class SearchText extends JTextField{
 			g2.setColor( new Color(c2,true));
 			g2.drawString(hint, ins.left, h / 2 + fm.getAscent()  / 2  - 2);
 		}
+	
 	}
 }

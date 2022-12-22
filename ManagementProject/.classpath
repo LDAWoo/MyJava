@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="src/library/jna-platform-5.5.0.jar"/>
 	<classpathentry kind="lib" path="src/library/jna-5.5.0.jar"/>
 	<classpathentry kind="lib" path="src/library/mssql-jdbc-11.2.0.jre8.jar"/>
+	<classpathentry kind="lib" path="src/library/table-custom.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

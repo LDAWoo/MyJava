@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import controller.UserController;
+import dao.LoginDAO;
 import dao.UserDAO;
 import img.img;
 import model.UserModel;
@@ -40,7 +41,7 @@ public class LoginUserView extends JFrame {
 	private JPasswordField passwordField;
 	private JLabel disable;
 	private JLabel Show;
-	private UserDAO userDAO = new UserDAO();
+	private LoginDAO loginDao = new LoginDAO();
 	private JLabel lblCheck;
 	
 	
@@ -102,7 +103,7 @@ public class LoginUserView extends JFrame {
 		lblNewLabel.setBounds(0, 61, 489, 46);
 		panel_1.add(lblNewLabel);
 
-		JLabel lblUsername = new JLabel("Username");
+		JLabel lblUsername = new JLabel("Email");
 		lblUsername.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		lblUsername.setBounds(35, 150, 414, 25);
 		lblUsername.setForeground(Color.getHSBColor(208, 67, 62));
@@ -293,20 +294,32 @@ public class LoginUserView extends JFrame {
 
 	public void Login() {
 		if(Validate()) {
-		String username = this.textFieldUser.getText().trim();
+		String email = textFieldUser.getText().trim();
 		String password = new String(this.passwordField.getPassword()).trim();
-		String Admin = "Admin";
-		String User = "User";
-		if(this.userDAO.selectAll(username, password).equals(Admin)) {
-
-			dispose();
-
-		}else if(this.userDAO.selectAll(username, password).equals(User)) {
+		
+		
+		
+		if(loginDao.SellectAll(email, password).equals("Manager")) {
+			Main main = new Main(email);
+			main.setVisible(true);
+			main.setLocationRelativeTo(null);
 			
 			dispose();
+			
+
+		}else if(this.loginDao.SellectAll(email, password).equals("Employee")) {
+			
+			System.out.println("Employee");	
+		}else if(this.loginDao.SellectAll(email, password).equals("Student")) {
+			
+			MainStudent mainSt = new MainStudent(email);
+			mainSt.setVisible(true);
+			mainSt.setLocationRelativeTo(null);
+			dispose();
+				
 		}
 		else {
-			lblCheck.setText("Sai Username Hoặc Password Không Đúng!");
+			lblCheck.setText("Sai Email Hoặc Password Không Đúng!");
 			lblCheck.setVisible(true);
 			this.passwordField.requestFocus();
 		}

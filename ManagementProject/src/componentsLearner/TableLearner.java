@@ -2,18 +2,23 @@ package componentsLearner;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 
+import componentsStudent.TableHeaderCustom;
 import dao.LearnerDAO;
 import interfaces.IEvent;
 import model.ModelLearner;
+import view.ScrollBarCustom;
 
 public class TableLearner extends JTable {
 	public static DefaultTableModel tableModel;
@@ -24,40 +29,41 @@ public class TableLearner extends JTable {
 	
 	public TableLearner(Learner learner) {
 		this.learner = learner;
-		
+		setOpaque(false);
 		setModel(new DefaultTableModel(new Object[][] {}, new String[] { "MÃ NGƯỜI ĐK", "HỌ VÀ TÊN", "NGÀY SINH",
 				"GIỚI TÍNH", "SỐ ĐIỆN THOẠI", "EMAIL","NGÀY ĐĂNG KÝ", "GHI CHÚ"}));
 		tableModel = (DefaultTableModel) getModel();
-		setRowHeight(40);
-		getTableHeader().setReorderingAllowed(false);
-		getTableHeader().setFont(new Font("SanSerif", Font.PLAIN, 15));
-		getTableHeader().setForeground(Color.decode("#84817a"));
-		setShowGrid(false);
-		setShowHorizontalLines(true);
-		setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-
-			@Override
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-					Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-							column);
-					table.setBorder(noFocusBorder);
-					com.setForeground(new Color(102, 102, 102));
-					if (isSelected) {
-						com.setBackground(Color.decode("#d1ccc0"));
-					} else {
-						com.setBackground(Color.WHITE);
-					}
-
-					return com;
-				}
-			
-		});
+		
 
 		IEvent<ArrayList<ModelLearner>> event = this::OnModelChangedLearner;
 		learner.ModelLearnerChanged.subscribe(event);
 	}
 	
+	public void addTableStyle(JScrollPane scroll) {
+		scroll.getViewport().setOpaque(false);
+        scroll.setViewportBorder(null);
+        setBorder(null);
+        scroll.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scroll.setVerticalScrollBar(new ScrollBarCustom());
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(60, 60, 60));
+        setForeground(new Color(214, 214, 214));
+        setSelectionForeground(new Color(214, 214, 214));
+        setSelectionBackground(new Color(50, 50, 50));
+        getTableHeader().setDefaultRenderer(new TableHeaderCustom());
+        setRowHeight(45);
+     
+        getTableHeader().setReorderingAllowed(false);
+		getTableHeader().setFont(new Font("SanSerif", Font.PLAIN, 15));
+		getTableHeader().setForeground(Color.decode("#84817a"));
+
+		setIntercellSpacing(new Dimension(0, 0));
+		setBackground(new Color(60,60,60));
+		setFocusable(false);
+        scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
+		
+	}
 	
 	public void OnModelChangedLearner(Object sourse, ArrayList<ModelLearner> eventArgs) {
 		datas = eventArgs;

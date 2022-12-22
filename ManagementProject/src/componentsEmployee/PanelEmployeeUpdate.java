@@ -59,7 +59,7 @@ import java.sql.ResultSet;
 public class PanelEmployeeUpdate extends JPanel {
 
 	private ArrayList<ModelEmployee> datas = new ArrayList<ModelEmployee>();
-	
+
 	private JComboBox cbbDayDate;
 	private JComboBox cbbMonthDate;
 	private JComboBox cbbYearDate;
@@ -140,147 +140,157 @@ public class PanelEmployeeUpdate extends JPanel {
 	private String YearOfOpening;
 
 	private String DayOpening;
+	
+	private Color colorTextForeground = new Color(191, 191, 191);
+	private Color colorTextBackground = new Color(50, 50, 50);
+	private Color colorLabel = new Color(200, 200, 200);
+	private Color colorCaret = new Color(255, 255, 255);
+	private Font fontText13 = new Font("SansSerif", Font.PLAIN, 13);
+	private Font fontText13Bold = new Font("SansSerif", Font.BOLD, 13);
+	
+	private Font fontText15 = new Font("SansSerif", Font.BOLD, 15);
+	private Font fontText18 = new Font("SansSerif", Font.BOLD, 18);
+	
+	
 
 	public PanelEmployeeUpdate(Employee employee) {
 
 		this.employee = employee;
 		setOpaque(false);
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(93, 58, 196));
+		panel.setBackground(new Color(60, 60, 60));
 
-		JLabel lbldescribe = new JLabel("Ghi chú:\r\n\r\n");
-		lbldescribe.setBounds(10, 258, 126, 22);
-		lbldescribe.setForeground(SystemColor.menu);
-		lbldescribe.setFont(new Font("SansSerif", Font.BOLD, 15));
+		JLabel lbldescribe = new JLabel("Ghi chú:");
+		lbldescribe.setForeground(colorLabel);
+		lbldescribe.setFont(fontText15);
 
 		JLabel lblPassword = new JLabel("Mật khẩu:");
-		lblPassword.setBounds(400, 291, 68, 22);
-		lblPassword.setForeground(SystemColor.menu);
-		lblPassword.setFont(new Font("SansSerif", Font.BOLD, 15));
+		lblPassword.setForeground(colorLabel);
+		lblPassword.setFont(fontText15);
 
-		JLabel lblCodeEmplo = new JLabel("Mã nhân viên:\r\n");
-		lblCodeEmplo.setBounds(400, 8, 118, 22);
-		lblCodeEmplo.setForeground(SystemColor.menu);
-		lblCodeEmplo.setFont(new Font("SansSerif", Font.BOLD, 15));
+		JLabel lblCodeEmplo = new JLabel("Mã nhân viên:");
+		lblCodeEmplo.setForeground(colorLabel);
+		lblCodeEmplo.setFont(fontText15);
 
 		JLabel lblName = new JLabel("Họ và tên:");
-		lblName.setBounds(400, 57, 72, 22);
-		lblName.setForeground(SystemColor.menu);
-		lblName.setFont(new Font("SansSerif", Font.BOLD, 15));
+		lblName.setForeground(colorLabel);
+		lblName.setFont(fontText15);
 
 		JLabel lblRole = new JLabel("Vai trò:");
-		lblRole.setBounds(400, 172, 49, 22);
-		lblRole.setForeground(SystemColor.menu);
-		lblRole.setFont(new Font("SansSerif", Font.BOLD, 15));
+		lblRole.setForeground(colorLabel);
+		lblRole.setFont(fontText15);
 
 		JLabel lblPerson = new JLabel("Giới tính:");
-		lblPerson.setBounds(643, 105, 66, 22);
-		lblPerson.setForeground(SystemColor.menu);
-		lblPerson.setFont(new Font("SansSerif", Font.BOLD, 15));
+		lblPerson.setForeground(colorLabel);
+		lblPerson.setFont(fontText15);
 
 		txtRole = new JTextField();
-		txtRole.setBounds(444, 194, 393, 28);
-		txtRole.setFont(new Font("SansSerif", Font.PLAIN, 13));
-		txtRole.setColumns(10);
+		txtRole.setFont(fontText13);
+		txtRole.setBorder(null);
+		txtRole.setForeground(colorTextForeground);
+		txtRole.setBackground(new Color(50, 50, 50));
+		txtRole.setCaretColor(new Color(200, 200, 200));
 
 		txtCodeEmplo = new JTextField();
-		txtCodeEmplo.setBounds(444, 30, 393, 28);
-		txtCodeEmplo.setFont(new Font("SansSerif", Font.PLAIN, 13));
-		txtCodeEmplo.setColumns(10);
+		txtCodeEmplo.setFont(fontText13);
+		txtCodeEmplo.setBorder(null);
+		txtCodeEmplo.setForeground(colorTextForeground);
+		txtCodeEmplo.setBackground(colorTextBackground);
+		txtCodeEmplo.setCaretColor(colorCaret);
 
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setBounds(60, 511, 0, 0);
 
 		JLabel lblDay = new JLabel("Ngày sinh:");
-		lblDay.setBounds(400, 105, 73, 22);
-		lblDay.setForeground(SystemColor.menu);
-		lblDay.setFont(new Font("SansSerif", Font.BOLD, 15));
+		lblDay.setForeground(colorLabel);
+		lblDay.setFont(fontText15);
 
 		cbbDayDate = new JComboBox();
 		cbbDayDate.setOpaque(false);
-		cbbDayDate.setBounds(444, 128, 50, 26);
-		cbbDayDate.setForeground(new Color(60, 22, 173));
-		cbbDayDate.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbDayDate.setForeground(new Color(60, 60, 60));
+		cbbDayDate.setFont(fontText13Bold);
 		cbbDayDate.setBorder(null);
-		cbbDayDate.setBackground(Color.WHITE);
+	
 
 		cbbMonthDate = new JComboBox();
 		cbbMonthDate.setBorder(null);
 		cbbMonthDate.setOpaque(false);
-		cbbMonthDate.setBounds(498, 128, 69, 26);
-		cbbMonthDate.setForeground(new Color(60, 22, 173));
-		cbbMonthDate.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbMonthDate.setForeground(new Color(60, 60, 60));
+		cbbMonthDate.setFont(fontText13Bold);
 
 		cbbYearDate = new JComboBox();
-		cbbYearDate.setBackground(Color.WHITE);
 		cbbYearDate.setBorder(null);
 		cbbYearDate.setOpaque(false);
-		cbbYearDate.setBounds(570, 128, 55, 26);
-		cbbYearDate.setForeground(new Color(60, 22, 173));
-		cbbYearDate.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbYearDate.setForeground(new Color(60, 60, 60));
+		cbbYearDate.setFont(fontText13Bold);
 
 		JLabel lblTimeOpening = new JLabel("Ngày tham gia:");
-		lblTimeOpening.setBounds(400, 223, 102, 22);
-		lblTimeOpening.setForeground(SystemColor.menu);
-		lblTimeOpening.setFont(new Font("SansSerif", Font.BOLD, 15));
+		lblTimeOpening.setForeground(colorLabel);
+		lblTimeOpening.setFont(fontText15);
 
 		cbbDay = new JComboBox();
-		cbbDay.setBounds(444, 245, 50, 26);
-		cbbDay.setForeground(new Color(60, 22, 173));
-		cbbDay.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbDay.setForeground(new Color(60, 60, 60));
+		cbbDay.setFont(fontText13Bold);
 		cbbDay.setBorder(null);
 		cbbDay.setBackground(Color.WHITE);
 
 		cbbMonth = new JComboBox();
-		cbbMonth.setBounds(498, 245, 69, 26);
-		cbbMonth.setForeground(new Color(60, 22, 173));
-		cbbMonth.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbMonth.setForeground(new Color(60, 60, 60));
+		cbbMonth.setFont(fontText13Bold);
 
 		cbbYear = new JComboBox();
-		cbbYear.setBounds(570, 245, 55, 26);
-		cbbYear.setForeground(new Color(60, 22, 173));
-		cbbYear.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbYear.setForeground(new Color(60, 60, 60));
+		cbbYear.setFont(fontText13Bold);
 
 		txtName = new JTextField();
-		txtName.setBounds(444, 78, 393, 28);
-		txtName.setFont(new Font("SansSerif", Font.PLAIN, 13));
-		txtName.setColumns(10);
+		txtName.setFont(fontText13);
+		txtName.setBorder(null);
+		txtName.setForeground(colorTextForeground);
+		txtName.setBackground(colorTextBackground);
+		txtName.setCaretColor(colorCaret);
 
 		buttonGroup = new ButtonGroup();
 
 		rdbtnMale = new JRadioButton("Nam");
-		rdbtnMale.setBounds(685, 128, 55, 27);
-		rdbtnMale.setForeground(Color.WHITE);
-		rdbtnMale.setFont(new Font("SansSerif", Font.BOLD, 13));
-		rdbtnMale.setBackground(new Color(93, 58, 196));
+		rdbtnMale.setOpaque(false);
+		rdbtnMale.setForeground(colorLabel);
+		rdbtnMale.setFont(fontText13Bold);
+		rdbtnMale.setBackground(getBackground());
 
 		rdbtnFemale = new JRadioButton("Nữ");
-		rdbtnFemale.setBounds(742, 128, 55, 27);
-		rdbtnFemale.setForeground(Color.WHITE);
-		rdbtnFemale.setFont(new Font("SansSerif", Font.BOLD, 13));
-		rdbtnFemale.setBackground(new Color(93, 58, 196));
+		rdbtnFemale.setOpaque(false);
+		rdbtnFemale.setForeground(colorLabel);
+		rdbtnFemale.setFont(fontText13Bold);
+		rdbtnFemale.setBackground(getBackground());
 
 		buttonGroup.add(rdbtnMale);
 		buttonGroup.add(rdbtnFemale);
 
 		txtPassword = new JPasswordField();
-		txtPassword.setBounds(444, 314, 393, 28);
-		txtPassword.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		txtPassword.setFont(fontText13);
+		txtPassword.setBorder(null);
+		txtPassword.setForeground(colorTextForeground);
+		txtPassword.setBackground(colorTextBackground);
+		txtPassword.setCaretColor(colorCaret);
 
 		JLabel lblImg = new JLabel("Hình:\r\n\r\n");
-		lblImg.setBounds(10, 8, 49, 22);
-		lblImg.setForeground(SystemColor.menu);
-		lblImg.setFont(new Font("SansSerif", Font.BOLD, 15));
+		lblImg.setForeground(colorLabel);
+		lblImg.setFont(fontText15);
 
 		JPanel panelImg = new JPanel();
-		panelImg.setBounds(20, 30, 178, 220);
 
 		JPanel panelNote = new JPanel();
-		panelNote.setBounds(20, 279, 300, 67);
 		textAreaNote = new JTextArea();
-		textAreaNote.setFont(new Font("SansSerif", Font.PLAIN, 13));
-
+		textAreaNote.setBorder(null);
+		textAreaNote.setForeground(colorTextForeground);
+		textAreaNote.setBackground(new Color(50, 50, 50));
+		textAreaNote.setFont(fontText13);
+		textAreaNote.setCaretColor(colorCaret);
 		JScrollPane scrollPane = new JScrollPane(textAreaNote);
+		scrollPane.setOpaque(false);
+		scrollPane.setViewportBorder(null);
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setBorder(null);
+
 		GroupLayout gl_panelNote = new GroupLayout(panelNote);
 		gl_panelNote.setHorizontalGroup(gl_panelNote.createParallelGroup(Alignment.LEADING).addComponent(scrollPane,
 				GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE));
@@ -290,156 +300,73 @@ public class PanelEmployeeUpdate extends JPanel {
 		panelImg.setLayout(null);
 
 		lblimg = new JLabel("");
-		lblimg.setBounds(0, 0, 178, 220);
+		lblimg.setBounds(0, 0, 217, 257);
+		lblimg.setOpaque(true);
 
-		lblimg.addMouseListener(new MouseAdapter() {
+		lblimg.setIcon(img.ImageWhite());
+		lblimg.setBackground(new Color(55, 55, 55));
 
-			public void mousePressed(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					JFileChooser fileChooser = new JFileChooser();
-					fileChooser.setFileFilter(new FileFilter() {
-
-						@Override
-						public String getDescription() {
-
-							return "Image File (*.jpg)";
-						}
-
-						@Override
-						public boolean accept(File f) {
-							if (f.isDirectory()) {
-								return true;
-							} else {
-								return f.getName().toLowerCase().endsWith(".jpg");
-							}
-
-						}
-					});
-
-					if (fileChooser.showOpenDialog(employee) == JFileChooser.CANCEL_OPTION) {
-						return;
-					}
-
-					File file = fileChooser.getSelectedFile();
-					try {
-
-						ImageIcon icon = new ImageIcon(file.getPath());
-						Image img = image.resize(icon.getImage(), 178, 220);
-
-						ImageIcon resizedIcon = new ImageIcon(img);
-						lblimg.setIcon(resizedIcon);
-
-						personalImage = image.toByteArray(img, "jpg");
-
-					} catch (Exception e2) {
-						// TODO: handle exception
-					}
-				}
-			};
-		});
 
 		panelImg.add(lblimg);
 
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setOpaque(true);
-		layeredPane.setBackground(SystemColor.control);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(panel,
+				GroupLayout.PREFERRED_SIZE, 1020, Short.MAX_VALUE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
+				groupLayout.createSequentialGroup().addContainerGap().addComponent(panel, GroupLayout.DEFAULT_SIZE, 673,
+						Short.MAX_VALUE)));
 
-		btnNew = new AnimationButton(img.iconNew(),"New");
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setOpaque(false);
+		layeredPane.setBackground(getBackground());
+
+		btnNew = new AnimationButton(img.iconNew(), "New");
 		btnNew.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNew.setForeground(SystemColor.menu);
-		btnNew.setFont(new Font("SansSerif", Font.BOLD, 18));
+		btnNew.setFont(fontText18);
 		btnNew.setBorder(null);
-		btnNew.setBackground(new Color(60, 22, 173));
 
-		btnDelete = new AnimationButton(img.iconDeleteWhite(),"Delete");
+		btnDelete = new AnimationButton(img.iconDeleteWhite(), "Delete");
 		btnDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDelete.setForeground(SystemColor.menu);
-		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 18));
+		btnDelete.setFont(fontText18);
 		btnDelete.setBorder(null);
-		btnDelete.setBackground(new Color(60, 22, 173));
 
-		btnUpdate = new AnimationButton(img.iconEditWhite(),"Update");
+		btnUpdate = new AnimationButton(img.iconEditWhite(), "Update");
 		btnUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnUpdate.setForeground(SystemColor.menu);
-		btnUpdate.setFont(new Font("SansSerif", Font.BOLD, 18));
+		btnUpdate.setFont(fontText18);
 		btnUpdate.setBorder(null);
-		btnUpdate.setBackground(new Color(60, 22, 173));
 
-		btnAdd = new AnimationButton(img.iconAdd(),"Add");
+		btnAdd = new AnimationButton(img.iconAdd(), "Add");
 		btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdd.setForeground(SystemColor.menu);
-		btnAdd.setFont(new Font("SansSerif", Font.BOLD, 18));
+		btnAdd.setFont(fontText18);
 		btnAdd.setBorder(null);
-		btnAdd.setBackground(new Color(60, 22, 173));
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(Alignment.TRAILING,
-										groupLayout.createSequentialGroup().addGap(12).addComponent(panel,
-												GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE))
-								.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-										.addComponent(layeredPane, GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)))
-						.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addGap(30)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(59, Short.MAX_VALUE)));
-		panel.setLayout(null);
-		panel.add(rdbtnMale);
-		panel.add(rdbtnFemale);
-		panel.add(lbldescribe);
-		panel.add(panelNote);
-		panel.add(panelImg);
-		panel.add(lblCodeEmplo);
-		panel.add(lblName);
-		panel.add(lblDay);
-		panel.add(lblRole);
-		panel.add(lblPassword);
-		panel.add(lblImg);
-		panel.add(lblTimeOpening);
-		panel.add(lblPerson);
-		panel.add(lblLogo);
-		panel.add(txtCodeEmplo);
-		panel.add(cbbDayDate);
-		panel.add(cbbMonthDate);
-		panel.add(cbbYearDate);
-		panel.add(txtName);
-		panel.add(txtPassword);
-		panel.add(cbbDay);
-		panel.add(cbbMonth);
-		panel.add(cbbYear);
-		panel.add(txtRole);
 
-		btnFirst = new AnimationButton(img.iconFisrt(),"");
+		btnFirst = new AnimationButton(img.iconFisrt(), "");
 		btnFirst.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnFirst.setForeground(SystemColor.menu);
-		btnFirst.setFont(new Font("SansSerif", Font.BOLD, 18));
+		btnFirst.setFont(fontText18);
 		btnFirst.setBorder(null);
-		btnFirst.setBackground(new Color(60, 22, 173));
 
-		btnPrev = new AnimationButton(img.iconPrev1(),"");
+		btnPrev = new AnimationButton(img.iconPrev1(), "");
 		btnPrev.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPrev.setForeground(SystemColor.menu);
-		btnPrev.setFont(new Font("SansSerif", Font.BOLD, 18));
+		btnPrev.setFont(fontText18);
 		btnPrev.setBorder(null);
-		btnPrev.setBackground(new Color(60, 22, 173));
 
-		btnNext = new AnimationButton(img.iconNext1(),"");
+		btnNext = new AnimationButton(img.iconNext1(), "");
 		btnNext.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNext.setForeground(SystemColor.menu);
-		btnNext.setFont(new Font("SansSerif", Font.BOLD, 18));
+		btnNext.setFont(fontText18);
 		btnNext.setBorder(null);
-		btnNext.setBackground(new Color(60, 22, 173));
 
-		btnLast = new AnimationButton(img.iconLast(),"");
+		btnLast = new AnimationButton(img.iconLast(), "");
 		btnLast.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLast.setForeground(SystemColor.menu);
-		btnLast.setFont(new Font("SansSerif", Font.BOLD, 18));
+		btnLast.setFont(fontText18);
 		btnLast.setBorder(null);
-		btnLast.setBackground(new Color(60, 22, 173));
 		GroupLayout gl_layeredPane = new GroupLayout(layeredPane);
 		gl_layeredPane.setHorizontalGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING).addGroup(gl_layeredPane
 				.createSequentialGroup().addGap(158)
@@ -471,6 +398,136 @@ public class PanelEmployeeUpdate extends JPanel {
 								.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))));
 		layeredPane.setLayout(gl_layeredPane);
+
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(layeredPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(10)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(10)
+									.addComponent(panelImg, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblImg, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lbldescribe, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(31)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(lblPassword)
+									.addContainerGap(684, Short.MAX_VALUE))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(243)
+									.addComponent(lblPerson))
+								.addComponent(lblName)
+								.addComponent(lblDay)
+								.addComponent(lblCodeEmplo, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(44)
+									.addComponent(cbbDayDate, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+									.addGap(4)
+									.addComponent(cbbMonthDate, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+									.addGap(3)
+									.addComponent(cbbYearDate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+									.addGap(60)
+									.addComponent(rdbtnMale)
+									.addGap(2)
+									.addComponent(rdbtnFemale, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblRole)
+								.addComponent(lblTimeOpening)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(44)
+									.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+									.addGap(4)
+									.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+									.addGap(3)
+									.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+								.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+									.addComponent(txtCodeEmplo, GroupLayout.PREFERRED_SIZE, 710, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap())))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 706, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelNote, GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+					.addContainerGap())
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap(303, Short.MAX_VALUE)
+					.addComponent(txtRole, GroupLayout.PREFERRED_SIZE, 707, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap(302, Short.MAX_VALUE)
+					.addComponent(txtName, GroupLayout.PREFERRED_SIZE, 708, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(8)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_panel.createSequentialGroup()
+											.addGap(49)
+											.addComponent(lblName, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+										.addGroup(gl_panel.createSequentialGroup()
+											.addComponent(lblCodeEmplo, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+											.addGap(45)
+											.addComponent(txtName, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+										.addGroup(gl_panel.createSequentialGroup()
+											.addGap(22)
+											.addComponent(txtCodeEmplo, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+											.addGap(47)
+											.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblPerson, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblDay, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))))
+									.addGap(1)
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(cbbDayDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(cbbMonthDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(cbbYearDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(rdbtnMale)
+										.addComponent(rdbtnFemale))
+									.addGap(17)
+									.addComponent(lblRole, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(txtRole, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+									.addGap(1)
+									.addComponent(lblTimeOpening, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(lblImg, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+									.addGap(1)
+									.addComponent(panelImg, GroupLayout.PREFERRED_SIZE, 257, GroupLayout.PREFERRED_SIZE))))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(288)
+							.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(20)
+							.addComponent(lbldescribe, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panelNote, GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+					.addGap(18)
+					.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE))
+		);
+		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
 		initFillComboboxDate();
 		ActionButton();
@@ -567,19 +624,19 @@ public class PanelEmployeeUpdate extends JPanel {
 		String YearOfBirth = datas.get(index).getYearOfBirth();
 
 		cbbDayDate.setSelectedItem(DayOfBirth);
-		cbbMonthDate.setSelectedItem(MonthOfBirth);
+		cbbMonthDate.setSelectedIndex(Integer.parseInt(MonthOfBirth));
 		cbbYearDate.setSelectedItem(YearOfBirth);
 		
+		System.out.println(MonthOfBirth);
 
 		String DayOpening = datas.get(index).getDayOpening();
 		String MonthOpening = datas.get(index).getMonthOpening();
 		String YearOpening = datas.get(index).getYearOpening();
 
 		cbbDay.setSelectedItem(DayOpening);
-		cbbMonth.setSelectedItem(MonthOpening);
+		cbbMonth.setSelectedIndex(Integer.parseInt(MonthOpening));
 		cbbYear.setSelectedItem(YearOpening);
-		
-		
+
 		if (datas.get(index).getImg() != null) {
 			byte[] img = datas.get(index).getImg();
 
@@ -598,6 +655,53 @@ public class PanelEmployeeUpdate extends JPanel {
 	}
 
 	public void ActionButton() {
+		
+		lblimg.addMouseListener(new MouseAdapter() {
+
+			public void mousePressed(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setFileFilter(new FileFilter() {
+
+						@Override
+						public String getDescription() {
+
+							return "Image File (*.jpg)";
+						}
+
+						@Override
+						public boolean accept(File f) {
+							if (f.isDirectory()) {
+								return true;
+							} else {
+								return f.getName().toLowerCase().endsWith(".jpg");
+							}
+
+						}
+					});
+
+					if (fileChooser.showOpenDialog(employee) == JFileChooser.CANCEL_OPTION) {
+						return;
+					}
+
+					File file = fileChooser.getSelectedFile();
+					try {
+
+						ImageIcon icon = new ImageIcon(file.getPath());
+						Image img = image.resize(icon.getImage(), 217, 257);
+
+						ImageIcon resizedIcon = new ImageIcon(img);
+						lblimg.setIcon(resizedIcon);
+
+						personalImage = image.toByteArray(img, "jpg");
+
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
+				}
+			};
+		});
+		
 		btnNew.addActionListener(new ActionListener() {
 
 			@Override
@@ -698,13 +802,18 @@ public class PanelEmployeeUpdate extends JPanel {
 
 	public void Update() {
 		getTextField();
-		byte[] Img = personalImage;
-
+		byte[] Img = personalImage;	
+		if(personalImage == null) {
+			Img = datas.get(IndexSelectedEmployee).getImg();
+		}
+		
 		if (dao.Update(new ModelEmployee(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note)) > 0) {
-			JOptionPane.showMessageDialog(employee, "Update Successfully","Update",JOptionPane.INFORMATION_MESSAGE,img.iconEdit32x32());
+			JOptionPane.showMessageDialog(null, "Update Successfully", "Update", JOptionPane.INFORMATION_MESSAGE,
+					img.iconEdit32x32());
 
 		} else {
-			JOptionPane.showMessageDialog(employee, "Update Faied","Update",JOptionPane.WARNING_MESSAGE,img.iconEdit32x32());
+			JOptionPane.showMessageDialog(null, "Update Faied", "Update", JOptionPane.WARNING_MESSAGE,
+					img.iconEdit32x32());
 		}
 		employee.getModelEmployees();
 	}
@@ -720,16 +829,19 @@ public class PanelEmployeeUpdate extends JPanel {
 				Image ig = image.resize(icon.getImage(), 130, 162);
 				Img = image.toByteArray(ig, "jpg");
 
-				if (dao.Insert(new ModelEmployee(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note))>0) {
-					JOptionPane.showMessageDialog(employee, "Insert Successfully","Insert",JOptionPane.INFORMATION_MESSAGE,img.iconAdd32x32());
+				if (dao.Insert(
+						new ModelEmployee(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note)) > 0) {
+					JOptionPane.showMessageDialog(null, "Insert Successfully", "Insert",
+							JOptionPane.INFORMATION_MESSAGE, img.iconAdd32x32());
 
 				}
 			} catch (Exception errorImg) {
 				System.out.println("Error: " + errorImg.toString());
 			}
 		} else {
-			if (dao.Insert(new ModelEmployee(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note))>0) {
-				JOptionPane.showMessageDialog(employee, "Insert Successfully","Insert",JOptionPane.INFORMATION_MESSAGE,img.iconAdd32x32());
+			if (dao.Insert(new ModelEmployee(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note)) > 0) {
+				JOptionPane.showMessageDialog(null, "Insert Successfully", "Insert",
+						JOptionPane.INFORMATION_MESSAGE, img.iconAdd32x32());
 
 			}
 		}
@@ -739,20 +851,22 @@ public class PanelEmployeeUpdate extends JPanel {
 	public void Delete() {
 		String CodeEmployee = txtCodeEmplo.getText();
 		if (CodeEmployee.equals("")) {
-			JOptionPane.showMessageDialog(employee, "Chưa Nhập Mã Nhân Viên Để Xóa !", "Message",
+			JOptionPane.showMessageDialog(null, "Chưa Nhập Mã Nhân Viên Để Xóa !", "Message",
 					JOptionPane.WARNING_MESSAGE, img.iconDelete32x32());
 			return;
 		}
 
-		int choice = JOptionPane.showConfirmDialog(employee, "Bạn Có Chắc Chắn Muốn Xóa Không?", "Choose Option",
+		int choice = JOptionPane.showConfirmDialog(null, "Bạn Có Chắc Chắn Muốn Xóa Không?", "Choose Option",
 				JOptionPane.YES_NO_OPTION, 0, img.iconDelete32x32());
 
 		if (choice == JOptionPane.YES_OPTION) {
 			if (dao.Delete(CodeEmployee) > 0) {
-				JOptionPane.showMessageDialog(employee, "Delete Successfully","Delete",JOptionPane.INFORMATION_MESSAGE,img.iconDelete32x32());
+				JOptionPane.showMessageDialog(null, "Delete Successfully", "Delete",
+						JOptionPane.INFORMATION_MESSAGE, img.iconDelete32x32());
 				ClearForm();
 			} else {
-				JOptionPane.showMessageDialog(employee, "Delete Failed","Delete",JOptionPane.WARNING_MESSAGE,img.iconDelete32x32());
+				JOptionPane.showMessageDialog(null, "Delete Failed", "Delete", JOptionPane.WARNING_MESSAGE,
+						img.iconDelete32x32());
 			}
 			employee.getModelEmployees();
 		}
@@ -804,9 +918,8 @@ public class PanelEmployeeUpdate extends JPanel {
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setPaint(new Color(93, 58, 196));
+		g2.setPaint(new Color(60, 60, 60));
 		g2.fillRect(0, 20, getSize().width, getSize().height - 20);
-
 		g2.fillRect(45, 1, 142, 19);
 
 		super.paintComponent(g);

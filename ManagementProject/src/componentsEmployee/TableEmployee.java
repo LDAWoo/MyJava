@@ -2,6 +2,7 @@ package componentsEmployee;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -9,7 +10,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -17,51 +22,32 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
+import componentsStudent.TableHeaderCustom;
 import dao.EmployeeDAO;
 import interfaces.IEvent;
 import model.ModelEmployee;
+import view.ScrollBarCustom;
 
 
 public class TableEmployee extends JTable {
 	public static DefaultTableModel tableModel;
 	private EmployeeDAO dao = new EmployeeDAO();
-	private int index = -1;
-	
+
 	
 	
 	private ArrayList<ModelEmployee> datas = new ArrayList<ModelEmployee>();
 
 	public TableEmployee(Employee employee) {
+		setOpaque(false);
 		setModel(new DefaultTableModel(new Object[][] {}, new String[] { "MÃ NV", "HỌ VÀ TÊN", "NGÀY SINH", "GIỚI TÍNH",
 				"VAI TRÒ", "MẬT KHẨU", "NGÀY T GIA","GHI CHÚ"
 
 		}));
 		tableModel = (DefaultTableModel) getModel();
-		setRowHeight(40);
-		getTableHeader().setReorderingAllowed(false);
-		getTableHeader().setFont(new Font("SanSerif", Font.PLAIN, 15));
-		getTableHeader().setForeground(Color.decode("#84817a"));
-		setShowGrid(false);
-		setShowHorizontalLines(true);
+	
+		
 
-		setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
-			@Override
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-
-				Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-				table.setBorder(noFocusBorder);
-				com.setForeground(new Color(102, 102, 102));
-				if (isSelected) {
-					com.setBackground(Color.decode("#d1ccc0"));
-				} else {
-					com.setBackground(new Color(255, 255, 255));
-				}
-				return com;
-			}
-
-		});
 		IEvent<ArrayList<ModelEmployee>> a = this::OnModelEmployeeChanged;
 		employee.ModelEmployeeChanged.subscribe(a);
 	}
@@ -69,6 +55,41 @@ public class TableEmployee extends JTable {
 	public void OnModelEmployeeChanged(Object source, ArrayList<ModelEmployee> eventArgs) {
 		datas = eventArgs;
 		initData();
+	}
+	
+	public void addTableStyle(JScrollPane scroll) {
+		scroll.getViewport().setOpaque(false);
+        scroll.setViewportBorder(null);
+        setBorder(null);
+        scroll.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setVerticalScrollBar(new ScrollBarCustom());
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(60, 60, 60));
+        setForeground(new Color(214, 214, 214));
+        setSelectionForeground(new Color(214, 214, 214));
+        setSelectionBackground(new Color(50, 50, 50));
+        getTableHeader().setDefaultRenderer(new TableHeaderCustom());
+        setRowHeight(45);
+     
+        getTableHeader().setReorderingAllowed(false);
+		getTableHeader().setFont(new Font("SanSerif", Font.PLAIN, 15));
+		getTableHeader().setForeground(Color.decode("#84817a"));
+
+		setIntercellSpacing(new Dimension(0, 0));
+		setBackground(new Color(60,60,60));
+		setFocusable(false);
+        scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
+		
+        
+        getColumnModel().getColumn(0).setPreferredWidth(10);
+        getColumnModel().getColumn(1).setPreferredWidth(100);
+        getColumnModel().getColumn(2).setPreferredWidth(30);
+        getColumnModel().getColumn(3).setPreferredWidth(10);
+        getColumnModel().getColumn(4).setPreferredWidth(20);
+        getColumnModel().getColumn(5).setPreferredWidth(50);
+        getColumnModel().getColumn(6).setPreferredWidth(30);
+        getColumnModel().getColumn(7).setPreferredWidth(200);
 	}
 	
 	public void addRow(Object[] row) {
@@ -97,14 +118,6 @@ public class TableEmployee extends JTable {
 		
 		
 		
-	}
-	
-	public int getIndex() {
-		return index;
-	}
-
-	public void setIndex(int index) {
-		this.index = index;
 	}
 
 	
