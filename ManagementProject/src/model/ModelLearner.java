@@ -11,6 +11,7 @@ public class ModelLearner {
 	private String phoneNumber;
 	private String email;
 	private String dateOfRegister;
+	private String employeeCode;
 	private String note;
 	
 	private String DayOfBirth;
@@ -22,7 +23,7 @@ public class ModelLearner {
 	private String YearOfRegister;
 	
 	
-	public ModelLearner(String personCode, String name, String date, boolean sex, String phoneNumber, String email,String dateOfRegister,
+	public ModelLearner(String personCode, String name, String date, boolean sex, String phoneNumber, String email,String dateOfRegister,String employeeCode,
 			String note, String dayOfBirth,String monthOfBirth, String yearOfBirth, String dayOfRegister,String monthOfRegister, String yearOfRegister) {
 		this.personCode = personCode;
 		this.name = name;
@@ -32,6 +33,7 @@ public class ModelLearner {
 		this.email = email;
 		this.dateOfRegister = dateOfRegister;
 		this.note = note;
+		this.employeeCode = employeeCode;
 		this.DayOfBirth = dayOfBirth;
 		this.MonthOfBirth = monthOfBirth;
 		this.YearOfBirth = yearOfBirth;
@@ -45,7 +47,7 @@ public class ModelLearner {
 		
 	}
 	
-	public ModelLearner(String personCode, String name, String date, boolean sex, String phoneNumber, String email,String dateOfRegister,
+	public ModelLearner(String personCode, String name, String date, boolean sex, String phoneNumber, String email,String dateOfRegister,String employeeCode,
 			String note) {
 		this.personCode = personCode;
 		this.name = name;
@@ -54,6 +56,7 @@ public class ModelLearner {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.dateOfRegister = dateOfRegister;
+		this.employeeCode = employeeCode;
 		this.note = note;
 	}
 
@@ -168,6 +171,17 @@ public class ModelLearner {
 	public void setYearOfRegister(String yearOfRegister) {
 		YearOfRegister = yearOfRegister;
 	}
+
+
+	public String getEmployeeCode() {
+		return employeeCode;
+	}
+
+
+	public void setEmployeeCode(String employeeCode) {
+		this.employeeCode = employeeCode;
+	}
+	
 	
 	
 }

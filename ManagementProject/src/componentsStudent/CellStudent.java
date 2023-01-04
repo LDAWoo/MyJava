@@ -19,12 +19,17 @@ import com.raven.table.cell.TableCustomCell;
 import com.raven.table.model.TableRowData;
 
 import animation.AnimationButtonSave;
+import componentsForgot.DialogQuestion;
 import dao.ManagerLearnerCourseDAO;
 import img.img;
+import view.Main;
+import view.MainEmployee;
 
 public class CellStudent extends TableCustomCell {
 	private JTextField txtCodeStudent;
 	private AnimationButtonSave btnSave;
+	
+	private DialogQuestion question = new DialogQuestion(null);
 	public CellStudent() {
 		
 		JLabel lblCodeStudent = new JLabel("Code Student");
@@ -33,7 +38,7 @@ public class CellStudent extends TableCustomCell {
 
 		txtCodeStudent.setEnabled(false);
 		
-		btnSave = new AnimationButtonSave("Update");
+		btnSave = new AnimationButtonSave("Cập nhật");
 		btnSave.setForeground(new Color(50,50,50));
 		btnSave.setBackground(new Color(200,200,200));
 		btnSave.setFocusPainted(false);
@@ -77,16 +82,26 @@ public class CellStudent extends TableCustomCell {
 				table.stopCellEditing();
 				int row = getRow();
 				String codeStudent = table.getValueAt(row, 0).toString();
-				
 				String codeCourse = table.getValueAt(row, 1).toString();
 				String codeLearner = table.getValueAt(row, 2).toString();
 				String nameLearner = table.getValueAt(row, 3).toString();
 				boolean gender = Boolean.parseBoolean(table.getValueAt(row, 4).toString());
 				String age = table.getValueAt(row, 5).toString();
 				double grade = Double.parseDouble(table.getValueAt(row, 6).toString());	
+				
+				if(grade > 10) {
+					getDialogPosition();
+					question.lblQuestion.setText("Vui lòng nhập");
+					question.lblTextMessage.setText("\"Thang điểm từ 0 - 10\"");
+					return;
+				}else if(grade < -1) {
+					getDialogPosition();
+					question.lblQuestion.setText("Vui lòng nhập");
+					question.lblTextMessage.setText("\"Điểm bằng -1 nếu không nhập điểm\"");
+					return;
+				}
 
 				ModelStudents st= (ModelStudents)table.getModelData(row);
-				
 				ModelStudents data = new ModelStudents(st.getID(), new ModelStudent(codeStudent),new ModelCourse(codeCourse), new ModelLearner(codeLearner), new ModelName(nameLearner), new ModelSex(gender), new ModelAge(age), new ModelGrade(grade));
 				
 				try {
@@ -98,9 +113,13 @@ public class CellStudent extends TableCustomCell {
 					ManagerLearnerCourseDAO dao = new ManagerLearnerCourseDAO();
 					
 					if( dao.Update(data)>0) {
-						JOptionPane.showMessageDialog(null, "Update Succesfully","Update",JOptionPane.INFORMATION_MESSAGE,img.iconEdit32x32());
+						getDialogPosition();
+						question.lblQuestion.setText("Cập nhật");
+						question.lblTextMessage.setText("\"Thành công\"");
 					}else {
-						JOptionPane.showMessageDialog(null, "Update Faield","Update",JOptionPane.WARNING_MESSAGE,img.iconEdit32x32());
+						getDialogPosition();
+						question.lblQuestion.setText("Cập nhật");
+						question.lblTextMessage.setText("\"Thất bại\"");
 					}
 					
 					table.updateModelData(row, data);
@@ -114,7 +133,16 @@ public class CellStudent extends TableCustomCell {
 		});
 	}
 	
-
+	public void getDialogPosition() {
+		if(MainEmployee.role == "Employee") {
+			question.setLocation(MainEmployee.xScreen, MainEmployee.yScreen);
+			question.setVisible(true);
+		}else if(Main.role == "Manager") {
+			question.setLocation(Main.xScreen, Main.yScreen);
+			question.setVisible(true);
+		}	
+	}
+	
 	@Override
 	public TableCustomCell createComponentCellEditor(TableCustom table, TableRowData data, Object o, int row,
 			int col) {

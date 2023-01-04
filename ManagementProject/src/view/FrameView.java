@@ -68,6 +68,7 @@ public class FrameView extends JFrame {
 
 		main = new MainForm();
 		main.setOpaque(false);
+		
 		menu.addEvent(new EventMenuSelected() {
 
 			@Override

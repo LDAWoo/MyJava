@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -27,11 +28,15 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.filechooser.FileFilter;
 
 import animation.AnimationButton;
+import componentsForgot.DialogQuestion;
+import componetsDialogConfirm.DialogConfirm;
 import dao.TopicDAO;
 import img.ImageHelper;
 import img.img;
 import interfaces.IEvent;
 import model.ModelTopic;
+import view.Main;
+import view.MainEmployee;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
@@ -83,7 +88,7 @@ public class PanelTopicUpdate extends JPanel {
 	private JLabel lblMChuyn;
 	private JLabel lblHcPh;
 	private JTextField txtCodeTopic;
-	private JPasswordField txtTime;
+	private JTextField txtTime;
 	private JTextArea textAreaDescriber;
 
 	private Color colorTextForeground = new Color(191, 191, 191);
@@ -93,6 +98,13 @@ public class PanelTopicUpdate extends JPanel {
 	private Font fontText13 = new Font("SansSerif", Font.PLAIN, 13);
 	private Font fontText15 = new Font("SansSerif", Font.BOLD, 15);
 	private Font fontText18 = new Font("SansSerif", Font.BOLD, 18);
+
+	private DialogQuestion question = new DialogQuestion(null);
+	private DialogConfirm confirm = new DialogConfirm(null);
+
+	private String code_topic_pattern = "^[A-Z0-9]{3,}$";
+	private String tuition_pattern = "^[0-9]{1,}$";
+	private String timer_pattern = "^[0-9]{1,}$";
 
 	public PanelTopicUpdate(Topic topic) {
 		this.topic = topic;
@@ -257,7 +269,7 @@ public class PanelTopicUpdate extends JPanel {
 		txtCodeTopic.setBorder(null);
 		txtCodeTopic.setBackground(colorTextBackground);
 
-		txtTime = new JPasswordField();
+		txtTime = new JTextField();
 		txtTime.setForeground(colorTextForeground);
 		txtTime.setFont(fontText13);
 		txtTime.setCaretColor(colorCaret);
@@ -347,6 +359,28 @@ public class PanelTopicUpdate extends JPanel {
 		datas = eventArgs;
 	}
 
+	public void getDialogPosition() {
+		if(Main.role == "Manager") {
+			question.setLocation(Main.xScreen, Main.yScreen);
+			question.setVisible(true);
+		}else if(MainEmployee.role == "Employee") {
+			question.setLocation(MainEmployee.xScreen, MainEmployee.yScreen);
+			question.setVisible(true);
+		}
+	}
+
+	public void getDialogConfirmPostiton() {
+		if(Main.role == "Manager") {
+			confirm.setLocation(Main.xScreen, Main.yScreen);
+			confirm.setModalityType(ModalityType.APPLICATION_MODAL);
+			confirm.setVisible(true);
+		}else if(MainEmployee.role == "Employee") {
+			confirm.setLocation(MainEmployee.xScreen, MainEmployee.yScreen);
+			confirm.setModalityType(ModalityType.APPLICATION_MODAL);
+			confirm.setVisible(true);
+		}
+	}
+
 	public void ClearForm() {
 		txtCodeTopic.setText("");
 		txtNameTopic.setText("");
@@ -360,13 +394,16 @@ public class PanelTopicUpdate extends JPanel {
 		String CodeTopic = datas.get(index).getCodeTopic();
 		String NameTopic = datas.get(index).getNameTopic();
 		double Tuition = datas.get(index).getTuition();
+
+		long roundTuition = Math.round(Tuition);
+
 		int Timer = datas.get(index).getTime();
 		String Describer = datas.get(index).getDescriber();
 		byte[] imageTopic = datas.get(index).getLogo();
 
 		txtCodeTopic.setText(CodeTopic);
 		txtNameTopic.setText(NameTopic);
-		txtTuition.setText(Tuition + "");
+		txtTuition.setText(roundTuition + "");
 		txtTime.setText(Timer + "");
 		textAreaDescriber.setText(Describer);
 
@@ -379,43 +416,108 @@ public class PanelTopicUpdate extends JPanel {
 		}
 	}
 
-	public void getTextField() {
-		CodeTopic = txtCodeTopic.getText();
-		NameTopic = txtNameTopic.getText();
-		Tuition = Double.parseDouble(txtTuition.getText());
-		Timer = Integer.parseInt(txtTime.getText());
-		Describer = textAreaDescriber.getText();
+	public boolean Validate() {
+		if (txtCodeTopic.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Mã chuyên đề\"");
+			return false;
+		}
+
+		if (!txtCodeTopic.getText().matches(code_topic_pattern)) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Mã chuyên đề đúng định dạng\"");
+			return false;
+		}
+
+		if (txtNameTopic.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Tên chuyên đề\"");
+			return false;
+		}
+
+		if (txtTuition.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Học phí\"");
+			return false;
+		}
+
+		if (!txtTuition.getText().matches(tuition_pattern)) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Học phí phải là số\"");
+			return false;
+		}
+
+		if (txtTime.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Thời lượng\"");
+			return false;
+		}
+
+		if (!txtTime.getText().matches(timer_pattern)) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Thời lượng phải là số\"");
+			return false;
+		}
+
+		return true;
 	}
 
 	public void Add() {
-		getTextField();
+		if (Validate()) {
+			CodeTopic = txtCodeTopic.getText();
+			NameTopic = txtNameTopic.getText();
+			Tuition = Double.parseDouble(txtTuition.getText());
+			Timer = Integer.parseInt(txtTime.getText());
+			Describer = textAreaDescriber.getText();
 
-		byte[] Img = personalImage;
+			byte[] Img = personalImage;
 
-		if (dao.Insert(new ModelTopic(CodeTopic, NameTopic, Tuition, Timer, Describer, Img)) > 0) {
-			JOptionPane.showMessageDialog(null, "Insert Successfully", "Insert", JOptionPane.INFORMATION_MESSAGE,
-					img.iconAdd32x32());
-		} else {
-			JOptionPane.showMessageDialog(null, "Insert Successfully", "Insert", JOptionPane.WARNING_MESSAGE,
-					img.iconAdd32x32());
+			if (dao.Insert(new ModelTopic(CodeTopic, NameTopic, Tuition, Timer, Describer, Img)) > 0) {
+				getDialogPosition();
+				question.lblQuestion.setText("Thêm chuyên đề");
+				question.lblTextMessage.setText("\"Thành công\"");
+
+			} else {
+				getDialogPosition();
+				question.lblQuestion.setText("Thêm chuyên đề");
+				question.lblTextMessage.setText("\"Thất bại\"");
+
+			}
 		}
 		topic.getModelTopic();
 	}
 
 	public void Update() {
-		getTextField();
-		byte[] Img = personalImage;
-		
-		if(personalImage == null) {
-			Img = datas.get(indexSelectedTopic).getLogo();
-		}
+		if (Validate()) {
+			CodeTopic = txtCodeTopic.getText();
+			NameTopic = txtNameTopic.getText();
+			Tuition = Double.parseDouble(txtTuition.getText());
+			Timer = Integer.parseInt(txtTime.getText());
+			Describer = textAreaDescriber.getText();
+			byte[] Img = personalImage;
 
-		if (dao.Update(new ModelTopic(CodeTopic, NameTopic, Tuition, Timer, Describer, Img)) > 0) {
-			JOptionPane.showMessageDialog(null, "Update Successfully", "Insert", JOptionPane.INFORMATION_MESSAGE,
-					img.iconEdit32x32());
-		} else {
-			JOptionPane.showMessageDialog(null, "Update Failed", "Insert", JOptionPane.WARNING_MESSAGE,
-					img.iconEdit32x32());
+			if (personalImage == null) {
+				Img = datas.get(indexSelectedTopic).getLogo();
+			}
+
+			if (dao.Update(new ModelTopic(CodeTopic, NameTopic, Tuition, Timer, Describer, Img)) > 0) {
+				getDialogPosition();
+				question.lblQuestion.setText("Cập nhật chuyên đề");
+				question.lblTextMessage.setText("\"Thành công\"");
+
+			} else {
+				getDialogPosition();
+				question.lblQuestion.setText("Cập nhật chuyên đề");
+				question.lblTextMessage.setText("\"Thất bại\"");
+
+			}
 		}
 		topic.getModelTopic();
 	}
@@ -424,26 +526,32 @@ public class PanelTopicUpdate extends JPanel {
 		CodeTopic = txtCodeTopic.getText();
 
 		if (CodeTopic.equals("")) {
-			JOptionPane.showMessageDialog(null, "Chưa Nhập Mã Chuyên Đề Để Xóa !", "Message",
-					JOptionPane.WARNING_MESSAGE, img.iconDelete32x32());
+			getDialogPosition();
+			question.lblQuestion.setText("Không thể xóa");
+			question.lblTextMessage.setText("\"Chưa nhập mã chuyên đề để xóa\"");
 			return;
 		}
 
-		int choice = JOptionPane.showConfirmDialog(null, "Bạn Có Chắc Chắn Muốn Xóa Không?", "Choose Option",
-				JOptionPane.YES_NO_OPTION, 0, img.iconDelete32x32());
+		getDialogConfirmPostiton();
 
-		if (choice == JOptionPane.YES_OPTION) {
-			if (dao.Delete(CodeTopic) > 0) {
-				JOptionPane.showMessageDialog(null, "Delete Successfully", "Delete", JOptionPane.INFORMATION_MESSAGE,
-						img.iconDelete32x32());
-				ClearForm();
-			} else {
-				JOptionPane.showMessageDialog(null, "Delete Failed", "Delete", JOptionPane.WARNING_MESSAGE,
-						img.iconDelete32x32());
+		if (confirm.option == 1) {
+			for (ModelTopic data : datas) {
+				if(data.getCodeTopic().equals(CodeTopic)) {
+					dao.Delete(CodeTopic);
+					getDialogPosition();
+					question.lblQuestion.setText("Đã xóa");
+					question.lblTextMessage.setText("\"Chuyên đề đã được xóa\"");
+					ClearForm();
+					break;
+				}else{
+					getDialogPosition();
+					question.lblQuestion.setText("Không thể xóa");
+					question.lblTextMessage.setText("\"Mã chuyên đề không tồn tại\"");
+				}
 			}
-			topic.getModelTopic();
+			
 		}
-
+		topic.getModelTopic();
 	}
 
 	public void Action() {

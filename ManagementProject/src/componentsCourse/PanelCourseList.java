@@ -16,6 +16,7 @@ import java.awt.SystemColor;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.CaretListener;
 
+import animation.TextField;
 import componentsEmployee.TableEmployee;
 import img.img;
 import view.SearchStudent;
@@ -29,7 +30,7 @@ import java.awt.event.ActionEvent;
 
 public class PanelCourseList extends JPanel {
 	private img img = new img();
-	public SearchStudent find;
+	public TextField find;
 	private int index = -1;
 	public int indexSelectedCourse = -1;
 	
@@ -38,10 +39,11 @@ public class PanelCourseList extends JPanel {
 	public PanelCourseList(Course course) {
 		setBorder(null);
 		setOpaque(false);
-		
-	
-		
-		find = new SearchStudent();
+		find = new TextField();
+		find.setHint("Tìm kiếm khóa học ...");
+		find.setFont(new Font("SansSerif",Font.PLAIN, 15));
+		find.setCaretColor(new Color(200,200,200));
+		find.setForeground(new Color(200,200,200));
 		
 		table = new TableCourse(course);
 		table.setBorder(null);
@@ -54,16 +56,12 @@ public class PanelCourseList extends JPanel {
 		
 		JPanel panelNorth = new JPanel();
 		panelNorth.setBackground(new Color(60,60,60));
-		find.setBackground(new Color(60,60,60));
-		find.setForeground(new Color(200,200,200));
-		find.setCaretColor(new Color(200,200,200));
+		 
 		
 		JPanel panelCenter = new JPanel();
 		panelCenter.setOpaque(false);
 		panelCenter.setBorder(null);
 		panelCenter.setBackground(new Color(60, 60, 60));
-		
-	
 		
 		
 		GroupLayout gl_panelCenter = new GroupLayout(panelCenter);
@@ -122,11 +120,18 @@ public class PanelCourseList extends JPanel {
 		);
 		panelNorth.setLayout(gl_panelNorth);
 		setLayout(groupLayout);
-		Action();	
+		action();
 	}
 	
-	public void Action() {
+	public void action() {
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				indexSelectedCourse = table.getSelectedRow();
+			}
+		});
 	}
+	
 	
 	public void setRowSelectionInterval(int index) {
 		table.setRowSelectionInterval(index, index);

@@ -3,62 +3,52 @@ package dao;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
-public class ForgotPasswordDAO {
-private java.sql.Connection connection = null;
+import jdbc.JDBCHelper;
+import model.ModelAccount;
+
+public class ForgotPasswordDAO {                                   
 	
-	public void Connection() {
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			String url = "jdbc:sqlserver://DESKTOP-2UOQ2VS:1433;databaseName=USERPASSWORD;encrypt=false";
-			String userId = "sa";
-			String password = "123456";
-			connection = DriverManager.getConnection(url, userId, password);
-		} catch (Exception e) {
-			System.out.println("Error:" + e.toString());
-		}
-	}
-	
-	public boolean ForgotEmail(String Email) {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			Connection();
-			String sql = "SELECT * FROM dbo.LOGINFORM WHERE EMAIL = ?";
-			ps = connection.prepareStatement(sql);
-			ps.setString(1,Email);
-			rs = ps.executeQuery();
+	final String SELECT_BY_EMAIL = "SELECT * FROM dbo.ACCOUNT WHERE EMAIL = ?";
+	final String UPDATE_SQL = "UPDATE dbo.ACCOUNT SET PASSWORD = ? WHERE EMAIL = ?";
+
+	public int ForgotEmail(String email) {
+		try {		
+			ResultSet rs = JDBCHelper.executeQuery(SELECT_BY_EMAIL, email);
+			
 			while(rs.next()) {
-				return true;
-			}
-			
-			
-		} catch (Exception e) {
-			System.out.println("Error :"+e.toString());
-		}
-		return false;
-		
-	}
-	
-	public int ChangePassword(String Email, String Pass) {
-		PreparedStatement ps = null;
-		try {
-			Connection();
-			String sql = "UPDATE dbo.LOGINFORM SET PASSWORD = ? WHERE EMAIL = ?";
-			ps = connection.prepareStatement(sql);
-			ps.setString(1,Pass);
-			ps.setString(2,Email);
-			
-			if(ps.executeUpdate()>0) {
 				return 1;
 			}
 			
-			
 		} catch (Exception e) {
-			System.out.println("Error :"+e.toString());
+			// TODO: handle exception
 		}
-		
 		return -1;
 	}
 	
+	public ArrayList<ModelAccount> SelectALL(String email){
+		ArrayList<ModelAccount> datas = new ArrayList<ModelAccount>();
+		ResultSet rs = null;
+		try {
+			rs = JDBCHelper.executeQuery(SELECT_BY_EMAIL, email);
+			while(rs.next()) {
+				ModelAccount data = new ModelAccount(rs.getString("USERNAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("SODIENTHOAI"), rs.getString("ROLE"));
+				datas.add(data);
+			}
+			rs.close();
+			return datas;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return null;
+	}
+	
+
+	public int ChangePassword(String Email, String Pass) {
+		return JDBCHelper.executeUpdate(UPDATE_SQL, Pass, Email);
+	
+	}
+
 }

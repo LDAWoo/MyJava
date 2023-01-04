@@ -27,7 +27,7 @@ public class CourseDAO implements DAOInterfaceCourse<ModelCourse, Object>{
 
 	@Override
 	public int Update(ModelCourse E) {
-		return JDBCHelper.executeUpdate(UPDATE_SQL, E.getCodeTopic(), E.getTuition(), E.getTime() ,E.getDayOpening(), E.getDayCreate(), E.getCreatePerson(), E.getNote(), E.getCodeCourse());
+		return JDBCHelper.executeUpdate(UPDATE_SQL, E.getCodeTopic(), E.getTuition(), E.getTime(), E.getDayOpening(), E.getDayCreate(), E.getCreatePerson(), E.getNote(), E.getCodeCourse());
 	}
 
 	@Override

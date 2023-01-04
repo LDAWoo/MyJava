@@ -12,7 +12,7 @@ import javax.management.RuntimeErrorException;
 public class JDBCHelper {
 	
 	public static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	public static String url = "jdbc:sqlserver://DESKTOP-2UOQ2VS:1433;databaseName=DUANMAUSOF203;encrypt=false";
+	public static String url = "jdbc:sqlserver://DESKTOP-2UOQ2VS:1433;databaseName=DUANMAUSOF2041;encrypt=false";
 	public static String use = "sa";
 	public static String password = "123456";
 	public static java.sql.Connection connection;

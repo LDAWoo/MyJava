@@ -19,6 +19,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.Caret;
 
+import animation.TextField;
 import dao.EmployeeDAO;
 import img.img;
 import interfaces.IEvent;
@@ -40,7 +41,7 @@ import javax.swing.border.LineBorder;
 public class PanelEmployeeList extends JPanel {
 	private TableEmployee table;
 	private img img = new img();
-	private SearchStudent find;
+	private TextField find;
 	private int index = -1;
 	private Employee employee;
 
@@ -53,7 +54,12 @@ public class PanelEmployeeList extends JPanel {
 		JPanel panelCenter = new JPanel();
 		panelCenter.setOpaque(false);
 		
-		find = new SearchStudent();
+		find = new TextField();
+		find.setHint("Tìm kiếm nhân viên ...");
+		find.setFont(new Font("SansSerif",Font.PLAIN, 15));
+		find.setCaretColor(new Color(200,200,200));
+		find.setForeground(new Color(200,200,200));
+		
 		table = new TableEmployee(employee);
 		table.setBorder(null);
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -75,27 +81,23 @@ public class PanelEmployeeList extends JPanel {
 		panelCenter.setBackground(new Color(60,60,60));
 		panelCenter.setBorder(null);
 		
-		
-		
-		
-		
+
 		JPanel panelNorth = new JPanel();
 		panelNorth.setBackground(new Color(60,60,60));
-		find.setBackground(new Color(60,60,60));
-		find.setForeground(new Color(200,200,200));
-		find.setCaretColor(new Color(200,200,200));
+		
+		
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addComponent(panelNorth, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 952, Short.MAX_VALUE)
 				.addComponent(panelCenter, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1051, Short.MAX_VALUE)
+				.addComponent(panelNorth, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1051, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(32)
-					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addGap(31)
+					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE))
 		);
@@ -109,22 +111,19 @@ public class PanelEmployeeList extends JPanel {
 		gl_panelNorth.setHorizontalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addComponent(lblIconFind, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-					.addGap(89))
-				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addGap(38)
-					.addComponent(find, GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
+					.addGroup(gl_panelNorth.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelNorth.createSequentialGroup()
+							.addGap(38)
+							.addComponent(find, GroupLayout.DEFAULT_SIZE, 1003, Short.MAX_VALUE))
+						.addComponent(lblIconFind, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		gl_panelNorth.setVerticalGroup(
 			gl_panelNorth.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelNorth.createSequentialGroup()
-					.addGroup(gl_panelNorth.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblIconFind, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panelNorth.createSequentialGroup()
-							.addGap(2)
-							.addComponent(find, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
+					.addGap(2)
+					.addComponent(find, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
+				.addComponent(lblIconFind, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
 		);
 		panelNorth.setLayout(gl_panelNorth);
 		setLayout(groupLayout);
@@ -163,11 +162,11 @@ public class PanelEmployeeList extends JPanel {
 
 	
 	
-	public SearchStudent getFind() {
+	public TextField getFind() {
 		return find;
 	}
 
-	public void setFind(SearchStudent find) {
+	public void setFind(TextField find) {
 		this.find = find;
 	}
 

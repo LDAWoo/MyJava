@@ -166,7 +166,7 @@ public class ForgotPasswordView extends JFrame {
 		lblCheck.setText("");
 		lblCheck.setVisible(false);
 		String email = textFieldEmail.getText();
-		if(this.daoPasswordDAO.ForgotEmail(email)){
+		if(this.daoPasswordDAO.ForgotEmail(email)>0){
 			ChangePasswordView view = new ChangePasswordView();
 			setVisible(false);
 			view.setVisible(true);

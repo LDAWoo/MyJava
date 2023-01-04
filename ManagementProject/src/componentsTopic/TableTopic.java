@@ -28,7 +28,7 @@ public class TableTopic extends JTable {
 		setOpaque(false);
 
 		setModel(new DefaultTableModel(new Object[][] {}, new String[] { "MÃ CHUYÊN ĐỀ", "TÊN CHUYÊN ĐỀ", "HỌC PHÍ",
-				"THỜI LƯỢNG", "MÔ TẢ CĐ" }));
+				"THỜI LƯỢNG", "MÔ TẢ CHUYÊN ĐỀ" }));
 		tableModel = (DefaultTableModel) getModel();
 
 		IEvent<ArrayList<ModelTopic>> event = this::OnModelTopicChange;	
@@ -66,8 +66,7 @@ public class TableTopic extends JTable {
        getColumnModel().getColumn(2).setPreferredWidth(10);
        getColumnModel().getColumn(3).setPreferredWidth(10);
        getColumnModel().getColumn(4).setPreferredWidth(300);
-      
-		
+      	
 	}
 	
 	public void OnModelTopicChange(Object source, ArrayList<ModelTopic> eventArgs) {
@@ -87,7 +86,11 @@ public class TableTopic extends JTable {
 			Object[] rows = new Object[6];
 			rows[0] = data.getCodeTopic();
 			rows[1] = data.getNameTopic();
-			rows[2] = data.getTuition();
+			
+			double value = data.getTuition();
+			long roundValue = Math.round(value);
+			
+			rows[2] = Long.toString(roundValue);
 			rows[3] = data.getTime();
 			rows[4] = data.getDescriber();
 			addRow(rows);

@@ -18,9 +18,9 @@ public class EmployeeDAO implements DAOInterfaceEmployee<ModelEmployee, Object> 
 
 	final String SELECT_ALL_SQL = "SELECT *,DAY(NGAYSINH) DAYOFBIRTH, MONTH(NGAYSINH) MONTHOFBIRTH, YEAR(NGAYSINH) YEAROFBIRTH, DAY(NGAYTHAMGIA) DAY, MONTH(NGAYTHAMGIA) MONTH,YEAR(NGAYTHAMGIA) YEAR FROM dbo.NHANVIEN";
 
-	final String UPDATE_SQL = "UPDATE dbo.NHANVIEN SET HOVATEN = ?,NGAYSINH = ?, GIOITINH = ?, NGAYTHAMGIA = ?,MATKHAU = ?, VAITRO = ?, HINH = ?,GHICHU = ? WHERE MANHANVIEN = ?";
+	final String UPDATE_SQL = "UPDATE dbo.NHANVIEN SET HOVATEN = ?,NGAYSINH = ?, GIOITINH = ?, NGAYTHAMGIA = ?,EMAIL = ? ,MATKHAU = ?, VAITRO = ?, HINH = ?,GHICHU = ? WHERE MANHANVIEN = ?";
 
-	final String INSERT_SQL = "INSERT INTO dbo.NHANVIEN (MANHANVIEN,HOVATEN,NGAYSINH,GIOITINH,NGAYTHAMGIA,MATKHAU,VAITRO,HINH,GHICHU) VALUES(?,?,?,?,?,?,?,?,?)";
+	final String INSERT_SQL = "INSERT INTO dbo.NHANVIEN (MANHANVIEN,HOVATEN,NGAYSINH,GIOITINH,NGAYTHAMGIA,EMAIL,MATKHAU,VAITRO,HINH,GHICHU) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 	final String DELETE_SQL = "{call SP_DELETENHANVIEN(?)}";
 
@@ -28,13 +28,13 @@ public class EmployeeDAO implements DAOInterfaceEmployee<ModelEmployee, Object> 
 	@Override
 	public int Insert(ModelEmployee E) {
 		return JDBCHelper.executeUpdate(INSERT_SQL, E.getCodeEmployee(), E.getName(), E.getDate(), E.isSex(),
-				E.getDateOpening(), E.getPassword(), E.getRole(), E.getImg(), E.getNote());
+				E.getDateOpening(),E.getEmail(), E.getPassword(), E.getRole(), E.getImg(), E.getNote());
 	}
 
 	@Override
 	public int Update(ModelEmployee E) {
 		return JDBCHelper.executeUpdate(UPDATE_SQL, E.getName(), E.getDate(), E.isSex(), E.getDateOpening(),
-				E.getPassword(), E.getRole(), E.getImg(), E.getNote(), E.getCodeEmployee());
+				E.getEmail(),E.getPassword(), E.getRole(), E.getImg(), E.getNote(), E.getCodeEmployee());
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class EmployeeDAO implements DAOInterfaceEmployee<ModelEmployee, Object> 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ModelEmployee employee = new ModelEmployee(rs.getString("MANHANVIEN"), rs.getString("HOVATEN"),
-						rs.getString("NGAYSINH"), rs.getBoolean("GIOITINH"), rs.getString("NGAYTHAMGIA"),
+						rs.getString("NGAYSINH"), rs.getBoolean("GIOITINH"),rs.getString("EMAIL"), rs.getString("NGAYTHAMGIA"),
 						rs.getString("VAITRO"), rs.getString("MATKHAU"), rs.getBytes("HINH"), rs.getString("GHICHU"),
 						rs.getString("DAYOFBIRTH"), rs.getString("MONTHOFBIRTH"), rs.getString("YEAROFBIRTH"),
 						rs.getString("DAY"), rs.getString("MONTH"), rs.getString("YEAR"));
@@ -86,7 +86,7 @@ public class EmployeeDAO implements DAOInterfaceEmployee<ModelEmployee, Object> 
 			ResultSet rs = JDBCHelper.executeQuery(sql, args);
 			while (rs.next()) {
 				ModelEmployee employee = new ModelEmployee(rs.getString("MANHANVIEN"), rs.getString("HOVATEN"),
-						rs.getString("NGAYSINH"), rs.getBoolean("GIOITINH"), rs.getString("NGAYTHAMGIA"),
+						rs.getString("NGAYSINH"), rs.getBoolean("GIOITINH"),rs.getString("EMAIL"), rs.getString("NGAYTHAMGIA"),
 						rs.getString("VAITRO"), rs.getString("MATKHAU"), rs.getBytes("HINH"), rs.getString("GHICHU"),
 						rs.getString("DAYOFBIRTH"), rs.getString("MONTHOFBIRTH"), rs.getString("YEAROFBIRTH"),
 						rs.getString("DAY"), rs.getString("MONTH"), rs.getString("YEAR"));

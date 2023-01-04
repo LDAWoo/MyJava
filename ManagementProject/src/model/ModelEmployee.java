@@ -7,6 +7,7 @@ public class ModelEmployee {
 	private String Date;
 	private boolean Sex;
 	private String Role;
+	private String Email;
 	private String Password;
 	private String DateOpening;
 	private byte[] img;
@@ -24,12 +25,13 @@ public class ModelEmployee {
 		
 	}
 
-	public ModelEmployee(String codeEmployee, String name, String date, boolean sex,String dateOpening, String role, String password, byte[] img, String note,String dayOfBirth, String monthOfBirth, String yearOfBirth, 
+	public ModelEmployee(String codeEmployee, String name, String date, boolean sex,String email, String dateOpening, String role, String password, byte[] img, String note,String dayOfBirth, String monthOfBirth, String yearOfBirth, 
 			String dayOpening,String monthOpening,String yearOpening) {
 		CodeEmployee = codeEmployee;
 		Name = name;
 		Date = date;
 		Sex = sex;
+		Email = email;
 		Role = role;
 		Password = password;
 		DateOpening = dateOpening;
@@ -44,12 +46,13 @@ public class ModelEmployee {
 	}
 	
 	
-	public ModelEmployee(String codeEmployee, String name, String date, boolean sex, String role, String password,String dateOpening,byte[] img
+	public ModelEmployee(String codeEmployee, String name, String date, boolean sex,String email, String role, String password,String dateOpening,byte[] img
 			,  String note) {
 		CodeEmployee = codeEmployee;
 		Name = name;
 		Date = date;
 		Sex = sex;
+		Email = email;
 		Role = role;
 		Password = password;
 		DateOpening = dateOpening;
@@ -92,6 +95,16 @@ public class ModelEmployee {
 	public void setPassword(String password) {
 		Password = password;
 	}
+	
+	
+	public String getEmail() {
+		return Email;
+	}
+
+	public void setEmail(String email) {
+		Email = email;
+	}
+
 	public String getDateOpening() {
 		return DateOpening;
 	}

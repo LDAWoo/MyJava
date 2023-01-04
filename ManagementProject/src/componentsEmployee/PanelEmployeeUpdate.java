@@ -17,21 +17,29 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.Dialog.ModalityType;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
-
 import animation.AnimationButton;
+import componentsForgot.DialogQuestion;
+import componetsDialogConfirm.DialogConfirm;
 import dao.EmployeeDAO;
 import img.ImageHelper;
 import img.img;
 import interfaces.IEvent;
 import model.ModelEmployee;
+import view.DialogMessage;
+import view.Main;
+import view.MainEmployee;
+import view.PanelMessage;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
@@ -56,7 +64,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class PanelEmployeeUpdate extends JPanel {
+public class PanelEmployeeUpdate extends JPanel{
 
 	private ArrayList<ModelEmployee> datas = new ArrayList<ModelEmployee>();
 
@@ -77,7 +85,9 @@ public class PanelEmployeeUpdate extends JPanel {
 	private JTextField txtName;
 	private JPasswordField txtPassword;
 	private JTextField txtRole;
+
 	private JTextField txtCodeEmplo;
+
 	private EmployeeDAO dao = new EmployeeDAO();
 
 	private byte[] personalImage = null;
@@ -113,46 +123,71 @@ public class PanelEmployeeUpdate extends JPanel {
 
 	private Employee employee;
 
-	private String Note;
+	String Note;
 
-	private String MonthOfOpening;
+	String MonthOfOpening;
 
-	private String Code;
+	String Code;
 
-	private String Name;
+	String Name;
 
-	private String DayOfBirth;
+	String DayOfBirth;
 
-	private String MonthOfBirth;
+	String MonthOfBirth;
 
-	private String YearOfBirth;
+	String YearOfBirth;
 
-	private String DayBirth;
+	String DayBirth;
 
-	private boolean sex;
+	boolean sex;
 
-	private String Role;
+	String Role;
 
-	private String Password;
+	String Password;
 
-	private String DayOfOpening;
+	String DayOfOpening;
 
-	private String YearOfOpening;
+	String YearOfOpening;
 
-	private String DayOpening;
-	
+	String DayOpening;
+
 	private Color colorTextForeground = new Color(191, 191, 191);
 	private Color colorTextBackground = new Color(50, 50, 50);
 	private Color colorLabel = new Color(200, 200, 200);
 	private Color colorCaret = new Color(255, 255, 255);
 	private Font fontText13 = new Font("SansSerif", Font.PLAIN, 13);
+
+	private Font fontText13Italic = new Font("SansSerif", Font.ITALIC, 13);
+	private Color colorTextForegroundRed = new Color(220, 20, 20);
+
 	private Font fontText13Bold = new Font("SansSerif", Font.BOLD, 13);
-	
+
+	private Font fontText15Plain = new Font("SansSerif", Font.PLAIN, 15);
+
 	private Font fontText15 = new Font("SansSerif", Font.BOLD, 15);
 	private Font fontText18 = new Font("SansSerif", Font.BOLD, 18);
-	
-	
+	private JPanel panelCenter;
 
+	private boolean isSelected = true;
+
+	private String employee_code_pattern = "^[N]{1}[V]{1}[0-9]{5}$";
+
+	private String password_pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+	
+	private String email_pattern = "^([a-z0-9_\\.-]){2,}+@([\\da-z]){2,}\\.([a-z]){2,}(\\.|[a-z]{2,}){0,}$";
+	
+	private  DialogQuestion question = new DialogQuestion(null);
+	
+	private JLabel lblEmail;
+	private JTextField txtEmail;
+
+	private String email;
+
+	private String CodeEmployee;
+
+	private static DialogConfirm confirm;
+
+	
 	public PanelEmployeeUpdate(Employee employee) {
 
 		this.employee = employee;
@@ -164,113 +199,9 @@ public class PanelEmployeeUpdate extends JPanel {
 		lbldescribe.setForeground(colorLabel);
 		lbldescribe.setFont(fontText15);
 
-		JLabel lblPassword = new JLabel("Mật khẩu:");
-		lblPassword.setForeground(colorLabel);
-		lblPassword.setFont(fontText15);
-
-		JLabel lblCodeEmplo = new JLabel("Mã nhân viên:");
-		lblCodeEmplo.setForeground(colorLabel);
-		lblCodeEmplo.setFont(fontText15);
-
-		JLabel lblName = new JLabel("Họ và tên:");
-		lblName.setForeground(colorLabel);
-		lblName.setFont(fontText15);
-
-		JLabel lblRole = new JLabel("Vai trò:");
-		lblRole.setForeground(colorLabel);
-		lblRole.setFont(fontText15);
-
-		JLabel lblPerson = new JLabel("Giới tính:");
-		lblPerson.setForeground(colorLabel);
-		lblPerson.setFont(fontText15);
-
-		txtRole = new JTextField();
-		txtRole.setFont(fontText13);
-		txtRole.setBorder(null);
-		txtRole.setForeground(colorTextForeground);
-		txtRole.setBackground(new Color(50, 50, 50));
-		txtRole.setCaretColor(new Color(200, 200, 200));
-
-		txtCodeEmplo = new JTextField();
-		txtCodeEmplo.setFont(fontText13);
-		txtCodeEmplo.setBorder(null);
-		txtCodeEmplo.setForeground(colorTextForeground);
-		txtCodeEmplo.setBackground(colorTextBackground);
-		txtCodeEmplo.setCaretColor(colorCaret);
-
 		JLabel lblLogo = new JLabel("");
 
-		JLabel lblDay = new JLabel("Ngày sinh:");
-		lblDay.setForeground(colorLabel);
-		lblDay.setFont(fontText15);
-
-		cbbDayDate = new JComboBox();
-		cbbDayDate.setOpaque(false);
-		cbbDayDate.setForeground(new Color(60, 60, 60));
-		cbbDayDate.setFont(fontText13Bold);
-		cbbDayDate.setBorder(null);
-	
-
-		cbbMonthDate = new JComboBox();
-		cbbMonthDate.setBorder(null);
-		cbbMonthDate.setOpaque(false);
-		cbbMonthDate.setForeground(new Color(60, 60, 60));
-		cbbMonthDate.setFont(fontText13Bold);
-
-		cbbYearDate = new JComboBox();
-		cbbYearDate.setBorder(null);
-		cbbYearDate.setOpaque(false);
-		cbbYearDate.setForeground(new Color(60, 60, 60));
-		cbbYearDate.setFont(fontText13Bold);
-
-		JLabel lblTimeOpening = new JLabel("Ngày tham gia:");
-		lblTimeOpening.setForeground(colorLabel);
-		lblTimeOpening.setFont(fontText15);
-
-		cbbDay = new JComboBox();
-		cbbDay.setForeground(new Color(60, 60, 60));
-		cbbDay.setFont(fontText13Bold);
-		cbbDay.setBorder(null);
-		cbbDay.setBackground(Color.WHITE);
-
-		cbbMonth = new JComboBox();
-		cbbMonth.setForeground(new Color(60, 60, 60));
-		cbbMonth.setFont(fontText13Bold);
-
-		cbbYear = new JComboBox();
-		cbbYear.setForeground(new Color(60, 60, 60));
-		cbbYear.setFont(fontText13Bold);
-
-		txtName = new JTextField();
-		txtName.setFont(fontText13);
-		txtName.setBorder(null);
-		txtName.setForeground(colorTextForeground);
-		txtName.setBackground(colorTextBackground);
-		txtName.setCaretColor(colorCaret);
-
 		buttonGroup = new ButtonGroup();
-
-		rdbtnMale = new JRadioButton("Nam");
-		rdbtnMale.setOpaque(false);
-		rdbtnMale.setForeground(colorLabel);
-		rdbtnMale.setFont(fontText13Bold);
-		rdbtnMale.setBackground(getBackground());
-
-		rdbtnFemale = new JRadioButton("Nữ");
-		rdbtnFemale.setOpaque(false);
-		rdbtnFemale.setForeground(colorLabel);
-		rdbtnFemale.setFont(fontText13Bold);
-		rdbtnFemale.setBackground(getBackground());
-
-		buttonGroup.add(rdbtnMale);
-		buttonGroup.add(rdbtnFemale);
-
-		txtPassword = new JPasswordField();
-		txtPassword.setFont(fontText13);
-		txtPassword.setBorder(null);
-		txtPassword.setForeground(colorTextForeground);
-		txtPassword.setBackground(colorTextBackground);
-		txtPassword.setCaretColor(colorCaret);
 
 		JLabel lblImg = new JLabel("Hình:\r\n\r\n");
 		lblImg.setForeground(colorLabel);
@@ -306,15 +237,14 @@ public class PanelEmployeeUpdate extends JPanel {
 		lblimg.setIcon(img.ImageWhite());
 		lblimg.setBackground(new Color(55, 55, 55));
 
-
 		panelImg.add(lblimg);
 
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(panel,
-				GroupLayout.PREFERRED_SIZE, 1020, Short.MAX_VALUE));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
-				groupLayout.createSequentialGroup().addContainerGap().addComponent(panel, GroupLayout.DEFAULT_SIZE, 673,
-						Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(panel,
+				GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(panel,
+						GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setOpaque(false);
@@ -368,165 +298,289 @@ public class PanelEmployeeUpdate extends JPanel {
 		btnLast.setFont(fontText18);
 		btnLast.setBorder(null);
 		GroupLayout gl_layeredPane = new GroupLayout(layeredPane);
-		gl_layeredPane.setHorizontalGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING).addGroup(gl_layeredPane
-				.createSequentialGroup().addGap(158)
-				.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING).addGroup(gl_layeredPane
-						.createSequentialGroup()
-						.addComponent(btnFirst, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE).addGap(28)
-						.addComponent(btnPrev, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE).addGap(29)
-						.addComponent(btnNext, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE).addGap(28)
-						.addComponent(btnLast, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_layeredPane.createSequentialGroup()
-								.addComponent(btnNew, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-								.addGap(28)
+		gl_layeredPane.setHorizontalGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_layeredPane.createSequentialGroup().addGap(188)
+						.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnFirst, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNew, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
+						.addGap(35)
+						.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING, false).addGroup(gl_layeredPane
+								.createSequentialGroup()
 								.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-								.addGap(29)
-								.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-								.addGap(28).addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 125,
-										GroupLayout.PREFERRED_SIZE)))));
+								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_layeredPane.createSequentialGroup()
+										.addComponent(btnPrev, GroupLayout.PREFERRED_SIZE, 125,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(36).addComponent(btnNext, GroupLayout.PREFERRED_SIZE, 125,
+												GroupLayout.PREFERRED_SIZE)))
+						.addGap(31)
+						.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnLast, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap()));
 		gl_layeredPane.setVerticalGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_layeredPane.createSequentialGroup().addGap(11)
 						.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnFirst, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnPrev, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnNext, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnLast, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-						.addGap(11)
+								.addComponent(btnLast, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnFirst, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
 						.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnNew, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))));
+								.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnNew, GroupLayout.PREFERRED_SIZE, 35,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 35,
+												GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 35,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 35,
+												GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap()));
 		layeredPane.setLayout(gl_layeredPane);
 
+		panelCenter = new JPanel();
+		panelCenter.setOpaque(false);
+
+		JLabel lblCodeEmplo = new JLabel("Mã nhân viên:");
+		lblCodeEmplo.setForeground(colorLabel);
+		lblCodeEmplo.setFont(fontText15);
+
+		txtCodeEmplo = new JTextField();
+
+		txtCodeEmplo.setFont(fontText13);
+		txtCodeEmplo.setBorder(null);
+		txtCodeEmplo.setForeground(colorTextForeground);
+		txtCodeEmplo.setBackground(colorTextBackground);
+		txtCodeEmplo.setCaretColor(colorCaret);
+
+		JLabel lblName = new JLabel("Họ và tên:");
+		lblName.setForeground(colorLabel);
+		lblName.setFont(fontText15);
+
+		txtName = new JTextField();
+		txtName.setFont(fontText13);
+		txtName.setBorder(null);
+		txtName.setForeground(colorTextForeground);
+		txtName.setBackground(colorTextBackground);
+		txtName.setCaretColor(colorCaret);
+
+		JLabel lblDay = new JLabel("Ngày sinh:");
+		lblDay.setForeground(colorLabel);
+		lblDay.setFont(fontText15);
+
+		cbbDayDate = new JComboBox();
+		cbbDayDate.setForeground(new Color(60, 60, 60));
+		cbbDayDate.setFont(fontText15Plain);
+		cbbDayDate.setFocusable(false);
+		cbbDayDate.setMaximumRowCount(10);
+
+		cbbMonthDate = new JComboBox();
+		cbbMonthDate.setForeground(new Color(60, 60, 60));
+		cbbMonthDate.setFont(fontText15Plain);
+		cbbMonthDate.setFocusable(false);
+		cbbMonthDate.setMaximumRowCount(10);
+
+		cbbYearDate = new JComboBox();
+		cbbYearDate.setForeground(new Color(60, 60, 60));
+		cbbYearDate.setFont(fontText15Plain);
+		cbbYearDate.setFocusable(false);
+		cbbYearDate.setMaximumRowCount(10);
+
+		JLabel lblPerson = new JLabel("Giới tính:");
+		lblPerson.setForeground(colorLabel);
+		lblPerson.setFont(fontText15);
+
+		rdbtnMale = new JRadioButton("Nam");
+		rdbtnMale.setOpaque(false);
+		rdbtnMale.setForeground(colorLabel);
+		rdbtnMale.setFont(fontText13Bold);
+		rdbtnMale.setBackground(getBackground());
+
+		buttonGroup.add(rdbtnMale);
+
+		rdbtnFemale = new JRadioButton("Nữ");
+		rdbtnFemale.setOpaque(false);
+		rdbtnFemale.setForeground(colorLabel);
+		rdbtnFemale.setFont(fontText13Bold);
+		rdbtnFemale.setBackground(getBackground());
+		buttonGroup.add(rdbtnFemale);
+
+		JLabel lblRole = new JLabel("Vai trò:");
+		lblRole.setForeground(colorLabel);
+		lblRole.setFont(fontText15);
+
+		txtRole = new JTextField();
+		txtRole.setFont(fontText13);
+		txtRole.setBorder(null);
+		txtRole.setForeground(colorTextForeground);
+		txtRole.setBackground(new Color(50, 50, 50));
+		txtRole.setCaretColor(new Color(200, 200, 200));
+
+		JLabel lblTimeOpening = new JLabel("Ngày tham gia:");
+		lblTimeOpening.setForeground(colorLabel);
+		lblTimeOpening.setFont(fontText15);
+
+		cbbDay = new JComboBox();
+		cbbDay.setForeground(new Color(60, 60, 60));
+		cbbDay.setFont(fontText15Plain);
+		cbbDay.setFocusable(false);
+		cbbDay.setMaximumRowCount(10);
+
+		cbbMonth = new JComboBox();
+		cbbMonth.setForeground(new Color(60, 60, 60));
+		cbbMonth.setFont(fontText15Plain);
+		cbbMonth.setFocusable(false);
+		cbbMonth.setMaximumRowCount(10);
+
+		cbbYear = new JComboBox();
+		cbbYear.setForeground(new Color(60, 60, 60));
+		cbbYear.setFont(fontText15Plain);
+		cbbYear.setFocusable(false);
+		cbbYear.setMaximumRowCount(10);
+
+		JLabel lblPassword = new JLabel("Mật khẩu:");
+		lblPassword.setForeground(colorLabel);
+		lblPassword.setFont(fontText15);
+
+		txtPassword = new JPasswordField();
+		txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtPassword.setBorder(null);
+		txtPassword.setForeground(colorTextForeground);
+		txtPassword.setBackground(colorTextBackground);
+		txtPassword.setCaretColor(colorCaret);
+
+		lblEmail = new JLabel("Email:");
+		lblEmail.setForeground(SystemColor.scrollbar);
+		lblEmail.setFont(new Font("SansSerif", Font.BOLD, 15));
+
+		txtEmail = new JTextField();
+		txtEmail.setForeground(new Color(191, 191, 191));
+		txtEmail.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		txtEmail.setCaretColor(Color.WHITE);
+		txtEmail.setBorder(null);
+		txtEmail.setBackground(new Color(50, 50, 50));
+		GroupLayout gl_panelCenter = new GroupLayout(panelCenter);
+		gl_panelCenter.setHorizontalGroup(gl_panelCenter.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCenter.createSequentialGroup().addGap(84)
+						.addComponent(cbbDayDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cbbMonthDate, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cbbYearDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(81).addComponent(rdbtnMale).addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(rdbtnFemale, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(307, Short.MAX_VALUE))
+				.addGroup(gl_panelCenter.createSequentialGroup().addGap(83)
+						.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(444, Short.MAX_VALUE))
+				.addGroup(gl_panelCenter.createSequentialGroup().addGap(39).addGroup(gl_panelCenter
+						.createParallelGroup(Alignment.LEADING)
+						.addComponent(txtCodeEmplo, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+						.addComponent(txtName, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+						.addComponent(txtRole, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+						.addGroup(gl_panelCenter.createSequentialGroup()
+								.addGroup(gl_panelCenter.createParallelGroup(Alignment.TRAILING)
+										.addComponent(lblEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 68,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblPassword, Alignment.LEADING)
+										.addComponent(lblTimeOpening, Alignment.LEADING)
+										.addComponent(lblRole, Alignment.LEADING)
+										.addGroup(Alignment.LEADING,
+												gl_panelCenter.createSequentialGroup().addComponent(lblDay).addGap(234)
+														.addComponent(lblPerson))
+										.addComponent(lblName, Alignment.LEADING)
+										.addComponent(lblCodeEmplo, Alignment.LEADING))
+								.addContainerGap(325, Short.MAX_VALUE))
+						.addComponent(txtPassword, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+						.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE))));
+		gl_panelCenter.setVerticalGroup(gl_panelCenter.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCenter.createSequentialGroup().addContainerGap().addComponent(lblCodeEmplo)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtCodeEmplo, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblName, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtName, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panelCenter.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblDay, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblPerson, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panelCenter.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panelCenter.createParallelGroup(Alignment.BASELINE)
+										.addComponent(cbbDayDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(cbbMonthDate, GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(cbbYearDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panelCenter.createParallelGroup(Alignment.BASELINE).addComponent(rdbtnMale)
+										.addComponent(rdbtnFemale)))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblRole, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE).addGap(1)
+						.addComponent(txtRole, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(lblTimeOpening, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panelCenter.createParallelGroup(Alignment.BASELINE)
+								.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+						.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap()));
+		panelCenter.setLayout(gl_panelCenter);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addComponent(layeredPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
+				.createSequentialGroup()
+				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup().addGap(87).addComponent(lblImg,
+										GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel.createSequentialGroup().addGap(20).addComponent(panelImg,
+										GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel.createSequentialGroup().addContainerGap().addComponent(lbldescribe,
+										GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)))
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE))
+						.addGroup(gl_panel.createSequentialGroup().addContainerGap().addComponent(panelNote,
+								GroupLayout.DEFAULT_SIZE, 974, Short.MAX_VALUE))
+						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 984, Short.MAX_VALUE))
+				.addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
+				.createSequentialGroup().addGap(9)
+				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel.createSequentialGroup()
+						.addComponent(lblImg, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE).addGap(3)
+						.addComponent(panelImg, GroupLayout.PREFERRED_SIZE, 257, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+						.addComponent(lbldescribe, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addGap(11))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(10)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addGap(10)
-									.addComponent(panelImg, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
-								.addComponent(lblImg, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lbldescribe, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)))
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(31)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(lblPassword)
-									.addContainerGap(684, Short.MAX_VALUE))
-								.addGroup(gl_panel.createSequentialGroup()
-									.addGap(243)
-									.addComponent(lblPerson))
-								.addComponent(lblName)
-								.addComponent(lblDay)
-								.addComponent(lblCodeEmplo, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addGap(44)
-									.addComponent(cbbDayDate, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-									.addGap(4)
-									.addComponent(cbbMonthDate, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-									.addGap(3)
-									.addComponent(cbbYearDate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-									.addGap(60)
-									.addComponent(rdbtnMale)
-									.addGap(2)
-									.addComponent(rdbtnFemale, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-								.addComponent(lblRole)
-								.addComponent(lblTimeOpening)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addGap(44)
-									.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-									.addGap(4)
-									.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-									.addGap(3)
-									.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-								.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-									.addComponent(txtCodeEmplo, GroupLayout.PREFERRED_SIZE, 710, GroupLayout.PREFERRED_SIZE)
-									.addContainerGap())))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 706, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panelNote, GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
-					.addContainerGap())
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-					.addContainerGap(303, Short.MAX_VALUE)
-					.addComponent(txtRole, GroupLayout.PREFERRED_SIZE, 707, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-					.addContainerGap(302, Short.MAX_VALUE)
-					.addComponent(txtName, GroupLayout.PREFERRED_SIZE, 708, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(8)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_panel.createSequentialGroup()
-											.addGap(49)
-											.addComponent(lblName, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_panel.createSequentialGroup()
-											.addComponent(lblCodeEmplo, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-											.addGap(45)
-											.addComponent(txtName, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_panel.createSequentialGroup()
-											.addGap(22)
-											.addComponent(txtCodeEmplo, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-											.addGap(47)
-											.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblPerson, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblDay, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))))
-									.addGap(1)
-									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(cbbDayDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(cbbMonthDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(cbbYearDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(rdbtnMale)
-										.addComponent(rdbtnFemale))
-									.addGap(17)
-									.addComponent(lblRole, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(txtRole, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-									.addGap(1)
-									.addComponent(lblTimeOpening, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(lblImg, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-									.addGap(1)
-									.addComponent(panelImg, GroupLayout.PREFERRED_SIZE, 257, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(288)
-							.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(20)
-							.addComponent(lbldescribe, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panelNote, GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE))
-		);
+								.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)))
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(panelNote, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)));
 		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
 		initFillComboboxDate();
@@ -536,17 +590,16 @@ public class PanelEmployeeUpdate extends JPanel {
 
 	public void initFillComboboxDate() {
 		cbbModelDay = new DefaultComboBoxModel();
-		String[] comboboxDay = new String[] { "Day", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
+		String[] comboboxDay = new String[] { "Ngày", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
 				"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28",
 				"29", "30", "31" };
 		for (String string : comboboxDay) {
 			cbbModelDay.addElement(string);
 		}
-
 		cbbDayDate.setModel(cbbModelDay);
 
 		cbbModelMonth = new DefaultComboBoxModel();
-		String[] comboboxMonth = new String[] { "Month", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+		String[] comboboxMonth = new String[] { "Tháng", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
 				"11", "12" };
 		for (String string : comboboxMonth) {
 			cbbModelMonth.addElement(string);
@@ -554,16 +607,17 @@ public class PanelEmployeeUpdate extends JPanel {
 		cbbMonthDate.setModel(cbbModelMonth);
 
 		cbbModelYear = new DefaultComboBoxModel();
-		String[] comboboxYear = new String[] { "Year", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997",
+		String[] comboboxYear = new String[] { "Năm", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997",
 				"1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010",
 				"2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022" };
 		for (String string : comboboxYear) {
 			cbbModelYear.addElement(string);
 		}
+
 		cbbYearDate.setModel(cbbModelYear);
 
 		cbbModelDayCreate = new DefaultComboBoxModel();
-		String[] comboboxDayCreate = new String[] { "Day", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+		String[] comboboxDayCreate = new String[] { "Ngày", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
 				"11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27",
 				"28", "29", "30", "31" };
 		for (String string : comboboxDayCreate) {
@@ -572,7 +626,7 @@ public class PanelEmployeeUpdate extends JPanel {
 		cbbDay.setModel(cbbModelDayCreate);
 
 		cbbModelMonthCreate = new DefaultComboBoxModel();
-		String[] comboboxMonthCreate = new String[] { "Month", "01", "02", "03", "04", "05", "06", "07", "08", "09",
+		String[] comboboxMonthCreate = new String[] { "Tháng", "01", "02", "03", "04", "05", "06", "07", "08", "09",
 				"10", "11", "12" };
 		for (String string : comboboxMonthCreate) {
 			cbbModelMonthCreate.addElement(string);
@@ -580,7 +634,7 @@ public class PanelEmployeeUpdate extends JPanel {
 		cbbMonth.setModel(cbbModelMonthCreate);
 
 		cbbModelYearCreate = new DefaultComboBoxModel();
-		String[] comboboxYearCreate = new String[] { "Year", "1990", "1991", "1992", "1993", "1994", "1995", "1996",
+		String[] comboboxYearCreate = new String[] { "Năm", "1990", "1991", "1992", "1993", "1994", "1995", "1996",
 				"1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009",
 				"2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021",
 				"2022" };
@@ -598,6 +652,133 @@ public class PanelEmployeeUpdate extends JPanel {
 		datas = eventArgs;
 	}
 
+	public void getDialogPosition() {
+		question.setLocation(Main.xScreen, Main.yScreen);
+		question.setVisible(true);
+	}
+	
+	public void getDialogConfirmPosition() {
+		confirm = new DialogConfirm(null);
+		confirm.setLocation(Main.xScreen, Main.yScreen);
+		confirm.setModalityType(ModalityType.APPLICATION_MODAL);
+		confirm.setVisible(true);
+	}
+
+	public boolean Validate() {
+		if (txtCodeEmplo.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Mã nhân viên\"");
+			return false;
+		}
+		if (!txtCodeEmplo.getText().matches(employee_code_pattern)) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Mã nhân viên đúng định dạng\"");
+			return false;
+		}
+
+		if (txtName.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Tên nhân viên\"");
+			return false;
+		}
+
+		if (cbbDayDate.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Ngày sinh\"");
+			return false;
+		}
+
+		if (cbbMonthDate.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Tháng sinh\"");
+			return false;
+		}
+
+		if (cbbYearDate.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Năm sinh\"");
+			return false;
+		}
+
+		if (!rdbtnMale.isSelected() && !rdbtnFemale.isSelected()) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Giới tính\"");
+			return false;
+		}
+
+		if (txtRole.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Vai trò\"");
+			return false;
+		}
+
+		if (!txtRole.getText().equals("Manager") && !txtRole.getText().equals("Employee")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Vai trò là Manager hoặc Employee\"");
+			return false;
+		}
+
+		if (cbbDay.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Ngày tham gia\"");
+			return false;
+		}
+
+		if (cbbMonth.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Tháng tham gia\"");
+			return false;
+		}
+
+		if (cbbYear.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Năm tham gia\"");
+			return false;
+		}
+
+		if (txtEmail.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Email nhân viên\"");
+			return false;
+		}
+
+		if (!txtEmail.getText().matches(email_pattern)) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Email đúng định dạng\"");
+			return false;
+		}
+
+		if (txtPassword.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Mật khẩu nhân viên\"");
+			return false;
+		}
+
+		if (!txtPassword.getText().matches(password_pattern)) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Mật khẩu đúng định dạng\"");
+			return false;
+		}
+
+		return true;
+	}
+
 	public void Display(int index) {
 		String Code = datas.get(index).getCodeEmployee();
 		String Name = datas.get(index).getName();
@@ -606,10 +787,11 @@ public class PanelEmployeeUpdate extends JPanel {
 		String Role = datas.get(index).getRole();
 		String Password = datas.get(index).getPassword();
 		String Note = datas.get(index).getNote();
-
+		String email = datas.get(index).getEmail();
 		txtCodeEmplo.setText(Code);
 		txtName.setText(Name);
 		txtRole.setText(Role);
+		txtEmail.setText(email);
 		txtPassword.setText(Password);
 		textAreaNote.setText(Note);
 
@@ -626,8 +808,6 @@ public class PanelEmployeeUpdate extends JPanel {
 		cbbDayDate.setSelectedItem(DayOfBirth);
 		cbbMonthDate.setSelectedIndex(Integer.parseInt(MonthOfBirth));
 		cbbYearDate.setSelectedItem(YearOfBirth);
-		
-		System.out.println(MonthOfBirth);
 
 		String DayOpening = datas.get(index).getDayOpening();
 		String MonthOpening = datas.get(index).getMonthOpening();
@@ -655,7 +835,7 @@ public class PanelEmployeeUpdate extends JPanel {
 	}
 
 	public void ActionButton() {
-		
+
 		lblimg.addMouseListener(new MouseAdapter() {
 
 			public void mousePressed(MouseEvent e) {
@@ -686,7 +866,8 @@ public class PanelEmployeeUpdate extends JPanel {
 
 					File file = fileChooser.getSelectedFile();
 					try {
-
+						
+						
 						ImageIcon icon = new ImageIcon(file.getPath());
 						Image img = image.resize(icon.getImage(), 217, 257);
 
@@ -701,7 +882,7 @@ public class PanelEmployeeUpdate extends JPanel {
 				}
 			};
 		});
-		
+
 		btnNew.addActionListener(new ActionListener() {
 
 			@Override
@@ -779,41 +960,47 @@ public class PanelEmployeeUpdate extends JPanel {
 	}
 
 	public void getTextField() {
-		Code = txtCodeEmplo.getText();
-		Name = txtName.getText();
-		DayOfBirth = cbbDayDate.getSelectedItem().toString();
-		MonthOfBirth = cbbMonthDate.getSelectedItem().toString();
-		YearOfBirth = cbbYearDate.getSelectedItem().toString();
-		DayBirth = YearOfBirth + MonthOfBirth + DayOfBirth;
-		sex = true;
-		if (rdbtnMale.isSelected()) {
+		if (Validate()) {
+			Code = txtCodeEmplo.getText();
+			Name = txtName.getText();
+			DayOfBirth = cbbDayDate.getSelectedItem().toString();
+			MonthOfBirth = cbbMonthDate.getSelectedItem().toString();
+			YearOfBirth = cbbYearDate.getSelectedItem().toString();
+			DayBirth = YearOfBirth + MonthOfBirth + DayOfBirth;
+
+			email = txtEmail.getText();
 			sex = true;
-		} else if (rdbtnFemale.isSelected()) {
-			sex = false;
+			if (rdbtnMale.isSelected()) {
+				sex = true;
+			} else if (rdbtnFemale.isSelected()) {
+				sex = false;
+			}
+			Role = txtRole.getText();
+			Password = new String(txtPassword.getPassword());
+			DayOfOpening = cbbDay.getSelectedItem().toString();
+			MonthOfOpening = cbbMonth.getSelectedItem().toString();
+			YearOfOpening = cbbYear.getSelectedItem().toString();
+			DayOpening = YearOfOpening + MonthOfOpening + DayOfOpening;
+			Note = textAreaNote.getText();
 		}
-		Role = txtRole.getText();
-		Password = new String(txtPassword.getPassword());
-		DayOfOpening = cbbDay.getSelectedItem().toString();
-		MonthOfOpening = cbbMonth.getSelectedItem().toString();
-		YearOfOpening = cbbYear.getSelectedItem().toString();
-		DayOpening = YearOfOpening + MonthOfOpening + DayOfOpening;
-		Note = textAreaNote.getText();
 	}
 
 	public void Update() {
 		getTextField();
-		byte[] Img = personalImage;	
-		if(personalImage == null) {
+		byte[] Img = personalImage;
+		if (personalImage == null) {
 			Img = datas.get(IndexSelectedEmployee).getImg();
 		}
-		
-		if (dao.Update(new ModelEmployee(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note)) > 0) {
-			JOptionPane.showMessageDialog(null, "Update Successfully", "Update", JOptionPane.INFORMATION_MESSAGE,
-					img.iconEdit32x32());
+
+		if (dao.Update(new ModelEmployee(Code, Name, DayBirth, sex, email, Role, Password, DayOpening, Img, Note)) > 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Cập nhật");
+			question.lblTextMessage.setText("\"Thành công\"");
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Update Faied", "Update", JOptionPane.WARNING_MESSAGE,
-					img.iconEdit32x32());
+			getDialogPosition();
+			question.lblQuestion.setText("Cập nhật");
+			question.lblTextMessage.setText("\"Thất bại\"");
 		}
 		employee.getModelEmployees();
 	}
@@ -824,54 +1011,75 @@ public class PanelEmployeeUpdate extends JPanel {
 
 		if (lblimg == null) {
 			try {
-				ImageIcon icon = new ImageIcon(getClass().getResource("default-user.png"));
+				File file = new File("C:\\Users\\LDAVu\\OneDrive\\Pictures\\default-user.png");
+				ImageIcon icon = new ImageIcon(file.getPath());
+				Image ig = image.resize(icon.getImage(), 217, 257);
+				
+				personalImage = image.toByteArray(ig, "jpg");
 
-				Image ig = image.resize(icon.getImage(), 130, 162);
-				Img = image.toByteArray(ig, "jpg");
+				if (dao.Insert(new ModelEmployee(Code, Name, DayBirth, sex, email, Role, Password, DayOpening, Img,
+						Note)) > 0) {
+					getDialogPosition();
+					question.lblQuestion.setText("Thêm nhân viên");
+					question.lblTextMessage.setText("\"Thành công\"");
 
-				if (dao.Insert(
-						new ModelEmployee(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note)) > 0) {
-					JOptionPane.showMessageDialog(null, "Insert Successfully", "Insert",
-							JOptionPane.INFORMATION_MESSAGE, img.iconAdd32x32());
-
+				} else {
+					getDialogPosition();
+					question.lblQuestion.setText("Không thể thêm nhân viên");
+					question.lblTextMessage.setText("\"Mã nhân viên đã tồn tại\"");
 				}
 			} catch (Exception errorImg) {
 				System.out.println("Error: " + errorImg.toString());
 			}
 		} else {
-			if (dao.Insert(new ModelEmployee(Code, Name, DayBirth, sex, Role, Password, DayOpening, Img, Note)) > 0) {
-				JOptionPane.showMessageDialog(null, "Insert Successfully", "Insert",
-						JOptionPane.INFORMATION_MESSAGE, img.iconAdd32x32());
+			if (dao.Insert(
+					new ModelEmployee(Code, Name, DayBirth, sex, email, Role, Password, DayOpening, Img, Note)) > 0) {
+				getDialogPosition();
+				question.lblQuestion.setText("Thêm nhân viên");
+				question.lblTextMessage.setText("\"Thành công\"");
 
+			} else {
+				getDialogPosition();
+				question.lblQuestion.setText("Không thể thêm nhân viên");
+				question.lblTextMessage.setText("\"Mã nhân viên đã tồn tại\"");
 			}
 		}
 		employee.getModelEmployees();
 	}
 
 	public void Delete() {
-		String CodeEmployee = txtCodeEmplo.getText();
+		CodeEmployee = txtCodeEmplo.getText();
 		if (CodeEmployee.equals("")) {
-			JOptionPane.showMessageDialog(null, "Chưa Nhập Mã Nhân Viên Để Xóa !", "Message",
-					JOptionPane.WARNING_MESSAGE, img.iconDelete32x32());
+			getDialogPosition();
+			question.lblQuestion.setText("Không thể xóa nhân viên");
+			question.lblTextMessage.setText("\"Chưa Nhập Mã Nhân Viên Để Xóa\"");
 			return;
 		}
 
-		int choice = JOptionPane.showConfirmDialog(null, "Bạn Có Chắc Chắn Muốn Xóa Không?", "Choose Option",
-				JOptionPane.YES_NO_OPTION, 0, img.iconDelete32x32());
-
-		if (choice == JOptionPane.YES_OPTION) {
-			if (dao.Delete(CodeEmployee) > 0) {
-				JOptionPane.showMessageDialog(null, "Delete Successfully", "Delete",
-						JOptionPane.INFORMATION_MESSAGE, img.iconDelete32x32());
-				ClearForm();
-			} else {
-				JOptionPane.showMessageDialog(null, "Delete Failed", "Delete", JOptionPane.WARNING_MESSAGE,
-						img.iconDelete32x32());
+		getDialogConfirmPosition();
+		
+		if(confirm.option == 1) {
+			for (ModelEmployee data : datas) {
+				if(!data.getCodeEmployee().equals(CodeEmployee)) {
+					getDialogPosition();
+					question.lblQuestion.setText("Xóa nhân viên");
+					question.lblTextMessage.setText("\"Mã nhân viên không tồn tại\"");
+					
+				}else {
+					dao.Delete(CodeEmployee);
+					getDialogPosition();
+					question.lblQuestion.setText("Xóa nhân viên");
+					question.lblTextMessage.setText("\"Nhân viên đã được xóa\"");
+					ClearForm();
+					
+				}
 			}
-			employee.getModelEmployees();
 		}
-	}
 
+		employee.getModelEmployees();
+		
+	}
+	
 	public void First() {
 		btnPrev.setEnabled(false);
 		btnNext.setEnabled(true);
@@ -921,51 +1129,9 @@ public class PanelEmployeeUpdate extends JPanel {
 		g2.setPaint(new Color(60, 60, 60));
 		g2.fillRect(0, 20, getSize().width, getSize().height - 20);
 		g2.fillRect(45, 1, 142, 19);
-
 		super.paintComponent(g);
 	}
 
-	public void setCbbModelYearCreate(DefaultComboBoxModel cbbModelYearCreate) {
-		this.cbbModelYearCreate = cbbModelYearCreate;
-	}
+	
 
-	public JTextField getTxtName() {
-		return txtName;
-	}
-
-	public void setTxtName(JTextField txtName) {
-		this.txtName = txtName;
-	}
-
-	public JPasswordField getTxtPassword() {
-		return txtPassword;
-	}
-
-	public void setTxtPassword(JPasswordField txtPassword) {
-		this.txtPassword = txtPassword;
-	}
-
-	public JTextField getTxtRole() {
-		return txtRole;
-	}
-
-	public void setTxtRole(JTextField txtRole) {
-		this.txtRole = txtRole;
-	}
-
-	public JTextField getTxtCodeEmplo() {
-		return txtCodeEmplo;
-	}
-
-	public void setTxtCodeEmplo(JTextField txtCodeEmplo) {
-		this.txtCodeEmplo = txtCodeEmplo;
-	}
-
-	public int getIndex() {
-		return IndexSelectedEmployee;
-	}
-
-	public void setIndex(int index) {
-		this.IndexSelectedEmployee = index;
-	}
 }

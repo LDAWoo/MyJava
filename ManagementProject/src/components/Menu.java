@@ -3,7 +3,9 @@ package components;
 import javax.swing.JPanel;
 
 import img.ImageAvatar;
+import img.ImageHelper;
 import img.img;
+import model.ModelInformationEmployee;
 import net.miginfocom.swing.MigLayout;
 import view.Main;
 import view.ScrollBarCustom;
@@ -19,20 +21,25 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.xml.crypto.Data;
 
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 import componetInformation.PanelInformation;
+import componetInformation.PanelInformationEmployee;
+import dao.InformationEmployeeDAO;
 import event.EventMenuSelected;
 
 import javax.swing.ScrollPaneConstants;
@@ -51,11 +58,15 @@ public class Menu extends JPanel {
 	private ImageAvatar avatar;
 	private JComponent lblHello;
 	private JLabel lblRole;
+	public static ArrayList<ModelInformationEmployee> datas = new ArrayList<ModelInformationEmployee>();
+	
+	private InformationEmployeeDAO dao = new InformationEmployeeDAO();
 
 	private String email;
 	
+	
 	public Menu() {
-		this.email = email;
+		
 		setOpaque(false);
 		panelMenu = new JPanel();
 		panelMenu.setBorder(new EmptyBorder(0, 0, 0, 5));
@@ -67,7 +78,7 @@ public class Menu extends JPanel {
 		scrollPane.setViewportBorder(null);
 		scrollPane.getViewport().setOpaque(false);
 		scrollPane.setVerticalScrollBar(new ScrollBarCustom());
-		scrollPane.setBorder(null);
+		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
@@ -80,10 +91,11 @@ public class Menu extends JPanel {
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 476, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 
 		JLabel lblManager = new JLabel("Management");
@@ -108,24 +120,35 @@ public class Menu extends JPanel {
 
 		avatar.setGradientColor1(new java.awt.Color(63, 109, 217));
 		avatar.setGradientColor2(new java.awt.Color(199, 42, 42));
+		
+	
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblHello)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+					.addContainerGap())
 				.addComponent(lblManager, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-				.addGroup(gl_panel.createSequentialGroup().addGap(10).addComponent(lblHello)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE).addContainerGap())
-				.addGroup(gl_panel.createSequentialGroup().addContainerGap()
-						.addComponent(avatar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addComponent(lblManager).addPreferredGap(ComponentPlacement.UNRELATED)
-				.addComponent(avatar, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-						.addComponent(lblHello, GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
-				.addContainerGap()));
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addComponent(avatar, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(lblManager, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(avatar, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+						.addComponent(lblHello, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+					.addContainerGap())
+		);
 		panel.setLayout(gl_panel);
 
 		setLayout(groupLayout);
@@ -136,21 +159,21 @@ public class Menu extends JPanel {
 
 	public void Action() {
 		avatar.addMouseListener(new MouseAdapter() {
-			;
+			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e.getClickCount() == 1 || e.getClickCount() == 2) {
-					Main.showForm(new PanelInformation());
+					
 				}
 			}
 		});
 
 		lblHello.addMouseListener(new MouseAdapter() {
-			;
+			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e.getClickCount() == 1 || e.getClickCount() == 2) {
-					Main.showForm(new PanelInformation());
+					
 				}
 			}
 		});
@@ -160,11 +183,12 @@ public class Menu extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e.getClickCount() == 1 || e.getClickCount() == 2) {
-					Main.showForm(new PanelInformation());
+					
 				}
 			}
 		});
 
+//		setAvatar();
 	}
 
 	public void init() {
@@ -173,7 +197,7 @@ public class Menu extends JPanel {
 			public void timingEvent(float fraction) {
 				selectedMenu.setAnimate(fraction - 0.15f);
 				if (unSelectedMenu != null) {
-					unSelectedMenu.setAnimate(0.85f - fraction);
+					unSelectedMenu.setAnimate(1f - fraction);
 				}
 			};
 		};
@@ -186,26 +210,21 @@ public class Menu extends JPanel {
 
 	public void initMenu(MenuEvent event) {
 		this.event = event;
-		addMenu(img.iconHome2(), "  ", "Home", 0);
-		split("Management");
-		addMenu(img.iconEmployee(), "Employee", 1);
-		addMenu(img.iconStudent2(), "Student", 2);
-		addMenu(img.iconTopic(), "Topic", 3);
-		addMenu(img.iconCourse(), "Course", 4);
-		split("Statistical");
-		addMenu(img.iconStudent2(), "Student Table Score", 5);
-		addMenu(img.iconStudent2(), "Course Table Score", 6);
+		addMenu(img.iconHome2(), "  ", "Trang chủ", 0);
+		split("Quản lý");
+		addMenu(img.iconEmployee(), "Nhân viên", 1);
+		addMenu(img.iconStudent2(), "Người học", 2);
+		addMenu(img.iconTopic(), "Chuyên đề", 3);
+		addMenu(img.iconCourse(), "Khóa học", 4);
+		split("Tổng Hợp Thống kê");
+		addMenu(img.iconStudent2(), "Người học", 5);
+		addMenu(img.iconStudent2(), "Bảng điểm", 6);
+		addMenu(img.iconStudent2(), "Tổng hợp điểm", 7);
+		addMenu(img.iconStudent2(), "Doanh thu", 8);
 		split("Calendar");
-		addMenu(img.iconCalendar(), "Calendar", 7);
-		split("Help");
-		addMenu(img.iconStudent2(), "Welcome", 7);
-		addMenu(img.iconStudent2(), "User Manual", 8);
-		addMenu(img.iconStudent2(), "Introduction Product", 9);
-		split("System");
-		addMenu(img.iconLogin(), "Login", 10);
-		addMenu(img.iconLogout(), "Log out", 11);
-		addMenu(img.iconFoget(), "Forgot Password", 12);
-		addMenu(img.iconExit(), "Exit", 13);
+		addMenu(img.iconCalendar(), "Lịch", 9);
+		
+		
 	}
 
 	private void split(String name) {
@@ -230,7 +249,7 @@ public class Menu extends JPanel {
 
 			}
 		});
-
+		
 		panelMenu.add(menu);
 	}
 
@@ -251,12 +270,35 @@ public class Menu extends JPanel {
 					animator.start();
 					event.menuSelected(index);
 				}
-
-			}
+				}
+			
 		});
+		
+	
 
 		panelMenu.add(menu);
 	}
+	
+	
+	public void setAvatar() {
+		email = Main.email;
+		datas = dao.SelectInformation(email);
+		ImageHelper image = new ImageHelper();
+		byte[] img = datas.get(0).getImg();
+		
+		try {
+		Image icon = image.createImageFromByteArray(img, "jpg");
+		avatar.setImage(new ImageIcon(icon));
+		lblRole.setText(datas.get(0).getFullName());
+		}catch(Exception e) {}
+		
+		
+	}
+	
+	
+	
+	
+	
 
 	public String getEmail() {
 		return email;

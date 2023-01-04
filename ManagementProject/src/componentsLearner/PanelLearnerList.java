@@ -16,6 +16,7 @@ import java.awt.SystemColor;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.CaretListener;
 
+import animation.TextField;
 import img.img;
 import view.ScrollBarEmployee;
 import view.ScrollBarLearner;
@@ -31,7 +32,7 @@ import java.awt.event.ActionEvent;
 public class PanelLearnerList extends JPanel {
 	private TableLearner table;
 	private img img = new img();
-	public SearchStudent find;
+	public TextField find;
 	
 	private int index = -1;
 	public int indexSelectedLearner = -1;
@@ -41,9 +42,15 @@ public class PanelLearnerList extends JPanel {
 		setOpaque(false);
 		JPanel panelCenter = new JPanel();
 		
-		find = new SearchStudent();
-		table = new TableLearner(learner);
+		find = new TextField();
+		find.setHint("Tìm kiếm người học ...");
+		find.setFont(new Font("SansSerif",Font.PLAIN, 15));
+		find.setCaretColor(new Color(200,200,200));
+		find.setForeground(new Color(200,200,200));
 		
+		
+		
+		table = new TableLearner(learner);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBorder(null);
 		scrollPane.setOpaque(false);
@@ -67,10 +74,6 @@ public class PanelLearnerList extends JPanel {
 		
 		JPanel panelNorth = new JPanel();
 		panelNorth.setBackground(new Color(60,60,60));
-		find.setBackground(new Color(60,60,60));
-		find.setForeground(new Color(200,200,200));
-		find.setCaretColor(new Color(200,200,200));
-		
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(

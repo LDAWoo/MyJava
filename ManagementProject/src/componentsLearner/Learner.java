@@ -86,7 +86,7 @@ public class Learner extends JPanel {
 				.addComponent(panelUpdate, GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
 		);
 		
-		AnimationButtonList btnUpdate = new AnimationButtonList(img.iconEditWhite(), "Update");
+		AnimationButtonList btnUpdate = new AnimationButtonList(img.iconEditWhite(), "Cập nhật");
 		btnUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnUpdate.setForeground(new Color(191,191,191));
 		btnUpdate.setFont(new Font("SansSerif", Font.PLAIN, 25));
@@ -115,7 +115,7 @@ public class Learner extends JPanel {
 		}
 	});
 
-		AnimationButtonList btnList = new AnimationButtonList(img.iconLibrary(), "List Course");
+		AnimationButtonList btnList = new AnimationButtonList(img.iconLibrary(), "Danh sách");
 		btnList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnList.setForeground(new Color(191,191,191));
 		btnList.setFont(new Font("SansSerif", Font.PLAIN, 25));

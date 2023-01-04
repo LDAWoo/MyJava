@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.CaretListener;
 
+import animation.TextField;
 import img.img;
 import view.ScrollBarEmployee;
 import view.SearchStudent;
@@ -35,7 +36,7 @@ public class PanelTopicList extends JPanel {
 	private int index = -1;
 	public int indexSelectedTopic = -1;
 	
-	public static SearchStudent find;
+	public static TextField find;
 	
 	public PanelTopicList(Topic topic) {
 		setBackground(SystemColor.infoText);
@@ -71,10 +72,11 @@ public class PanelTopicList extends JPanel {
 		JPanel panelNorth = new JPanel();
 		panelNorth.setBackground(new Color(60,60,60));
 		
-		find = new SearchStudent();
-		find.setBackground(new Color(60,60,60));
-		find.setForeground(new Color(200,200,200));
+		find = new TextField();
+		find.setHint("Tìm kiếm chuyên đề ...");
+		find.setFont(new Font("SansSerif",Font.PLAIN, 15));
 		find.setCaretColor(new Color(200,200,200));
+		find.setForeground(new Color(200,200,200));
 		
 		
 		JLabel lblIconFind = new JLabel(img.iconSearch());

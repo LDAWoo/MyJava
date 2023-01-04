@@ -65,13 +65,16 @@ public class LoginUserView extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1054, 557);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(2, 2, 2, 2));
+		
+		contentPane.setBackground(new Color(63, 109, 217));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
+		panel.setBorder(new EmptyBorder(1, 1, 1, 0));
 		panel.setBackground(SystemColor.text);
-		panel.setBounds(0, 0, 565, 557);
+		panel.setBounds(5, 5, 555, 545);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -100,7 +103,7 @@ public class LoginUserView extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 35));
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(0, 61, 489, 46);
+		lblNewLabel.setBounds(10, 50, 489, 46);
 		panel_1.add(lblNewLabel);
 
 		JLabel lblUsername = new JLabel("Email");
@@ -109,12 +112,12 @@ public class LoginUserView extends JFrame {
 		lblUsername.setForeground(Color.getHSBColor(208, 67, 62));
 		panel_1.add(lblUsername);
 
-		JLabel IconUser = new JLabel("");
-		IconUser.setHorizontalAlignment(SwingConstants.CENTER);
-		IconUser.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		IconUser.setBounds(410, 185, 46, 46);
-		panel_1.add(IconUser);
-		IconUser.setIcon(this.img.IconUser());
+		JLabel IconEmail = new JLabel("");
+		IconEmail.setHorizontalAlignment(SwingConstants.CENTER);
+		IconEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		IconEmail.setBounds(410, 185, 46, 46);
+		panel_1.add(IconEmail);
+		IconEmail.setIcon(this.img.IconEmail());
 
 		JLabel lblUsername_1 = new JLabel("______________________________________________________________");
 		lblUsername_1.setForeground(new Color(243, 255, 253));
@@ -157,6 +160,7 @@ public class LoginUserView extends JFrame {
 		chckbxRemenber.setBackground(SystemColor.textHighlight);
 		chckbxRemenber.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		chckbxRemenber.setBounds(37, 310, 163, 23);
+		chckbxRemenber.setFocusPainted(false);
 		panel_1.add(chckbxRemenber);
 
 		JLabel lblForgetPassword = new JLabel("Forget Password?");
@@ -179,6 +183,7 @@ public class LoginUserView extends JFrame {
 		btnLogin.setBackground(SystemColor.text);
 		btnLogin.setForeground(SystemColor.textHighlight);
 		btnLogin.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnLogin.setFocusPainted(false);
 		btnLogin.addActionListener(controller);
 		btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
@@ -300,22 +305,26 @@ public class LoginUserView extends JFrame {
 		
 		
 		if(loginDao.SellectAll(email, password).equals("Manager")) {
-			Main main = new Main(email);
+			Main main = new Main(email,"Manager");
 			main.setVisible(true);
 			main.setLocationRelativeTo(null);
-			
 			dispose();
 			
 
 		}else if(this.loginDao.SellectAll(email, password).equals("Employee")) {
-			
-			System.out.println("Employee");	
+			MainEmployee main = new MainEmployee(email,"Employee");
+			main.setVisible(true);
+			main.setLocationRelativeTo(null);
+			dispose();
+				
 		}else if(this.loginDao.SellectAll(email, password).equals("Student")) {
-			
 			MainStudent mainSt = new MainStudent(email);
 			mainSt.setVisible(true);
 			mainSt.setLocationRelativeTo(null);
+			
 			dispose();
+			
+			
 				
 		}
 		else {

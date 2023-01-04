@@ -89,13 +89,16 @@ public class TableCourse extends JTable {
 			Object[] rows = new Object[8];
 			rows[0] = data.getCodeCourse();
 			rows[1] = data.getCodeTopic();
-			rows[2] = data.getTuition();
+			
+			double value = data.getTuition();
+			long roundValue = Math.round(value);
+			
+			rows[2] = Long.toString(roundValue);
 			rows[3] = data.getTime();
 			rows[4] = data.getDayOpening();
 			rows[5] = data.getDayCreate();
 			rows[6] = data.getCreatePerson();
-			rows[7] = data.getNote();
-			
+			rows[7] = data.getNote();	
 			addRow(rows);
 		}
 	}

@@ -22,7 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import animation.AnimationButton;
+import componentsForgot.DialogQuestion;
 import componentsStudent.PanelTableStudents;
+import componetsDialogConfirm.DialogConfirm;
 import dao.CourseDAO;
 import img.img;
 import interfaces.IEvent;
@@ -30,6 +32,7 @@ import model.ModelCodeTopic;
 import model.ModelCourse;
 import model.ModelEmployee;
 import view.Main;
+import view.MainEmployee;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
@@ -39,6 +42,8 @@ import javax.swing.JComponent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.Cursor;
+import java.awt.Dialog.ModalityType;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -86,7 +91,16 @@ public class PanelCourseUpdate extends JPanel {
 	private Course course;
 	private JTextArea textAreaNote;
 	private AnimationButton btnStudent;
+	private Font fontText15Plain = new Font("SansSerif", Font.PLAIN, 15);
 
+	private String code_Course_pattern = "^[K]{1}[H]{1}[0-9]{3}$";
+
+	private String tuition_pattern = "^[0-9]{1,}$";
+	private String timer_pattern = "^[0-9]{1,}$";
+	private String employee_code = "^[N]{1}[V]{1}[0-9]{5}$";
+	
+	private DialogQuestion question = new DialogQuestion(null);
+	private DialogConfirm confirm = new DialogConfirm(null);
 	public PanelCourseUpdate(Course course) {
 		this.course = course;
 		setOpaque(false);
@@ -148,7 +162,9 @@ public class PanelCourseUpdate extends JPanel {
 
 		cbbTopic = new JComboBox();
 		cbbTopic.setForeground(new Color(60, 60, 60));
-		cbbTopic.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbTopic.setFont(fontText15Plain);
+		cbbTopic.setFocusable(false);
+		cbbTopic.setMaximumRowCount(10);
 
 		JLabel lblDay = new JLabel("Ngày khai giảng:");
 		lblDay.setForeground(new Color(200, 200, 200));
@@ -156,16 +172,21 @@ public class PanelCourseUpdate extends JPanel {
 
 		cbbDay = new JComboBox();
 		cbbDay.setForeground(new Color(60, 60, 60));
-		cbbDay.setFont(new Font("SansSerif", Font.BOLD, 13));
-		cbbDay.setBorder(null);
+		cbbDay.setFont(fontText15Plain);
+		cbbDay.setFocusable(false);
+		cbbDay.setMaximumRowCount(10);
 
 		cbbMonth = new JComboBox();
 		cbbMonth.setForeground(new Color(60, 60, 60));
-		cbbMonth.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbMonth.setFont(fontText15Plain);
+		cbbMonth.setFocusable(false);
+		cbbMonth.setMaximumRowCount(10);
 
 		cbbYear = new JComboBox();
 		cbbYear.setForeground(new Color(60, 60, 60));
-		cbbYear.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbYear.setFont(fontText15Plain);
+		cbbYear.setFocusable(false);
+		cbbYear.setMaximumRowCount(10);
 
 		txtTime = new JTextField();
 		txtTime.setFont(new Font("SansSerif", Font.PLAIN, 13));
@@ -187,17 +208,22 @@ public class PanelCourseUpdate extends JPanel {
 
 		cbbDayCreate = new JComboBox();
 		cbbDayCreate.setForeground(new Color(60, 60, 60));
-		cbbDayCreate.setFont(new Font("SansSerif", Font.BOLD, 13));
-		cbbDayCreate.setBorder(null);
-		cbbDayCreate.setBackground(Color.WHITE);
+		cbbDayCreate.setFont(fontText15Plain);
+		cbbDayCreate.setFocusable(false);
+		cbbDayCreate.setMaximumRowCount(10);
 
 		cbbMonthCreate = new JComboBox();
 		cbbMonthCreate.setForeground(new Color(60, 60, 60));
-		cbbMonthCreate.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbMonthCreate.setFont(fontText15Plain);
+		cbbMonthCreate.setFocusable(false);
+		cbbMonthCreate.setMaximumRowCount(10);
 
 		cbbYearCreate = new JComboBox();
 		cbbYearCreate.setForeground(new Color(60, 60, 60));
-		cbbYearCreate.setFont(new Font("SansSerif", Font.BOLD, 13));
+		cbbYearCreate.setFont(fontText15Plain);
+		cbbYearCreate.setFocusable(false);
+		cbbYearCreate.setMaximumRowCount(10);
+
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(panel,
 				GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE));
@@ -257,8 +283,8 @@ public class PanelCourseUpdate extends JPanel {
 		btnDelete.setBorder(null);
 		btnDelete.setBackground(new Color(60, 22, 173));
 
-		btnStudent = new AnimationButton((Icon) null, "Delete");
-		btnStudent.setText("Student");
+		btnStudent = new AnimationButton();
+		btnStudent.setText("Học viên");
 		btnStudent.setForeground(SystemColor.menu);
 		btnStudent.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnStudent.setBorder(null);
@@ -323,17 +349,17 @@ public class PanelCourseUpdate extends JPanel {
 		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup().addGap(60).addComponent(lblLogo).addGap(890))
 				.addGroup(gl_panel.createSequentialGroup().addGap(61)
-						.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE).addGap(338)
-						.addComponent(cbbDayCreate, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE).addGap(165)
+						.addComponent(cbbDayCreate, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(cbbMonthCreate, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cbbMonthCreate, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(cbbYearCreate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(188, Short.MAX_VALUE))
+						.addComponent(cbbYearCreate, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(315, Short.MAX_VALUE))
 				.addGroup(gl_panel.createSequentialGroup().addGap(62)
 						.addComponent(txtTuition, GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE).addContainerGap())
 				.addGroup(gl_panel.createSequentialGroup().addGap(61)
@@ -346,11 +372,10 @@ public class PanelCourseUpdate extends JPanel {
 								.addGroup(gl_panel.createSequentialGroup().addGap(28)
 										.addComponent(cbbTopic, 0, 890, Short.MAX_VALUE).addContainerGap())
 								.addGroup(gl_panel.createSequentialGroup().addComponent(lblTime).addContainerGap())
-								.addGroup(gl_panel.createSequentialGroup().addComponent(lblDay)
-										.addPreferredGap(ComponentPlacement.RELATED, 400, Short.MAX_VALUE)
+								.addGroup(gl_panel.createSequentialGroup().addComponent(lblDay).addGap(246)
 										.addComponent(lblDayCreate, GroupLayout.PREFERRED_SIZE, 80,
 												GroupLayout.PREFERRED_SIZE)
-										.addGap(333))
+										.addContainerGap())
 								.addGroup(gl_panel.createSequentialGroup().addComponent(lblPerson).addContainerGap())
 								.addGroup(gl_panel.createSequentialGroup()
 										.addComponent(lbldescribe, GroupLayout.PREFERRED_SIZE, 126,
@@ -368,61 +393,72 @@ public class PanelCourseUpdate extends JPanel {
 				.addGroup(gl_panel.createSequentialGroup().addGap(61)
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE).addContainerGap())
 				.addComponent(layeredPane, GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup().addGap(8)
-						.addComponent(lblCodeCourse, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(txtCodeCourse, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblTopic, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(cbbTopic, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblDay, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblDayCreate, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+		gl_panel.setVerticalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup().addGap(8)
+								.addComponent(lblCodeCourse, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(txtCodeCourse, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblTopic, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(cbbTopic, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addGroup(gl_panel
+										.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
+												.createSequentialGroup()
+												.addComponent(lblDay, GroupLayout.PREFERRED_SIZE, 22,
+														GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+														.addComponent(cbbDay, GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(lblTuition, GroupLayout.PREFERRED_SIZE, 22,
+														GroupLayout.PREFERRED_SIZE))
+										.addGroup(gl_panel.createSequentialGroup()
+												.addComponent(lblDayCreate, GroupLayout.PREFERRED_SIZE, 22,
+														GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+														.addComponent(cbbDayCreate, GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(cbbMonthCreate, GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(cbbYearCreate, GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(txtTuition, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(txtTime, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addGap(15)
+								.addComponent(lblPerson, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(txtCreatePerson, GroupLayout.PREFERRED_SIZE, 28,
 										GroupLayout.PREFERRED_SIZE)
-								.addComponent(cbbMonth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(cbbYear, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(cbbDayCreate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(cbbMonthCreate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(cbbYearCreate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblTuition, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(txtTuition, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(txtTime, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE).addGap(15)
-						.addComponent(lblPerson, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(txtCreatePerson, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lbldescribe, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-						.addGap(53).addComponent(lblLogo).addGap(19)));
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lbldescribe, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+								.addGap(53).addComponent(lblLogo).addGap(19)));
 		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
 		initFillComboboxDate();
 		ActionButton();
-		
+
 	}
 
 	public void initFillComboboxDate() {
 		cbbModelDay = new DefaultComboBoxModel();
-		String[] comboboxDay = new String[] { "Day", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
+		String[] comboboxDay = new String[] { "Ngày", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
 				"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28",
 				"29", "30", "31" };
 		for (String string : comboboxDay) {
@@ -431,7 +467,7 @@ public class PanelCourseUpdate extends JPanel {
 		cbbDay.setModel(cbbModelDay);
 
 		cbbModelMonth = new DefaultComboBoxModel();
-		String[] comboboxMonth = new String[] { "Month", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+		String[] comboboxMonth = new String[] { "Tháng", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
 				"11", "12" };
 		for (String string : comboboxMonth) {
 			cbbModelMonth.addElement(string);
@@ -439,16 +475,17 @@ public class PanelCourseUpdate extends JPanel {
 		cbbMonth.setModel(cbbModelMonth);
 
 		cbbModelYear = new DefaultComboBoxModel();
-		String[] comboboxYear = new String[] { "Year", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997",
+		String[] comboboxYear = new String[] { "Năm", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997",
 				"1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010",
-				"2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022" };
+				"2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022",
+				"2023" };
 		for (String string : comboboxYear) {
 			cbbModelYear.addElement(string);
 		}
 		cbbYear.setModel(cbbModelYear);
 
 		cbbModelDayCreate = new DefaultComboBoxModel();
-		String[] comboboxDayCreate = new String[] { "Day", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+		String[] comboboxDayCreate = new String[] { "Ngày", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
 				"11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27",
 				"28", "29", "30", "31" };
 		for (String string : comboboxDayCreate) {
@@ -457,7 +494,7 @@ public class PanelCourseUpdate extends JPanel {
 		cbbDayCreate.setModel(cbbModelDayCreate);
 
 		cbbModelMonthCreate = new DefaultComboBoxModel();
-		String[] comboboxMonthCreate = new String[] { "Month", "01", "02", "03", "04", "05", "06", "07", "08", "09",
+		String[] comboboxMonthCreate = new String[] { "Tháng", "01", "02", "03", "04", "05", "06", "07", "08", "09",
 				"10", "11", "12" };
 		for (String string : comboboxMonthCreate) {
 			cbbModelMonthCreate.addElement(string);
@@ -465,10 +502,10 @@ public class PanelCourseUpdate extends JPanel {
 		cbbMonthCreate.setModel(cbbModelMonthCreate);
 
 		cbbModelYearCreate = new DefaultComboBoxModel();
-		String[] comboboxYearCreate = new String[] { "Year", "1990", "1991", "1992", "1993", "1994", "1995", "1996",
+		String[] comboboxYearCreate = new String[] { "Năm", "1990", "1991", "1992", "1993", "1994", "1995", "1996",
 				"1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009",
-				"2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021",
-				"2022" };
+				"2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022",
+				"2023" };
 		for (String string : comboboxYearCreate) {
 			cbbModelYearCreate.addElement(string);
 		}
@@ -500,7 +537,12 @@ public class PanelCourseUpdate extends JPanel {
 		cbbYear.setSelectedItem(datas.get(index).getYearOfOpening());
 
 		txtCreatePerson.setText(datas.get(index).getCreatePerson());
-		txtTuition.setText(datas.get(index).getTuition() + "");
+		
+		double value = datas.get(index).getTuition();
+		long roundValue = Math.round(value);
+		
+		txtTuition.setText(roundValue+ "");
+		
 		txtTime.setText(datas.get(index).getTime() + "");
 
 		cbbDayCreate.setSelectedItem(datas.get(index).getDayOfCreatePerson());
@@ -565,30 +607,162 @@ public class PanelCourseUpdate extends JPanel {
 				Last();
 			}
 		});
-		
-		
+
 		txtCodeCourse.addCaretListener(new CaretListener() {
-			
+
 			@Override
 			public void caretUpdate(CaretEvent e) {
-				if(txtCodeCourse.getText().equals("")) {
+				if (txtCodeCourse.getText().equals("")) {
 					btnStudent.setEnabled(false);
-				}else {
+				} else {
 					btnStudent.setEnabled(true);
 				}
-				
-			}
-		});
-		
-		btnStudent.addActionListener(new ActionListener() {		
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String codeCourse = txtCodeCourse.getText();
-				Main.showForm(new PanelTableStudents(codeCourse));
-				
+
 			}
 		});
 
+		btnStudent.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String codeCourse = txtCodeCourse.getText();
+				
+
+				MainEmployee.showForm(new PanelTableStudents(codeCourse));
+
+			}
+		});
+
+	}
+
+	public void getDialogPosition() {
+		if(Main.role == "Manager") {
+			question.setLocation(Main.xScreen, Main.yScreen);
+			question.setVisible(true);
+		}else if(MainEmployee.role == "Employee") {
+			question.setLocation(MainEmployee.xScreen, MainEmployee.yScreen);
+			question.setVisible(true);
+		}
+	}
+
+	public void getDialogConfirmPostiton() {
+		if(Main.role == "Manager") {
+			confirm.setLocation(Main.xScreen, Main.yScreen);
+			confirm.setModalityType(ModalityType.APPLICATION_MODAL);
+			confirm.setVisible(true);
+		}else if(MainEmployee.role == "Employee") {
+			confirm.setLocation(MainEmployee.xScreen, MainEmployee.yScreen);
+			confirm.setModalityType(ModalityType.APPLICATION_MODAL);
+			confirm.setVisible(true);
+		}
+	}
+
+	public boolean Validate() {
+		if (txtCodeCourse.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Mã khóa học\"");
+			return false;
+		}
+
+		if (!txtCodeCourse.getText().matches(code_Course_pattern)) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Mã khóa học đúng định dạng\"");
+			return false;
+		}
+
+		if (cbbTopic.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Chuyên đề\"");
+			return false;
+		}
+
+		if (cbbDay.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Ngày khai giảng\"");
+			return false;
+		}
+
+		if (cbbMonth.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Tháng khai giảng\"");
+			return false;
+		}
+
+		if (cbbYear.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Năm khai giảng\"");
+			return false;
+		}
+
+		if (cbbDayCreate.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Ngày tạo\"");
+			return false;
+		}
+
+		if (cbbMonthCreate.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Tháng tạo\"");
+			return false;
+		}
+
+		if (cbbYearCreate.getSelectedIndex() == 0) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng chọn");
+			question.lblTextMessage.setText("\"Năm tạo\"");
+			return false;
+		}
+
+		if (txtTuition.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Học phí\"");
+			return false;
+		}
+
+		if (!txtTuition.getText().matches(tuition_pattern)) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Học phí phải là số\"");
+			return false;
+		}
+
+		if (txtTime.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Thời lượng giờ\"");
+			return false;
+		}
+
+		if (!txtTime.getText().matches(timer_pattern)) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Thời lượng giờ phải là số\"");
+			return false;
+		}
+
+		if (txtCreatePerson.getText().equals("")) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Mã nhân viên đã tạo\"");
+			return false;
+		}
+
+		if (!txtCreatePerson.getText().matches(employee_code)) {
+			getDialogPosition();
+			question.lblQuestion.setText("Vui lòng nhập");
+			question.lblTextMessage.setText("\"Mã người tạo đúng định dạng\"");
+			return false;
+		}
+
+		return true;
 	}
 
 	public void ClearForm() {
@@ -611,33 +785,37 @@ public class PanelCourseUpdate extends JPanel {
 	}
 
 	public void Add() {
-		String CodeCourse = txtCodeCourse.getText().trim();
-		String EmlementCodeTopic = cbbTopic.getSelectedItem().toString();
+		if (Validate()) {
+			String CodeCourse = txtCodeCourse.getText().trim();
+			String EmlementCodeTopic = cbbTopic.getSelectedItem().toString();
 
-		String CodeTopic = EmlementCodeTopic.substring(0, EmlementCodeTopic.indexOf(" "));
+			String CodeTopic = EmlementCodeTopic.substring(0, EmlementCodeTopic.indexOf(" "));
 
-		String CreatePerson = txtCreatePerson.getText().trim();
-		double Tuition = Double.parseDouble(txtTuition.getText().trim());
-		int Time = Integer.parseInt(txtTime.getText().trim());
+			String CreatePerson = txtCreatePerson.getText().trim();
+			double Tuition = Double.parseDouble(txtTuition.getText().trim());
+			int Time = Integer.parseInt(txtTime.getText().trim());
 
-		String DayOpening = cbbYear.getSelectedItem().toString() + cbbMonth.getSelectedItem().toString()
-				+ cbbDay.getSelectedItem().toString();
-		String DayCreate = cbbYearCreate.getSelectedItem().toString() + cbbMonthCreate.getSelectedItem().toString()
-				+ cbbDayCreate.getSelectedItem().toString();
+			String DayOpening = cbbYear.getSelectedItem().toString() + cbbMonth.getSelectedItem().toString()
+					+ cbbDay.getSelectedItem().toString();
+			String DayCreate = cbbYearCreate.getSelectedItem().toString() + cbbMonthCreate.getSelectedItem().toString()
+					+ cbbDayCreate.getSelectedItem().toString();
 
-		String Note = textAreaNote.getText();
+			String Note = textAreaNote.getText();
 
-		if (dao.Insert(
-				new ModelCourse(CodeCourse, CodeTopic, CreatePerson, Tuition, Time, DayOpening, DayCreate, Note)) > 0) {
-			JOptionPane.showMessageDialog(course, "Insert Successfully", "Insert", JOptionPane.INFORMATION_MESSAGE,
-					img.iconAdd32x32());
+			if (dao.Insert(new ModelCourse(CodeCourse, CodeTopic, CreatePerson, Tuition, Time, DayOpening, DayCreate,
+					Note)) > 0) {
+				getDialogPosition();
+				question.lblQuestion.setText("Thêm khóa học");
+				question.lblTextMessage.setText("\"Thành công\"");
+				
+			} else {
+				getDialogPosition();
+				question.lblQuestion.setText("Thêm khóa học");
+				question.lblTextMessage.setText("\"Thất bại\"");
 
-		} else if (dao.Insert(
-				new ModelCourse(CodeCourse, CodeTopic, CreatePerson, Tuition, Time, DayOpening, DayCreate, Note)) > 0) {
-			JOptionPane.showMessageDialog(course, "Insert Successfully", "Insert", JOptionPane.INFORMATION_MESSAGE,
-					img.iconAdd32x32());
-
+			}
 		}
+
 		course.getModelCourseChanged();
 
 	}
@@ -645,31 +823,45 @@ public class PanelCourseUpdate extends JPanel {
 	public void Delete() {
 		String CodeCourse = txtCodeCourse.getText();
 		if (CodeCourse.equals("")) {
-			JOptionPane.showMessageDialog(course, "Chưa Nhập Mã Khóa Học Để Xóa !", "Message",
-					JOptionPane.WARNING_MESSAGE, img.iconDelete32x32());
+			getDialogPosition();
+			question.lblQuestion.setText(" Không thể xóa");
+			question.lblTextMessage.setText("\"Chưa nhập mã khóa học để xóa\"");
 			return;
 		}
-		int choice = JOptionPane.showConfirmDialog(course, "Bạn Có Chắc Chắn Muốn Xóa Không?", "Choose Option",
-				JOptionPane.YES_NO_OPTION, 0, img.iconDelete32x32());
-
-		if (choice == JOptionPane.YES_OPTION) {
-			if (dao.Delete(CodeCourse) > 0) {
-				JOptionPane.showMessageDialog(course, "Delete Successfully", "Delete", JOptionPane.INFORMATION_MESSAGE,
-						img.iconDelete32x32());
-				ClearForm();
-			} else {
-				JOptionPane.showMessageDialog(course, "Delete Failed", "Delete", JOptionPane.WARNING_MESSAGE,
-						img.iconDelete32x32());
+		getDialogConfirmPostiton();
+		if (confirm.option == 1) {
+			for (ModelCourse data : datas) {
+				if(data.getCodeCourse().equals(CodeCourse)) {
+					dao.Delete(CodeCourse);
+					getDialogPosition();
+					question.lblQuestion.setText("Đã xóa");
+					question.lblTextMessage.setText("\"Khóa học đã được xóa\"");
+					ClearForm();
+					break;
+				}else {
+					getDialogPosition();
+					question.lblQuestion.setText("Không thể xóa");
+					question.lblTextMessage.setText("\"Mã khóa học không tồn tại\"");
+				}
 			}
+			
+			
+				
 
 		}
 		course.getModelCourseChanged();
 	}
 
 	public void Update() {
+		if(Validate()) {
 		String CodeCourse = txtCodeCourse.getText();
-		String CodeTopic = cbbTopic.getSelectedItem().toString();
-
+		
+		String codeTopic = cbbTopic.getSelectedItem().toString();
+		
+		int atIndex = codeTopic.indexOf(" ");
+		
+		String CodeTopic = codeTopic.substring(0,atIndex);
+		
 		String CreatePerson = txtCreatePerson.getText();
 		double Tuition = Double.parseDouble(txtTuition.getText());
 		int Time = Integer.parseInt(txtTime.getText());
@@ -683,12 +875,15 @@ public class PanelCourseUpdate extends JPanel {
 
 		if (dao.Update(
 				new ModelCourse(CodeCourse, CodeTopic, CreatePerson, Tuition, Time, DayOpening, DayCreate, Note)) > 0) {
-			JOptionPane.showMessageDialog(course, "Update Successfully", "Update", JOptionPane.INFORMATION_MESSAGE,
-					img.iconEdit32x32());
+			getDialogPosition();
+			question.lblQuestion.setText("Cập nhật khóa học");
+			question.lblTextMessage.setText("\"Thành công\"");
 
 		} else {
-			JOptionPane.showMessageDialog(course, "Update Faied", "Update", JOptionPane.WARNING_MESSAGE,
-					img.iconEdit32x32());
+			getDialogPosition();
+			question.lblQuestion.setText("Cập nhật khóa học");
+			question.lblTextMessage.setText("\"Thất bại\"");
+		}
 		}
 		course.getModelCourseChanged();
 	}
@@ -741,9 +936,7 @@ public class PanelCourseUpdate extends JPanel {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setPaint(new Color(60, 60, 60));
 		g2.fillRect(0, 20, getSize().width, getSize().height - 20);
-
 		g2.fillRect(45, 1, 142, 19);
-
 		super.paintComponent(g);
 	}
 }

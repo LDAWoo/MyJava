@@ -5,6 +5,8 @@ import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
@@ -30,6 +32,8 @@ public class MenuButton extends JButton{
 		setBackground(new Color(65,65,65));
 		setBorder(new EmptyBorder(8, 20, 8, 5));
 		setFocusPainted(false);
+		
+		
 		
 	}
 	

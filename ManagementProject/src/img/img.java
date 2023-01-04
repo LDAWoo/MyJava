@@ -28,7 +28,7 @@ public class img {
 	}
 
 	public static Icon iconHome() {
-		Icon iconHome = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("home.png")));
+		Icon iconHome = new ImageIcon(Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-home.png")));
 		return iconHome;
 	}
 
@@ -40,7 +40,7 @@ public class img {
 
 	public static Icon iconCalendar() {
 		Icon iconCalendar = new ImageIcon(
-				Toolkit.getDefaultToolkit().createImage(img.class.getResource("calendar.png")));
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-calendar.png")));
 		return iconCalendar;
 	}
 
@@ -296,6 +296,90 @@ public class img {
 		Icon iconExit= new ImageIcon(
 				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-exit.png")));
 		return iconExit;
+	}
+	
+	public static Icon iconSetting() {
+		Icon iconSetting= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-setting.png")));
+		return iconSetting;
+	}
+	
+	public static Icon avatarMale() {
+		Icon avatarMale= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("avatar-male.png")));
+		return avatarMale;
+	}
+	
+	public static Icon avatarFemale() {
+		Icon avatarFemale= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("avatar-female.png")));
+		return avatarFemale;
+	}
+	
+	public static Icon iconWallet1() {
+		Icon iconWallet1= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("wallet1.png")));
+		return iconWallet1;
+	}
+	
+	public static Icon iconWallet2() {
+		Icon iconWallet2= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("wallet2.png")));
+		return iconWallet2;
+	}
+	
+	public static Icon iconWallet3() {
+		Icon iconWallet3= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("wallet3.png")));
+		return iconWallet3;
+	}
+	
+	public static Icon iconWallet4() {
+		Icon iconWallet4= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("wallet4.png")));
+		return iconWallet4;
+	}
+	
+	public static Icon iconQuestion() {
+		Icon iconQuestion= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-question.png")));
+		return iconQuestion;
+	}
+	
+	public static Icon iconMessageCheck() {
+		Icon iconMessageCheck= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-message-check.png")));
+		return iconMessageCheck;
+	}
+	
+	public static Icon iconPhone() {
+		Icon iconPhone= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-phone-classic.png")));
+		return iconPhone;
+	}
+	
+	public static Icon iconAttendance() {
+		Icon iconAttendance= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-attendance.png")));
+		return iconAttendance;
+	}
+	
+	public static Icon iconPoint() {
+		Icon iconPoint= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-point.png")));
+		return iconPoint;
+	}
+	
+	public static Icon iconTuition() {
+		Icon iconTuition= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-wallet-tuition.png")));
+		return iconTuition;
+	}
+	
+	public static Icon iconCalendarStudent() {
+		Icon iconCalendarStudent= new ImageIcon(
+				Toolkit.getDefaultToolkit().createImage(img.class.getResource("icon-calendarStudent.png")));
+		return iconCalendarStudent;
 	}
 	
 }

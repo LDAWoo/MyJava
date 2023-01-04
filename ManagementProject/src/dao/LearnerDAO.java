@@ -13,23 +13,26 @@ import model.ModelLearner;
 public class LearnerDAO implements DAOInterfaceLearner<ModelLearner, Object> {
 
 	final String SELECT_ALL_SQL = "SELECT *,DAY(NGAYSINH) DAY, MONTH(NGAYSINH) MONTH, YEAR(NGAYSINH) YEAR, DAY(NGAYDANGKY) DAYOFREGISTER,MONTH(NGAYDANGKY) MONTHOFREGISTER, YEAR(NGAYDANGKY) YEAROFREGISTER FROM dbo.NGUOIHOC";
-	final String UPDATE_SQL = "";
+	final String UPDATE_SQL = "UPDATE dbo.NGUOIHOC SET HOVATEN = ?, NGAYSINH = ? , GIOITINH = ?, DIENTHOAI = ?, EMAIL = ?, GHICHU = ?, MANHANVIEN = ? , NGAYDANGKY = ? WHERE MANGUOIHOC = ?";
+	final String INSERT_SQL = "INSERT INTO dbo.NGUOIHOC\r\n"
+			+ "(MANGUOIHOC,HOVATEN,NGAYSINH,GIOITINH,DIENTHOAI,EMAIL,GHICHU,MANHANVIEN,NGAYDANGKY)\r\n"
+			+ "VALUES\r\n"
+			+ "(?,?,?,?,?,?,?,?,?)";
 
+	final String DELETE_SQL = "{ call SP_DELETENGUOIHOC(?)}";
 	@Override
 	public int Insert(ModelLearner E) {
-		return 0;
+		return JDBCHelper.executeUpdate(INSERT_SQL, E.getPersonCode(),E.getName(),E.getDate(),E.isSex(),E.getPhoneNumber(),E.getEmail(),E.getNote(),E.getEmployeeCode(),E.getDateOfRegister());
 	}
 
 	@Override
 	public int Update(ModelLearner E) {
-		// TODO Auto-generated method stub
-		return 0;
+		return JDBCHelper.executeUpdate(UPDATE_SQL, E.getName(),E.getDate(),E.isSex(),E.getPhoneNumber(),E.getEmail(),E.getNote(),E.getEmployeeCode(),E.getDateOfRegister(),E.getPersonCode());
 	}
 
 	@Override
 	public int Delete(Object K) {
-		// TODO Auto-generated method stub
-		return 0;
+		return JDBCHelper.executeUpdate(DELETE_SQL, K);
 	}
 
 	@Override
@@ -50,7 +53,7 @@ public class LearnerDAO implements DAOInterfaceLearner<ModelLearner, Object> {
 			while(rs.next()) {
 				ModelLearner data = new ModelLearner(rs.getString("MANGUOIHOC"), rs.getString("HOVATEN"),
 						rs.getString("NGAYSINH"), rs.getBoolean("GIOITINH"), rs.getString("DIENTHOAI"),
-						rs.getString("EMAIL"),rs.getString("NGAYDANGKY"), rs.getString("GHICHU"), rs.getString("DAY"), rs.getString("MONTH"),
+						rs.getString("EMAIL"),rs.getString("NGAYDANGKY"),rs.getString("MANHANVIEN"), rs.getString("GHICHU"), rs.getString("DAY"), rs.getString("MONTH"),
 						rs.getString("YEAR"), rs.getString("DAYOFREGISTER"), rs.getString("MONTHOFREGISTER"),
 						rs.getString("YEAROFREGISTER"));
 				datas.add(data);
@@ -77,7 +80,7 @@ public class LearnerDAO implements DAOInterfaceLearner<ModelLearner, Object> {
 			while (rs.next()) {
 				ModelLearner data = new ModelLearner(rs.getString("MANGUOIHOC"), rs.getString("HOVATEN"),
 						rs.getString("NGAYSINH"), rs.getBoolean("GIOITINH"), rs.getString("DIENTHOAI"),
-						rs.getString("EMAIL"),rs.getString("NGAYDANGKY"), rs.getString("GHICHU"), rs.getString("DAY"), rs.getString("MONTH"),
+						rs.getString("EMAIL"),rs.getString("NGAYDANGKY"),rs.getString("MANHANVIEN"), rs.getString("GHICHU"), rs.getString("DAY"), rs.getString("MONTH"),
 						rs.getString("YEAR"), rs.getString("DAYOFREGISTER"), rs.getString("MONTHOFREGISTER"),
 						rs.getString("YEAROFREGISTER"));
 				datas.add(data);

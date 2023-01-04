@@ -39,7 +39,7 @@ public class TableEmployee extends JTable {
 
 	public TableEmployee(Employee employee) {
 		setOpaque(false);
-		setModel(new DefaultTableModel(new Object[][] {}, new String[] { "MÃ NV", "HỌ VÀ TÊN", "NGÀY SINH", "GIỚI TÍNH",
+		setModel(new DefaultTableModel(new Object[][] {}, new String[] { "MÃ NV", "HỌ VÀ TÊN", "NGÀY SINH", "GIỚI TÍNH","EMAIL",
 				"VAI TRÒ", "MẬT KHẨU", "NGÀY T GIA","GHI CHÚ"
 
 		}));
@@ -108,10 +108,11 @@ public class TableEmployee extends JTable {
 			}else {
 				rows[3] = "Nữ";
 			}
-			rows[4] = data.getRole();
-			rows[5] = data.getPassword();
-			rows[6] = data.getDateOpening();
-			rows[7] = data.getNote();	
+			rows[4] = data.getEmail();
+			rows[5] = data.getRole();
+			rows[6] = data.getPassword();
+			rows[7] = data.getDateOpening();
+			rows[8] = data.getNote();	
 			addRow(rows);
 		}
 		

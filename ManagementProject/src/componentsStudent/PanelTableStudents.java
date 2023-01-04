@@ -24,8 +24,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
 import img.img;
+import view.Main;
+import view.MainEmployee;
+import view.MainStudent;
 import view.ScrollBarEmployee;
-import view.SearchText;
 import javax.swing.border.LineBorder;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -34,6 +36,8 @@ import com.raven.table.TableCustom;
 import com.raven.table.model.TableRowData;
 
 import animation.AnimationButtonAction;
+import animation.TextField;
+import componentsForgot.DialogQuestion;
 import dao.ManagerLearnerCourseDAO;
 
 import javax.swing.JComboBox;
@@ -44,7 +48,7 @@ import javax.swing.JRadioButton;
 public class PanelTableStudents extends JPanel {
 	Table table;
 	private JScrollPane scrollPane;
-	private SearchText find;
+	private TextField find;
 	private JLabel lblFind;
 	private img img = new img();
 	private JPanel panelNorth2;
@@ -66,6 +70,8 @@ public class PanelTableStudents extends JPanel {
 	private ButtonGroup buttonGroup;
 
 	private String codeCourse;
+	
+	private DialogQuestion question = new DialogQuestion(null);
 	
 	public PanelTableStudents(String codeCourse) {
 		this.codeCourse =codeCourse;
@@ -110,7 +116,7 @@ public class PanelTableStudents extends JPanel {
 		cbbLearnerNoCourse = new JComboBox();
 		cbbLearnerNoCourse.setFont(new Font("SansSerif", Font.PLAIN, 15));
 
-		btnAdd = new AnimationButtonAction("Add");
+		btnAdd = new AnimationButtonAction("Thêm");
 		btnAdd.setBorder(null);
 		btnAdd.setBackground(new Color(230, 230, 230));
 		btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -184,8 +190,13 @@ public class PanelTableStudents extends JPanel {
 								.addComponent(rdbtnScoreHasNotBeenEntered).addComponent(rdbtnAll))
 						.addGap(17)));
 		panelSouth.setLayout(gl_panelSouth);
-		find = new SearchText();
-		find.setBackground(new Color(230, 230, 230));
+		find = new TextField();
+		find.setHint("Tìm kiếm học viên ...");
+		find.setFont(new Font("SansSerif",Font.PLAIN, 15));
+		find.setCaretColor(new Color(200,200,200));
+		find.setForeground(new Color(200,200,200));
+		
+		
 		lblFind = new JLabel("");
 		lblFind.setIcon(img.iconSearch());
 		GroupLayout gl_panelNorth = new GroupLayout(panelNorth);
@@ -301,8 +312,9 @@ public class PanelTableStudents extends JPanel {
 				ModelStudents st = new ModelStudents();
 				
 				if(dao.Insert(new ModelStudents(st.getID(), new ModelStudent(codeStudent), new ModelCourse(codeCourse), new ModelLearner(codeLearner), new ModelName(), new ModelSex(), new ModelAge(), new ModelGrade(grade)))>0){	
-					JOptionPane.showMessageDialog(null, "Insert Successfully", "Insert",
-							JOptionPane.INFORMATION_MESSAGE, img.iconAdd32x32());
+					getDialogPosition();
+					question.lblQuestion.setText("Thêm học viên");
+					question.lblTextMessage.setText("\"Thành công\"");
 					
 					cbbModelLearner.removeAllElements();
 					initCombobox();
@@ -314,13 +326,24 @@ public class PanelTableStudents extends JPanel {
 					initData();
 
 				}else {
-					JOptionPane.showMessageDialog(null, "Insert Failed", "Insert",
-							JOptionPane.WARNING_MESSAGE, img.iconAdd32x32());
+					getDialogPosition();
+					question.lblQuestion.setText("Thêm học viên");
+					question.lblTextMessage.setText("\"Thất bại\"");
 				}
 
 			}
 		});
 
+	}
+	
+	public void getDialogPosition() {
+		if(MainEmployee.role == "Employee") {
+			question.setLocation(MainEmployee.xScreen, MainEmployee.yScreen);
+			question.setVisible(true);
+		}else if(Main.role == "Manager") {
+			question.setLocation(Main.xScreen, Main.yScreen);
+			question.setVisible(true);
+		}	
 	}
 
 	public void initDataTable() {

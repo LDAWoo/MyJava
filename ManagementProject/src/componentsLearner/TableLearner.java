@@ -31,7 +31,7 @@ public class TableLearner extends JTable {
 		this.learner = learner;
 		setOpaque(false);
 		setModel(new DefaultTableModel(new Object[][] {}, new String[] { "MÃ NGƯỜI ĐK", "HỌ VÀ TÊN", "NGÀY SINH",
-				"GIỚI TÍNH", "SỐ ĐIỆN THOẠI", "EMAIL","NGÀY ĐĂNG KÝ", "GHI CHÚ"}));
+				"GIỚI TÍNH", "SỐ ĐIỆN THOẠI", "EMAIL","NGÀY ĐĂNG KÝ","MÃ NHÂN VIÊN", "GHI CHÚ"}));
 		tableModel = (DefaultTableModel) getModel();
 		
 
@@ -79,7 +79,7 @@ public class TableLearner extends JTable {
 	public void initData() {
 		tableModel.getDataVector().removeAllElements();
 		for (ModelLearner data : datas) {
-			Object[] rows = new Object[8];
+			Object[] rows = new Object[9];
 			rows[0] = data.getPersonCode();
 			rows[1] = data.getName();
 			rows[2] = data.getDate();
@@ -92,7 +92,8 @@ public class TableLearner extends JTable {
 			rows[4] = data.getPhoneNumber();
 			rows[5] = data.getEmail();
 			rows[6] = data.getDateOfRegister();
-			rows[7] = data.getNote();
+			rows[7] = data.getEmployeeCode();
+			rows[8] = data.getNote();
 			addRow(rows);
 
 		}

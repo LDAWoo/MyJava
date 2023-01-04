@@ -40,20 +40,6 @@ public class ChangePasswordView extends JFrame {
 	private JLabel disableCreate;
 	private JLabel lblCheck;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					ChangePasswordView frame = new ChangePasswordView();
-					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public ChangePasswordView() {
 		setUndecorated(true);
@@ -293,8 +279,6 @@ public class ChangePasswordView extends JFrame {
 			setVisible(false);
 			view.setVisible(true);
 			view.setLocationRelativeTo(null);
-		}else {
-			JOptionPane.showMessageDialog(this, "Change Faied");
 		}
 		
 		}

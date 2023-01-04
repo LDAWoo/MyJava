@@ -19,6 +19,7 @@ import dao.InfomationStudentDAO;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import components.MenuStudent;
 import model.ModelInformation;
 import view.Main;
 import view.MainStudent;
@@ -140,6 +141,7 @@ public class PanelInformation extends JPanel {
 		txtFullName.setBorder(null);
 		txtFullName.setBackground(new Color(60, 60, 60));
 		txtFullName.setCaretColor(colorForeground1);
+		txtFullName.setFocusable(false);
 		
 		lblCode = new JLabel("Mã sinh viên");
 		lblCode.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -151,18 +153,21 @@ public class PanelInformation extends JPanel {
 		txtCodeStudent.setBorder(null);
 		txtCodeStudent.setBackground(new Color(60, 60, 60));
 		txtCodeStudent.setCaretColor(colorForeground1);
+		txtCodeStudent.setFocusable(false);
 		
 		txtSex = new JTextField();
 		txtSex.setForeground(SystemColor.scrollbar);
 		txtSex.setBorder(null);
 		txtSex.setBackground(new Color(60, 60, 60));
 		txtSex.setCaretColor(colorForeground1);
+		txtSex.setFocusable(false);
 		
 		txtAddress = new JTextField();
 		txtAddress.setForeground(SystemColor.scrollbar);
 		txtAddress.setBorder(null);
 		txtAddress.setBackground(new Color(60, 60, 60));
 		txtAddress.setCaretColor(colorForeground1);
+		txtAddress.setFocusable(false);
 		
 		lblSex = new JLabel("Giới tính");
 		lblSex.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -179,12 +184,14 @@ public class PanelInformation extends JPanel {
 		txtCodeAccount.setBorder(null);
 		txtCodeAccount.setBackground(new Color(60, 60, 60));
 		txtCodeAccount.setCaretColor(colorForeground1);
+		txtCodeAccount.setFocusable(false);
 		
 		txtCourse = new JTextField();
 		txtCourse.setForeground(SystemColor.scrollbar);
 		txtCourse.setBorder(null);
 		txtCourse.setBackground(new Color(60, 60, 60));
 		txtCourse.setCaretColor(colorForeground1);
+		txtCourse.setFocusable(false);
 		
 		lblCodeAccount = new JLabel("Mã tài khoản");
 		lblCodeAccount.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -205,22 +212,22 @@ public class PanelInformation extends JPanel {
 		lblInfo1.setFont(new Font("SansSerif", Font.BOLD, 15));
 		
 		txtSpecialized = new JTextField();
-		txtSpecialized.setText((String) null);
 		txtSpecialized.setForeground(colorForeground2);
 		txtSpecialized.setCaretColor(Color.WHITE);
 		txtSpecialized.setBorder(null);
 		txtSpecialized.setBackground(new Color(60, 60, 60));
+		txtSpecialized.setFocusable(false);
 		
 		lblDay = new JLabel("Ngày đăng ký");
 		lblDay.setFont(font14);
 		lblDay.setForeground(colorForeground1);
 		
 		txtRegistrationDate = new JTextField();
-		txtRegistrationDate.setText((String) null);
 		txtRegistrationDate.setForeground(colorForeground2);
 		txtRegistrationDate.setCaretColor(Color.WHITE);
 		txtRegistrationDate.setBorder(null);
 		txtRegistrationDate.setBackground(new Color(60, 60, 60));
+		txtRegistrationDate.setFocusable(false);
 		
 		GroupLayout gl_panelEast = new GroupLayout(panelEast);
 		gl_panelEast.setHorizontalGroup(
@@ -293,9 +300,6 @@ public class PanelInformation extends JPanel {
 		);
 		panelEast.setLayout(gl_panelEast);
 		
-		JLabel lblImage = new JLabel("");
-		lblImage.setHorizontalAlignment(SwingConstants.CENTER);
-		
 		lblName = new JLabel("Lê Đức Anh Vũ");
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblName.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -336,40 +340,33 @@ public class PanelInformation extends JPanel {
 		GroupLayout gl_panelWest = new GroupLayout(panelWest);
 		gl_panelWest.setHorizontalGroup(
 			gl_panelWest.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelWest.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, gl_panelWest.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panelWest.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelWest.createSequentialGroup()
-							.addComponent(lblImage, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_panelWest.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-								.addComponent(lblName, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
-						.addGroup(gl_panelWest.createSequentialGroup()
+					.addGroup(gl_panelWest.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblName, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, gl_panelWest.createSequentialGroup()
 							.addComponent(lblEmail)
 							.addGap(51)
-							.addComponent(lblTextEmail, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
-						.addGroup(gl_panelWest.createSequentialGroup()
+							.addComponent(lblTextEmail, GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))
+						.addGroup(Alignment.LEADING, gl_panelWest.createSequentialGroup()
 							.addGroup(gl_panelWest.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblPhoneNumber)
 								.addComponent(lblStatus))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_panelWest.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblTextStatus, GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-								.addComponent(lblTextPhoneNumber, GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))))
+								.addComponent(lblTextStatus, GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+								.addComponent(lblTextPhoneNumber, GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)))
+						.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_panelWest.setVerticalGroup(
 			gl_panelWest.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelWest.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panelWest.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelWest.createSequentialGroup()
-							.addComponent(lblName, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblRole, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblImage, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
+					.addComponent(lblName, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblRole, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addGap(85)
 					.addGroup(gl_panelWest.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelWest.createSequentialGroup()
 							.addComponent(lblEmail)
@@ -382,7 +379,7 @@ public class PanelInformation extends JPanel {
 								.addComponent(lblStatus)
 								.addComponent(lblTextStatus)))
 						.addComponent(lblTextEmail))
-					.addContainerGap(185, Short.MAX_VALUE))
+					.addContainerGap(294, Short.MAX_VALUE))
 		);
 		panelWest.setLayout(gl_panelWest);
 		panelInfor.setLayout(gl_panelInfor);
@@ -392,7 +389,6 @@ public class PanelInformation extends JPanel {
 	
 	public void getEmail() {
 		String email = MainStudent.email;
-		
 		
 		datas = dao.SelectInformation(email);
 		

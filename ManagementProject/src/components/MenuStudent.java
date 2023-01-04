@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import img.ImageAvatar;
 import img.img;
+import model.ModelInformation;
 import net.miginfocom.swing.MigLayout;
 import view.Main;
 import view.MainStudent;
@@ -24,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -34,6 +36,7 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 import componetInformation.PanelInformation;
+import dao.InfomationStudentDAO;
 import event.EventMenuSelected;
 
 import javax.swing.ScrollPaneConstants;
@@ -51,12 +54,14 @@ public class MenuStudent extends JPanel {
 	private Font font13BOLD = new Font("SansSerif", Font.BOLD, 13);
 	private ImageAvatar avatar;
 	private JComponent lblHello;
-	private JLabel lblRole;
+	public JLabel lblRole;
 
-	private String email;
+	private ArrayList<ModelInformation> datas = new ArrayList<ModelInformation>();
+	
+	private InfomationStudentDAO dao = new InfomationStudentDAO();
 	
 	public MenuStudent() {
-		this.email = email;
+		
 		setOpaque(false);
 		panelMenu = new JPanel();
 		panelMenu.setBorder(new EmptyBorder(0, 0, 0, 5));
@@ -68,7 +73,7 @@ public class MenuStudent extends JPanel {
 		scrollPane.setViewportBorder(null);
 		scrollPane.getViewport().setOpaque(false);
 		scrollPane.setVerticalScrollBar(new ScrollBarCustom());
-		scrollPane.setBorder(null);
+		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
@@ -81,10 +86,11 @@ public class MenuStudent extends JPanel {
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 476, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 
 		JLabel lblManager = new JLabel("Management");
@@ -109,30 +115,43 @@ public class MenuStudent extends JPanel {
 
 		avatar.setGradientColor1(new java.awt.Color(63, 109, 217));
 		avatar.setGradientColor2(new java.awt.Color(199, 42, 42));
+		
+		
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblHello)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+					.addContainerGap())
 				.addComponent(lblManager, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-				.addGroup(gl_panel.createSequentialGroup().addGap(10).addComponent(lblHello)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE).addContainerGap())
-				.addGroup(gl_panel.createSequentialGroup().addContainerGap()
-						.addComponent(avatar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addComponent(lblManager).addPreferredGap(ComponentPlacement.UNRELATED)
-				.addComponent(avatar, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-						.addComponent(lblHello, GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
-				.addContainerGap()));
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addComponent(avatar, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(lblManager, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(avatar, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+						.addComponent(lblHello, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+					.addContainerGap())
+		);
 		panel.setLayout(gl_panel);
 
 		setLayout(groupLayout);
 		init();
 
 		Action();
+		
+		setAvatarUser();
 	}
 
 	public void Action() {
@@ -147,7 +166,6 @@ public class MenuStudent extends JPanel {
 		});
 
 		lblHello.addMouseListener(new MouseAdapter() {
-			;
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e.getClickCount() == 1 || e.getClickCount() == 2) {
@@ -185,27 +203,30 @@ public class MenuStudent extends JPanel {
 
 	}
 
+	public void setAvatarUser() {
+		String email = MainStudent.email;
+		
+		datas= dao.SelectInformation(email);
+		lblRole.setText(datas.get(0).getFullName());
+		
+		boolean gender = datas.get(0).isSex();
+		
+		if(gender) {
+			avatar.setImage(img.avatarMale());
+		}else {
+			avatar.setImage(img.avatarFemale());
+		}
+	}
+	
 	public void initMenu(MenuEvent event) {
 		this.event = event;
-		addMenu(img.iconHome2(), "  ", "Home", 0);
-		split("Điểm danh");
-		addMenu(img.iconEmployee(), "Điểm danh", 1);
-		split("Lịch học");
-		addMenu(img.iconEmployee(), "Lịch học", 2);
-		split("Điểm");
-		addMenu(img.iconStudent2(), "Bảng điểm từng môn", 3);
-		addMenu(img.iconStudent2(), "Bảng điểm tổng hợp", 4);
-		split("Calendar");
-		addMenu(img.iconCalendar(), "Calendar", 5);
-		split("Help");
-		addMenu(img.iconStudent2(), "Welcome", 6);
-		addMenu(img.iconStudent2(), "User Manual", 7);
-		addMenu(img.iconStudent2(), "Introduction Product", 8);
-		split("System");
-		addMenu(img.iconLogin(), "Login", 9);
-		addMenu(img.iconLogout(), "Log out", 10);
-		addMenu(img.iconFoget(), "Forgot Password", 11);
-		addMenu(img.iconExit(), "Exit", 12);
+		addMenu(img.iconHome2(), "  ", "Trang chủ", 0);
+		addMenu(img.iconAttendance(), "  ","Điểm danh", 1);
+		addMenu(img.iconCalendarStudent(), "  ","Lịch học", 2);
+		addMenu(img.iconPoint(), "  ","Bảng điểm", 3);
+		addMenu(img.iconTuition(), "  ","Học phí", 4);
+		addMenu(img.iconCalendar(), "  ","Calendar", 5);
+		
 	}
 
 	private void split(String name) {
@@ -234,38 +255,5 @@ public class MenuStudent extends JPanel {
 		panelMenu.add(menu);
 	}
 
-	private void addMenu(Icon icon, String text, int index) {
-		MenuButton menu = new MenuButton(index);
-		setFont(getFont().deriveFont(Font.PLAIN, 14));
-		menu.setFont(getFont());
-		menu.setIcon(icon);
-		menu.setBorder(new EmptyBorder(8, 40, 8, 5));
-		menu.setText("  " + text);
-		menu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!animator.isRunning()) {
-					unSelectedMenu = selectedMenu;
-					selectedMenu = menu;
-					animator.start();
-					event.menuSelected(index);
-				}
-
-			}
-		});
-
-		panelMenu.add(menu);
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	
 	
 }
