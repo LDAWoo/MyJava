@@ -72,6 +72,7 @@ public class MainLogin extends JFrame {
 	private JLabel lblLogoShop;
 	private ImageIcon imageShop = new ImageIcon(new ImageIcon(MainLogin.class.getResource("/icon/shop.png")).getImage().getScaledInstance(310, 480, Image.SCALE_SMOOTH));
 	private ImageIcon imageLogoShop = new ImageIcon(new ImageIcon(MainLogin.class.getResource("/icon/logo-shop.png")).getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+	
 	public MainLogin() {
 		setUndecorated(true);   
 		setBounds(100, 100, 740, 570);

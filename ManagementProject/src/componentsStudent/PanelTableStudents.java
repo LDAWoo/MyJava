@@ -355,6 +355,7 @@ public class PanelTableStudents extends JPanel {
 		table.addTableCell(new CellAge(), 5);
 		table.addTableCell(new CellGrade(), 6);
 		table.addTableCell(new CellAction(), 7);
+	
 		initData();
 	}
 

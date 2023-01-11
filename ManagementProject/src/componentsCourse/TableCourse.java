@@ -45,6 +45,7 @@ public class TableCourse extends JTable {
         scroll.setVerticalScrollBar(new ScrollBarCustom());
         JPanel panel = new JPanel();
         panel.setBackground(new Color(60, 60, 60));
+        
         setForeground(new Color(214, 214, 214));
         setSelectionForeground(new Color(214, 214, 214));
         setSelectionBackground(new Color(50, 50, 50));

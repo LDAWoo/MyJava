@@ -61,7 +61,7 @@ public class LoginUserView extends JFrame {
 
 	public LoginUserView() {
 		
-		setUndecorated(true);
+//		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1054, 557);
 		contentPane = new JPanel();

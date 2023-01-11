@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -59,6 +60,7 @@ public class MenuButton extends JButton {
 		setForeground(color);
 		setFont(new Font("Roboto", Font.PLAIN, 15));
 		setHorizontalAlignment(JButton.LEFT);
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {

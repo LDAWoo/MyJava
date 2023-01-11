@@ -627,7 +627,7 @@ public class PanelCourseUpdate extends JPanel {
 				String codeCourse = txtCodeCourse.getText();
 				
 
-				MainEmployee.showForm(new PanelTableStudents(codeCourse));
+				Main.showForm(new PanelTableStudents(codeCourse));
 
 			}
 		});

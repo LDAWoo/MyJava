@@ -232,20 +232,10 @@ public class Main extends JFrame {
 				}
 
 				if (index == 13) {
-					LoginForm();
-				}
-
-				if (index == 14) {
-
-				}
-
-				if (index == 15) {
-					ForgotFassword();
-				}
-
-				if (index == 16) {
 				
 				}
+
+				
 
 			}
 		};
@@ -262,7 +252,7 @@ public class Main extends JFrame {
 
 	
 	public void action() {
-		DialogSettingStudent setting = new DialogSettingStudent(Main.this,height);
+		
 		DialogHelp help = new DialogHelp(Main.this);
 	
 		DialogConfirmMessage confirm = new DialogConfirmMessage(null);
@@ -272,7 +262,7 @@ public class Main extends JFrame {
 			public void mouseEntered(MouseEvent e) {
 				btnExit.setOpaque(true);
 				btnExit.setBackground(new Color(220, 20, 20));
-				setting.setVisible(false);
+				
 			}
 
 			@Override
@@ -298,7 +288,7 @@ public class Main extends JFrame {
 			public void mouseEntered(MouseEvent e) {
 				btnMinimize.setOpaque(true);
 				btnMinimize.setBackground(new Color(70, 70, 70));
-				setting.setVisible(false);
+				
 			}
 
 			@Override
@@ -339,14 +329,7 @@ public class Main extends JFrame {
 				setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);		
 			}
 			
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				
-				if(e.getX() < 1061) {
-					setting.setVisible(false);
-					
-				}
-			}
+			
 		});
 		
 		addWindowListener(new WindowAdapter() {
@@ -387,8 +370,6 @@ public class Main extends JFrame {
 		btnSetting.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setting.setLocation(x, y);
-				setting.setVisible(true);
 				
 			}
 		});
@@ -398,8 +379,7 @@ public class Main extends JFrame {
 			public void mouseEntered(MouseEvent e) {
 				btnSetting.setOpaque(true);
 				btnSetting.setBackground(new Color(70, 70, 70));
-				setting.setLocation(x, y);
-				setting.setVisible(true);
+				
 				
 			}
 			@Override
@@ -410,22 +390,6 @@ public class Main extends JFrame {
 		});
 	}
 	
-	
-
-	public void LoginForm() {
-		this.setVisible(false);
-		login = new LoginUserView();
-		login.setVisible(true);
-		login.setLocationRelativeTo(null);
-
-	}
-
-	public void ForgotFassword() {
-		this.setVisible(false);
-		forgot = new ForgotPasswordView();
-		forgot.setVisible(true);
-		forgot.setLocationRelativeTo(null);
-	}
 
 
 

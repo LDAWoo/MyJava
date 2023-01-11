@@ -15,7 +15,7 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class ModelScrollBarUIMenu extends BasicScrollBarUI {
 
-	private int THUMB_SIZE = 80;
+	private int THUMB_SIZE = 400;
 	
 	@Override
 	protected Dimension getMaximumThumbSize() {
@@ -45,6 +45,7 @@ public class ModelScrollBarUIMenu extends BasicScrollBarUI {
 	        return new ScrollBarButton();
 	    }
 	
+	    
 	
 	@Override
 	protected void paintThumb(Graphics g, JComponent c, Rectangle rectangle) {
@@ -74,6 +75,7 @@ public class ModelScrollBarUIMenu extends BasicScrollBarUI {
 
         @Override
         public void paint(Graphics grphcs) {
+        	
         }
     }
 

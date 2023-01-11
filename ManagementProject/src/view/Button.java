@@ -20,7 +20,7 @@ public class Button extends JButton {
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		setHorizontalAlignment(SwingConstants.LEFT);
 		setBackground(new Color(60,60,60));
-		setBorder(new EmptyBorder(8, 20, 8, 5));
+		setBorder(new EmptyBorder(8, 30, 8, 5));
 		setFocusPainted(false);
 		setFont(new Font("SansSerif",Font.PLAIN,13));
 		addMouseListener(new MouseAdapter() {

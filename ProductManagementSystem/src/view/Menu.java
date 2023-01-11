@@ -32,20 +32,19 @@ public class Menu extends JPanel {
 	
 	public Menu() {
 		setOpaque(false);
-		
-		JPanel panelProfile = new JPanel();
-		panelProfile.setOpaque(false);
-		
+		PanelProfile panelProfile = new PanelProfile();	
 		panelMenu = new JPanel();
 		panelMenu.setOpaque(false);
 		JScrollPane scrollPane = new JScrollPane(panelMenu);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBar(new ScrollBarMenu());
 		scrollPane.setOpaque(true);
+		scrollPane.getViewport().setOpaque(false);
 		scrollPane.setBorder(null);
+		scrollPane.setViewportBorder(null);
 		scrollPane.setBackground(colorMenu);
 		
-		layout = new MigLayout("fillx,wrap, insets 0", "[fill]", "[]0[]");
+		layout = new MigLayout("fillx, wrap, insets 0", "[fill]", "[]0[]");
 		panelMenu.setLayout(layout);
 		
 		
@@ -56,11 +55,11 @@ public class Menu extends JPanel {
 				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panelProfile, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-					.addGap(8)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE))
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addComponent(panelProfile, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 		
@@ -69,18 +68,27 @@ public class Menu extends JPanel {
 	
 	public void initMenuItem() {
 		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/icon-home.png")), "Trang Chủ"));
-		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/diamond-stone.png")), "Sản Phẩm","Dashboard","Drafts","Released"));
-		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/user-white.png")), "Khách Hàng","Overview","Customer List"));
+		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/diamond-stone.png")), "Sản Phẩm","Bảng điều khiển","Drafts","Released"));
+		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/user-white.png")), "Khách Hàng","Tổng quan","Danh sách khách hàng"));
 		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/store-white.png")), "Cửa Hàng"));
 		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/income-white.png")), "Thu Nhập","Hoàn Lại Tiền","Doanh Thu"));
-		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/income-white.png")), "Trợ Giúp & Bắt Đầu"));
+		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/icon-calendar.png")), "Calendar"));
 		
+		JPanel panel1 = new JPanel();
+		panel1.setOpaque(false);
+		panel1.setLayout(null);
+		panelMenu.add(panel1,"w 265,h 220!, pushy");
+
 		
-		PanelMode panel = new PanelMode();
-		panel.setBackground(colorMenu);
-		panelMenu.add(panel,"w 265, h 40");
+		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/help-white.png")), "Trợ Giúp & Bắt Đầu"));
+		JPanel panel2 = new JPanel();
+		panel2.setLayout(null);
+		PanelMode panelMode = new PanelMode();
+		panel2.setBackground(colorMenu);
+		panelMenu.add(panel2,"w 265, h 40,pushy");
 		
-		
+		panelMode.setBounds(0, 0, 265, 40);
+		panel2.add(panelMode);
 	}
 	
 	public void addMenu(ModelMenu menu) {
