@@ -59,14 +59,13 @@ public class Menu extends JPanel {
 	private JComponent lblHello;
 	private JLabel lblRole;
 	public static ArrayList<ModelInformationEmployee> datas = new ArrayList<ModelInformationEmployee>();
-	
+
 	private InformationEmployeeDAO dao = new InformationEmployeeDAO();
 
 	private String email;
-	
-	
+
 	public Menu() {
-		
+
 		setOpaque(false);
 		panelMenu = new JPanel();
 		panelMenu.setBorder(new EmptyBorder(0, 0, 0, 5));
@@ -84,19 +83,15 @@ public class Menu extends JPanel {
 		panel.setOpaque(false);
 
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-				.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 476, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
+				.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
+				groupLayout.createSequentialGroup()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 476, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap()));
 
 		JLabel lblManager = new JLabel("Management");
 		lblManager.setForeground(new Color(200, 200, 200));
@@ -120,35 +115,25 @@ public class Menu extends JPanel {
 
 		avatar.setGradientColor1(new java.awt.Color(63, 109, 217));
 		avatar.setGradientColor2(new java.awt.Color(199, 42, 42));
-		
-	
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(10)
-					.addComponent(lblHello)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-					.addContainerGap())
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup().addGap(10).addComponent(lblHello)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE).addContainerGap())
 				.addComponent(lblManager, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
 				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-					.addComponent(avatar, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(avatar, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE).addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(lblManager, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(avatar, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-						.addComponent(lblHello, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
-					.addContainerGap())
-		);
+						.addComponent(lblManager, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(avatar, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblRole, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+								.addComponent(lblHello, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+						.addContainerGap()));
 		panel.setLayout(gl_panel);
 
 		setLayout(groupLayout);
@@ -159,17 +144,17 @@ public class Menu extends JPanel {
 
 	public void Action() {
 		avatar.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e.getClickCount() == 1 || e.getClickCount() == 2) {
-					
+
 				}
 			}
 		});
 
 		lblHello.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e.getClickCount() == 1 || e.getClickCount() == 2) {
@@ -188,7 +173,7 @@ public class Menu extends JPanel {
 			}
 		});
 
-//		setAvatar();
+		setAvatar();
 	}
 
 	public void init() {
@@ -223,8 +208,8 @@ public class Menu extends JPanel {
 		addMenu(img.iconStudent2(), "Doanh thu", 8);
 		split("Calendar");
 		addMenu(img.iconCalendar(), "Lịch", 9);
-		
-		
+		split("Hệ Thống");
+		addMenu(img.iconCalendar(), "Đăng xuất", 10);
 	}
 
 	private void split(String name) {
@@ -249,7 +234,7 @@ public class Menu extends JPanel {
 
 			}
 		});
-		
+
 		panelMenu.add(menu);
 	}
 
@@ -270,35 +255,27 @@ public class Menu extends JPanel {
 					animator.start();
 					event.menuSelected(index);
 				}
-				}
-			
+			}
+
 		});
-		
-	
 
 		panelMenu.add(menu);
 	}
-	
-	
+
 	public void setAvatar() {
 		email = Main.email;
 		datas = dao.SelectInformation(email);
 		ImageHelper image = new ImageHelper();
 		byte[] img = datas.get(0).getImg();
-		
+
 		try {
-		Image icon = image.createImageFromByteArray(img, "jpg");
-		avatar.setImage(new ImageIcon(icon));
-		lblRole.setText(datas.get(0).getFullName());
-		}catch(Exception e) {}
-		
-		
+			Image icon = image.createImageFromByteArray(img, "jpg");
+			avatar.setImage(new ImageIcon(icon));
+			lblRole.setText(datas.get(0).getFullName());
+		} catch (Exception e) {
+		}
+
 	}
-	
-	
-	
-	
-	
 
 	public String getEmail() {
 		return email;
@@ -307,7 +284,5 @@ public class Menu extends JPanel {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
+
 }

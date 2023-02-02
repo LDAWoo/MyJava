@@ -33,6 +33,8 @@ public class ManagerLearnerCourseDAO implements DAOManagerLearner<ModelStudents,
 	
 	final String INSERT_SQL = "INSERT INTO HOCVIEN(MAHOCVIEN,MANGUOIHOC,MAKHOAHOC,DIEM)\r\n"
 			+ "VALUES(?,?,?,?)";
+	
+	final String DELETE_SQL = "DELETE dbo.HOCVIEN WHERE MANGUOIHOC = ?";
 	@Override
 	public int Insert(ModelStudents E) {
 		return JDBCHelper.executeUpdate(INSERT_SQL, E.getCodeStudent().getCodeStudent(),E.getCodeLearner().getCodeLerner(),E.getCodeCourse().getCodeCourse(),E.getGrade().getGrade());
@@ -45,8 +47,7 @@ public class ManagerLearnerCourseDAO implements DAOManagerLearner<ModelStudents,
 
 	@Override
 	public int Delete(Object K) {
-		// TODO Auto-generated method stub
-		return 0;
+		return JDBCHelper.executeUpdate(DELETE_SQL, K);
 	}
 
 	@Override

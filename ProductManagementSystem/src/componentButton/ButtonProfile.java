@@ -28,6 +28,7 @@ public class ButtonProfile extends JButton {
 		setFocusPainted(false);
 		setContentAreaFilled(false);
 		setBorder(new EmptyBorder(8, 20, 8, 5));
+	
 		
 		setHorizontalAlignment(SwingConstants.LEFT);
 		setCursor(new Cursor(Cursor.HAND_CURSOR));

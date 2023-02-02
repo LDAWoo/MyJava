@@ -16,6 +16,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+import color.ColorBackground;
 import componentCustomers.PanelCustomerlList;
 import componentHeader.DialogNotification;
 import componentHeader.DialogNotificationOption;
@@ -24,11 +25,13 @@ import componentHeader.PanelDialogProfile;
 import componentProduct.PanelCreateProduct;
 import componentProduct.PanelDashboard;
 import componentProduct.PanelOverviewProductDashboard;
+import componentProduct.PanelProductDashboard;
 import componentScrollPane.ScrollBarMenu;
 import interfaces.EventMenuSelected;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -39,6 +42,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -50,8 +54,6 @@ public class MainForm extends JFrame {
 	private JPanel contentPane;
 	private Menu panelMenu;
 
-	private Menu menu;
-	private Animator animator;
 	private Color colorMain = new Color(26,29,31);
 	private PanelBody panelBody;
 
@@ -76,10 +78,24 @@ public class MainForm extends JFrame {
 	private PanelHeader panelHeader;
 	private PanelNorth panelNorth;
 	public static MainForm frame;
+	
+	Icon iconHomeWhite = new ImageIcon(MainForm.class.getResource("/icon/icon-home.png"));
+	Icon iconProductWhite = new ImageIcon(MainForm.class.getResource("/icon/diamond-stone.png"));
+	Icon iconCustomerWhite = new ImageIcon(MainForm.class.getResource("/icon/user-white.png"));
+	Icon iconStoreWhite = new ImageIcon(MainForm.class.getResource("/icon/store-white.png"));
+	Icon iconIncomeWhite = new ImageIcon(MainForm.class.getResource("/icon/income-white.png"));
+	Icon iconCaledarWhite = new ImageIcon(MainForm.class.getResource("/icon/icon-calendar.png"));
+	
+	public static Icon iconLightB = new ImageIcon(MainForm.class.getResource("/icon/sun-black.png"));
+	public static Icon iconDarkB = new ImageIcon(MainForm.class.getResource("/icon/moon-black.png"));
+	
+
+	private JPanel panelCenter;
+
+	
 	public MainForm() {
 		setUndecorated(true);
 		setBounds(100, 100, 1200, 670);
-		
 		
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -99,14 +115,14 @@ public class MainForm extends JFrame {
 		
 		panelNorth = new PanelNorth();
 		
-		JPanel panelCenter = new JPanel();
+		panelCenter = new JPanel();
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addComponent(panelNorth, GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
 				.addComponent(panelCenter, GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
 		);
-		gl_panel.setVerticalGroup(
+		gl_panel.setVerticalGroup(                                                                                                                                                     
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addComponent(panelNorth, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
@@ -124,6 +140,13 @@ public class MainForm extends JFrame {
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBar(new ScrollBarMenu());
 		
+		scrollPane.addMouseWheelListener(new MouseAdapter() {
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) {
+//				System.out.println(e.getWheelRotation());
+				
+			}
+		});
 		
 		scrollPane.setOpaque(true);
 		scrollPane.setBorder(null);
@@ -173,6 +196,7 @@ public class MainForm extends JFrame {
 		pack();
 		init();
 		actionDialog();
+		actionButtonMode();
 	}
 	public void init() {
 		
@@ -194,10 +218,9 @@ public class MainForm extends JFrame {
 			}
 		});
 		
-		panelMenu.initMenuItem();
+		panelBody.showForm(new PanelProductDashboard());
 		
-		
-		panelBody.showForm(new PanelCreateProduct());
+		panelMenu.initMenuItem(iconHomeWhite,iconProductWhite,iconCustomerWhite,iconStoreWhite,iconIncomeWhite,iconCaledarWhite);
 	}
 	
 	public void actionDialog() {
@@ -254,6 +277,15 @@ public class MainForm extends JFrame {
 				dialogProfile.setVisible(false);
 				dialogNotification.setVisible(false);
 				dialogNotificationOption.setVisible(false);
+			}
+		});
+		
+		panelHeader.addActionAddProduct(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelBody.showForm(new PanelCreateProduct());
+				
 			}
 		});
 		
@@ -323,6 +355,46 @@ public class MainForm extends JFrame {
 		
 		});
 		
+	}
+	
+	public void actionButtonMode() {
+		
+		PanelMode.actionButonModeLight(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PanelMode.btnLight.setForeground(ColorBackground.colorGRB255255255);
+				PanelMode.btnLight.setColorMenu(ColorBackground.colorGRB394348);
+				
+				PanelMode.btnDark.setForeground(ColorBackground.colorGRB200200200);
+				PanelMode.btnDark.setColorMenu(ColorBackground.colorGRB171921);
+				
+				panelMenu.setColorMenu(ColorBackground.colorLight);
+				panelMenu.scrollPane.setBackground(ColorBackground.colorLight);
+					
+				PanelMode.setMode(ColorBackground.colorLight);
+				
+			}
+		});
+		
+		PanelMode.actionButonModeDark(new ActionListener(){
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PanelMode.btnDark.setForeground(ColorBackground.colorGRB200200200);
+				PanelMode.btnDark.setColorMenu(ColorBackground.colorGRB394348);
+				
+				PanelMode.btnLight.setForeground(ColorBackground.colorGRB200200200);
+				PanelMode.btnLight.setColorMenu(ColorBackground.colorGRB171921);
+				
+				panelMenu.setColorMenu(ColorBackground.colorDark);
+				panelMenu.scrollPane.setBackground(ColorBackground.colorDark);
+
+				
+				PanelMode.setMode(ColorBackground.colorDark);
+				
+			}
+		});
 	}
 
 	public static void setVisible(boolean option,Window setLocation) {

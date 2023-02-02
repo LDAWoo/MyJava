@@ -1,15 +1,16 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import org.jdesktop.animation.timing.Animator;
 
+import color.ColorBackground;
 import componentScrollPane.ScrollBarMenu;
 import interfaces.EventMenu;
 import interfaces.EventMenuSelected;
@@ -21,7 +22,7 @@ import view.MenuItem;
 public class Menu extends JPanel {
 
 	private JPanel panelMenu;
-	private Color colorMenu = new Color(26,29,31);
+	private Color colorMenu = ColorBackground.colorDark;
 	private Animator animator;
 	private boolean enable = true;
 	private boolean showMenu = true;
@@ -29,13 +30,23 @@ public class Menu extends JPanel {
 	private EventMenuSelected event;
 
 	private ShowPopup showPopup;
+	private PanelMode panelMode;
+	public JScrollPane scrollPane;
+	public Icon iconLightW = new ImageIcon(MainForm.class.getResource("/icon/sun-white.png"));
+	public Icon iconDarkW = new ImageIcon(MainForm.class.getResource("/icon/moon-white.png"));
+	
+	public void setColorMenu(Color colorMenu) {
+		this.colorMenu = colorMenu;
+		repaint();
+	}
 	
 	public Menu() {
 		setOpaque(false);
-		PanelProfile panelProfile = new PanelProfile();	
+		PanelProfile panelProfile = new PanelProfile();
+		panelMode = new PanelMode(iconLightW,iconDarkW);
 		panelMenu = new JPanel();
 		panelMenu.setOpaque(false);
-		JScrollPane scrollPane = new JScrollPane(panelMenu);
+		scrollPane = new JScrollPane(panelMenu);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBar(new ScrollBarMenu());
 		scrollPane.setOpaque(true);
@@ -43,72 +54,68 @@ public class Menu extends JPanel {
 		scrollPane.setBorder(null);
 		scrollPane.setViewportBorder(null);
 		scrollPane.setBackground(colorMenu);
-		
+
 		layout = new MigLayout("fillx, wrap, insets 0", "[fill]", "[]0[]");
 		panelMenu.setLayout(layout);
-		
-		
+
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(panelProfile, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addComponent(panelProfile, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE))
-		);
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
+				groupLayout.createSequentialGroup()
+						.addComponent(panelProfile, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)));
 		setLayout(groupLayout);
-		
 		
 	}
 	
-	public void initMenuItem() {
-		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/icon-home.png")), "Trang Chủ"));
-		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/diamond-stone.png")), "Sản Phẩm","Bảng điều khiển","Drafts","Released"));
-		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/user-white.png")), "Khách Hàng","Tổng quan","Danh sách khách hàng"));
-		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/store-white.png")), "Cửa Hàng"));
-		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/income-white.png")), "Thu Nhập","Hoàn Lại Tiền","Doanh Thu"));
-		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/icon-calendar.png")), "Calendar"));
-		
+
+	public void initMenuItem(Icon iconHome, Icon iconProduct, Icon iconCustomer, Icon iconStore, Icon income,
+			Icon iconcaledar) {
+		addMenu(new ModelMenu(iconHome, "Trang Chủ"));
+		addMenu(new ModelMenu(iconProduct, "Sản Phẩm", "Bảng điều khiển", "Drafts", "Released"));
+		addMenu(new ModelMenu(iconCustomer, "Khách Hàng", "Tổng quan", "Danh sách khách hàng"));
+		addMenu(new ModelMenu(iconStore, "Cửa Hàng"));
+		addMenu(new ModelMenu(income, "Thu Nhập", "Hoàn Lại Tiền", "Doanh Thu"));
+		addMenu(new ModelMenu(iconcaledar, "Calendar"));
+
 		JPanel panel1 = new JPanel();
 		panel1.setOpaque(false);
 		panel1.setLayout(null);
-		panelMenu.add(panel1,"w 265,h 220!, pushy");
+		panelMenu.add(panel1, "w 265,h 220!, pushy");
 
-		
 		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/help-white.png")), "Trợ Giúp & Bắt Đầu"));
 		JPanel panel2 = new JPanel();
+		panel2.setOpaque(false);
 		panel2.setLayout(null);
-		PanelMode panelMode = new PanelMode();
+
 		panel2.setBackground(colorMenu);
-		panelMenu.add(panel2,"w 265, h 40,pushy");
-		
+		panelMenu.add(panel2, "w 265, h 40,pushy");
+
 		panelMode.setBounds(0, 0, 265, 40);
 		panel2.add(panelMode);
 	}
-	
+
 	public void addMenu(ModelMenu menu) {
-		panelMenu.add(new MenuItem(menu, getEventMenu(), event, panelMenu.getComponentCount())," h 40!");
+		panelMenu.add(new MenuItem(menu, getEventMenu(), event, panelMenu.getComponentCount()), " h 40!");
 	}
-	
+
 	public EventMenu getEventMenu() {
 		return new EventMenu() {
-			
+
 			@Override
 			public boolean menuPressed(Component com, boolean open) {
-				if(enable) {
-					if(showMenu) {
-						if(open) {
+				if (enable) {
+					if (showMenu) {
+						if (open) {
 							new MenuAnimation(layout, com).openMenu();
-						}else {
+						} else {
 							new MenuAnimation(layout, com).closeMenu();
 						}
 						return true;
-					}else {
+					} else {
 						showPopup.showPopup(com);
 					}
 				}
@@ -116,18 +123,21 @@ public class Menu extends JPanel {
 			}
 		};
 	}
-	
-	
-	
+
+
 	@Override
-	protected void paintComponent(Graphics g){
-		Graphics2D g2 = (Graphics2D)g;
+	protected void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setColor(colorMenu);
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		super.paintComponent(g);
 	}
-	
+
+	public Color getColorMenu() {
+		return colorMenu;
+	}
+
 	public void setEnableMenu(boolean enable) {
 		this.enable = enable;
 	}

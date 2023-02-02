@@ -8,7 +8,7 @@ public class JDBCHelper {
 	public static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	public static String url = "jdbc:sqlserver://DESKTOP-2UOQ2VS:1433;databaseName=PRODUCTMANAGEMENTSYSTEM;encrypt=false";
 	public static String username = "sa";
-	public static String password = "123456";
+	public static String password = "123";
 	public static java.sql.Connection connection;
 	
 	static {

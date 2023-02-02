@@ -105,9 +105,11 @@ public class PanelTopicUpdate extends JPanel {
 	private String code_topic_pattern = "^[A-Z0-9]{3,}$";
 	private String tuition_pattern = "^[0-9]{1,}$";
 	private String timer_pattern = "^[0-9]{1,}$";
+	private String role;
 
-	public PanelTopicUpdate(Topic topic) {
+	public PanelTopicUpdate(Topic topic,String role) {
 		this.topic = topic;
+		this.role = role;
 		setOpaque(false);
 
 		panel = new JPanel();
@@ -169,6 +171,10 @@ public class PanelTopicUpdate extends JPanel {
 		btnDelete.setForeground(SystemColor.menu);
 		btnDelete.setFont(fontText18);
 		btnDelete.setBorder(null);
+		if(role == "Employee") {
+			btnDelete.setVisible(false);
+		}
+		
 		GroupLayout gl_layeredPane = new GroupLayout(layeredPane);
 		gl_layeredPane.setHorizontalGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING).addGroup(gl_layeredPane
 				.createSequentialGroup().addGap(213)

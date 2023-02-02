@@ -96,8 +96,10 @@ public class PanelLearnerUpdate extends JPanel {
 	
 	private JTextField txtCodeEmployee;
 	private JLabel lblCodeEmployee;
+	private String role;
 	
-	public PanelLearnerUpdate(Learner learner) {
+	public PanelLearnerUpdate(Learner learner,String role) {
+		this.role = role;
 		setOpaque(false);
 		this.learner = learner;
 		JPanel panel = new JPanel();
@@ -294,6 +296,11 @@ public class PanelLearnerUpdate extends JPanel {
 		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnDelete.setBorder(null);
 		btnDelete.setBackground(new Color(60, 22, 173));
+		
+		if(role == "Employee") {
+			btnDelete.setVisible(false);
+		}
+		
 		GroupLayout gl_layeredPane = new GroupLayout(layeredPane);
 		gl_layeredPane.setHorizontalGroup(
 			gl_layeredPane.createParallelGroup(Alignment.LEADING)

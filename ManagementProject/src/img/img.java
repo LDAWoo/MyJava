@@ -6,15 +6,6 @@ import java.awt.Toolkit;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import date.CurrendarCustom;
-import view.ChangePasswordView;
-import view.ForgotPasswordView;
-import view.Header;
-import view.LoginUserView;
-import view.Menu;
-import view.PanelFind;
-import view.Profile;
-import view.SignUpView;
 
 public class img {
 

@@ -45,15 +45,17 @@ public class Learner extends JPanel {
 	ArrayList<ModelLearner> modelLearner;
 	public EventHandler<ArrayList<ModelLearner>> ModelLearnerChanged = new EventHandler<ArrayList<ModelLearner>>();
 	
+	private String role;
 	
-	public Learner() {
+	public Learner(String role) {
+		this.role = role;
 		setOpaque(false);
 		JPanel panelNorth = new JPanel();
 		panelNorth.setOpaque(false);
 		panelCenter = new JPanel();
 		panelCenter.setBackground(new Color(50,50,50));
 
-		panelUpdate = new PanelLearnerUpdate(this);
+		panelUpdate = new PanelLearnerUpdate(this,role);
 
 		panelList = new PanelLearnerList(this);	
 		

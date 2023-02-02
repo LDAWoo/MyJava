@@ -148,9 +148,7 @@ public class MenuStudent extends JPanel {
 
 		setLayout(groupLayout);
 		init();
-
 		Action();
-		
 		setAvatarUser();
 	}
 

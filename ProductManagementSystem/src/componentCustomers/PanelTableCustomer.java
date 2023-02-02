@@ -65,6 +65,7 @@ public class PanelTableCustomer extends JPanel {
 		panelHeader = new PanelCustomerHeader();
 		
 		body = createPanelBody();
+		
 		JScrollPane scrollPane = new JScrollPane(body);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBorder(null);
@@ -79,7 +80,7 @@ public class PanelTableCustomer extends JPanel {
 		
 		panel.add(panelHeader);
 		panel.add(scrollPane);
-		panel.add(bottom, "");
+		panel.add(bottom);
 		
 
 		add(panel, "push,grow");
@@ -133,12 +134,12 @@ public class PanelTableCustomer extends JPanel {
 		for (ModelCustomerList data : datas) {
 			double total =data.getTotalMonney();
 			long roundValue = Math.round(total);
-			ButtonCustomerList button1 = new ButtonCustomerList(image,
+			ButtonCustomerList button = new ButtonCustomerList(image,
 			data.getName(),data.getEmail(),data.getPhone(),data.getBuys(),roundValue+"",data.getComment()+"",data.getLikes()+"");
-			button1.setBorder(null);
-			button1.setFont(new Font("Roboto", Font.BOLD, 17));
-			button1.setHorizontalAlignment(SwingConstants.LEFT); // 33
-			panelBody.add(button1, "wrap");
+			button.setBorder(null);
+			button.setFont(new Font("Roboto", Font.BOLD, 17));
+			button.setHorizontalAlignment(SwingConstants.LEFT);
+			panelBody.add(button, "wrap");
 			
 		}
 		

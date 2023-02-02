@@ -214,23 +214,6 @@ public class DialogSettingStudent extends JDialog {
 			}
 		});
 
-		btnLogout.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				DialogConfirmMessage confirm = new DialogConfirmMessage(null);
-				confirm.setLocation(MainStudent.xScreenExit, MainStudent.yScreenExit);
-				confirm.setModalityType(ModalityType.APPLICATION_MODAL);
-				confirm.lblTitle.setText("ĐĂNG XUẤT?");
-				confirm.lblTextMessage.setText("Bạn có chắc chắn muốn đăng xuất không ?");
-				confirm.setVisible(true);
-				if (confirm.option == 1) {
-					MainStudent main = new MainStudent(MainStudent.email);
-					
-					main.setVisible(false);
-				}
-			}
-		});
 		btnExit.addActionListener(new ActionListener() {
 
 			@Override
@@ -247,5 +230,9 @@ public class DialogSettingStudent extends JDialog {
 			}
 		});
 
+	}
+	
+	public void addActionButtonLogout(ActionListener event) {
+		btnLogout.addActionListener(event);
 	}
 }

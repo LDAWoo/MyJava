@@ -24,4 +24,15 @@ public class LablePurchase extends JLabel {
 		g2.fillRoundRect(0, 0, getWidth(), getHeight(),15,15);
 		super.paintComponent(g);
 	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+		repaint();
+	}
+	
+	
 }

@@ -48,6 +48,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingUtilities;
 
 import java.awt.SystemColor;
+import java.awt.Window;
 import java.awt.Dialog.ModalityType;
 import javax.swing.ImageIcon;
 
@@ -85,19 +86,7 @@ public class MainStudent extends JFrame {
 
 	public static int height;
 	DialogConfirmMessage confirm = new DialogConfirmMessage(null);
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					MainStudent frame = new MainStudent("");
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public static MainStudent frame;
 
 	public MainStudent(String email) {
 		this.email = email;
@@ -199,10 +188,10 @@ public class MainStudent extends JFrame {
 		MenuEvent event = new MenuEvent() {
 			@Override
 			public void menuSelected(int index) {
-				if(index == 0) {
+				if (index == 0) {
 					showForm(new PanelHomeStudent());
 				}
-				
+
 				if (index == 1) {
 					showForm(new PanelAttendanceStudent());
 				}
@@ -221,6 +210,7 @@ public class MainStudent extends JFrame {
 
 				if (index == 5) {
 					showForm(new CurrendarCustom());
+
 				}
 
 			}
@@ -236,7 +226,6 @@ public class MainStudent extends JFrame {
 
 		DialogSettingStudent setting = new DialogSettingStudent(MainStudent.this, height);
 		DialogHelp help = new DialogHelp(MainStudent.this);
-		
 
 		btnExit.addMouseListener(new MouseAdapter() {
 			@Override
@@ -403,8 +392,40 @@ public class MainStudent extends JFrame {
 				help.setVisible(false);
 			}
 		});
+
+		setting.addActionButtonLogout(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DialogConfirmMessage confirm = new DialogConfirmMessage(null);
+				confirm.setLocation(MainStudent.xScreenExit, MainStudent.yScreenExit);
+				confirm.setModalityType(ModalityType.APPLICATION_MODAL);
+				confirm.lblTitle.setText("ĐĂNG XUẤT?");
+				confirm.lblTextMessage.setText("Bạn có chắc chắn muốn đăng xuất không ?");
+				confirm.setVisible(true);
+				if (confirm.option == 1) {
+					LoginUserView.setVisible(true, null);
+					setVisible(false);
+
+				}
+			}
+		});
+
 	}
 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					frame = new MainStudent("");
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	public static void showForm(Component com) {
 		body.removeAll();

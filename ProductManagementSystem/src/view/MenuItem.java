@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import color.ColorBackground;
 import interfaces.EventMenu;
 import interfaces.EventMenuSelected;
 import model.ModelMenu;
@@ -21,6 +22,9 @@ public class MenuItem extends JPanel {
 	private boolean open;
 	private EventMenuSelected eventMenuSelected;
 	private int index;
+	private Color colorMenuItem = ColorBackground.colorDark;
+	private Color colorArrow= new Color(100, 100, 100);
+
 
 	public MenuItem(ModelMenu menu, EventMenu event, EventMenuSelected eventMenuSelected, int index) {
 		this.menu = menu;
@@ -28,7 +32,7 @@ public class MenuItem extends JPanel {
 		this.index = index;
 		setOpaque(false);
 		setLayout(new MigLayout("wrap, fillx, insets 0", "[fill]", "[fill, 40!]0[fill, 50!]"));
-		MenuButton item = new MenuButton(menu.getIcon() ,  "   " +menu.getMenuName());
+		MenuButton item = new MenuButton(menu.getIcon(), "   " + menu.getMenuName());
 		item.addActionListener(new ActionListener() {
 
 			@Override
@@ -55,10 +59,33 @@ public class MenuItem extends JPanel {
 					eventMenuSelected.menuSelected(index, buttonItem.getIndex());
 				}
 			});
-			add(buttonItem,"al right,width ::85%");
+			add(buttonItem, "al right,width ::85%");
 		}
+		actionButtonMode();
 	}
 	
+	public void actionButtonMode() {
+		PanelMode.actionButonModeDark(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				colorMenuItem = ColorBackground.colorDark;
+				repaint();
+				
+			}
+		});
+		
+		PanelMode.actionButonModeLight(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				colorMenuItem = ColorBackground.colorLight;
+				colorArrow = ColorBackground.colorGRB239239239;
+				repaint();
+			}
+		});
+	}
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
@@ -66,12 +93,12 @@ public class MenuItem extends JPanel {
 		int heigth = getPreferredSize().height;
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setColor(new Color(26, 29, 31));
+		g2.setColor(colorMenuItem);
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 		g2.fillRect(0, 2, width, 38);
 		g2.setComposite(AlphaComposite.SrcOver);
 		g2.fillRect(0, 40, width, heigth - 40);
-		g2.setColor(new Color(100, 100, 100));
+		g2.setColor(colorArrow);
 		g2.drawLine(31, 40, 31, heigth - 25);
 		for (int i = 0; i < menu.getSubMenu().length; i++) {
 			int y = ((i + 1) * 50 + 32) - 17;
@@ -83,7 +110,7 @@ public class MenuItem extends JPanel {
 
 		super.paintComponent(g);
 	}
-	
+
 	private void createArrowButton(Graphics2D g2) {
 		int size = 4;
 		int y = 19;
@@ -134,6 +161,10 @@ public class MenuItem extends JPanel {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	public Color getColorMenuItem() {
+		return colorMenuItem;
 	}
 
 }

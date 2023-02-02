@@ -101,7 +101,10 @@ public class PanelCourseUpdate extends JPanel {
 	
 	private DialogQuestion question = new DialogQuestion(null);
 	private DialogConfirm confirm = new DialogConfirm(null);
-	public PanelCourseUpdate(Course course) {
+	private String role;
+	
+	public PanelCourseUpdate(Course course,String role) {
+		this.role = role;
 		this.course = course;
 		setOpaque(false);
 
@@ -282,6 +285,9 @@ public class PanelCourseUpdate extends JPanel {
 		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 18));
 		btnDelete.setBorder(null);
 		btnDelete.setBackground(new Color(60, 22, 173));
+		if(role == "Employee") {
+			btnDelete.setVisible(false);
+		}
 
 		btnStudent = new AnimationButton();
 		btnStudent.setText("Học viên");
@@ -625,9 +631,11 @@ public class PanelCourseUpdate extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String codeCourse = txtCodeCourse.getText();
-				
-
-				Main.showForm(new PanelTableStudents(codeCourse));
+				if(role == "Manager") {
+				Main.showForm(new PanelTableStudents(codeCourse,role));
+				}else if(role == "Employee") {
+					MainEmployee.showForm(new PanelTableStudents(codeCourse,role));
+				}
 
 			}
 		});

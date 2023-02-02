@@ -7,15 +7,19 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import color.ColorBackground;
+
 public class MenuButtonItem extends JButton {
 
-	private Color effectColor = new Color(26, 29, 31);
+	private Color effectColor = ColorBackground.colorDark;
 	
 	private Color colorButton = new Color(200,200,200);
 	private int index;
@@ -47,16 +51,44 @@ public class MenuButtonItem extends JButton {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				effectColor = new Color(70,70,70);
-				colorButton = new Color(255,255,255);
+				if (effectColor == ColorBackground.colorDark) {
+					setOpaque(true);
+					setBackground(ColorBackground.colorGRB707070);
+				}
+				if (effectColor == ColorBackground.colorLight) {
+					setOpaque(true);
+					setBackground(ColorBackground.colorGRB239239239);
+				}
 				setForeground(colorButton);
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				effectColor =  new Color(26, 29, 31);
-				colorButton = new Color(200,200,200);
+				setOpaque(false);
 				setForeground(colorButton);
+			}
+		});
+		actionButtonMode();
+	}
+	
+	public void actionButtonMode() {
+		PanelMode.actionButonModeDark(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				effectColor = ColorBackground.colorDark;
+				setForeground(ColorBackground.colorLight);
+				repaint();
+			}
+		});
+
+		PanelMode.actionButonModeLight(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				effectColor = ColorBackground.colorLight;
+				setForeground(ColorBackground.colorDark);
+				repaint();
 			}
 		});
 	}
@@ -66,7 +98,7 @@ public class MenuButtonItem extends JButton {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setColor(effectColor);
-		g2.fillRoundRect(0, 0, getWidth() -10, getHeight() - 2, 15, 15);
+		g2.fillRect(0, 0, getWidth(), getHeight() - 2);
 		super.paintComponent(g);
 	}
 

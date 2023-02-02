@@ -87,6 +87,7 @@ public class AnimationButtonAction extends JButton{
 		setBorder(new EmptyBorder(5,5,5,5));
 		setBackground(null);
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
+		setFocusPainted(false);
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {

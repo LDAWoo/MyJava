@@ -82,7 +82,6 @@ public class PanelTitleProduct extends JPanel {
 		txtDescriber.setBorder(null);
 		txtDescriber.setCaretColor(color2);
 		txtDescriber.setForeground(color2);
-		
 		txtDescriber.setBackground(color1);
 			
 		btnBold = new ButtonPont();

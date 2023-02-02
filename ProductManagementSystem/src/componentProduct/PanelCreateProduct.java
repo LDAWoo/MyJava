@@ -10,8 +10,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
 import componentCreateProduct.ButtonCheckedSizeAndColor;
+import componentCreateProduct.PanelWarranty;
 import componentCreateProduct.PanelManufacturerProduct;
-import componentCreateProduct.PanelNhaCungCapFillRoundRect;
+import componentCreateProduct.PanelSupplier;
 import componentCreateProduct.PanelPriceProduct;
 import componentCreateProduct.PanelTitleProduct;
 import componentCreateProduct.PanelmageProduct;
@@ -22,7 +23,8 @@ public class PanelCreateProduct extends JPanel {
 	private PanelmageProduct panelImageProduct;
 	private PanelPriceProduct panelPrice;
 	private PanelManufacturerProduct panelManufacturer;
-	private PanelNhaCungCapFillRoundRect panel;
+	private PanelSupplier panelNcc;
+	private PanelWarranty panel;
 
 	public PanelCreateProduct() {
 		setOpaque(false);
@@ -39,9 +41,9 @@ public class PanelCreateProduct extends JPanel {
 
 		panelManufacturer = new PanelManufacturerProduct();
 		
-		panel = new PanelNhaCungCapFillRoundRect();
+		panelNcc = new PanelSupplier();
 		
-		
+		panel = new PanelWarranty();
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -54,6 +56,7 @@ public class PanelCreateProduct extends JPanel {
 				.addComponent(panelImageProduct, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)
 				.addComponent(panelManufacturer, GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)
 				.addComponent(panelPrice, GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)
+				.addComponent(panelNcc, GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)
 				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
@@ -68,10 +71,12 @@ public class PanelCreateProduct extends JPanel {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panelPrice, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelManufacturer, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelManufacturer, GroupLayout.PREFERRED_SIZE, 480, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 342, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(158, Short.MAX_VALUE))
+					.addComponent(panelNcc, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(49, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 

@@ -46,24 +46,24 @@ import java.awt.Font;
 import javax.swing.JRadioButton;
 
 public class PanelTableStudents extends JPanel {
-	Table table;
+	private Table table;
 	private JScrollPane scrollPane;
 	private TextField find;
 	private JLabel lblFind;
 	private img img = new img();
 	private JPanel panelNorth2;
-	private JComboBox cbbLearnerNoCourse;
+	private static JComboBox cbbLearnerNoCourse;
 	private AnimationButtonAction btnAdd;
 
 	private int indexSelectedCombobox = -1;
 	
-	private DefaultComboBoxModel cbbModelLearner;
+	public static DefaultComboBoxModel cbbModelLearner;
 
-	ArrayList<ModelStudents> datas = new ArrayList<ModelStudents>();
+	private ArrayList<ModelStudents> datas = new ArrayList<ModelStudents>();
 
-	ArrayList<ModelLearnerNoCourse> datasCombobox = new ArrayList<ModelLearnerNoCourse>();
+	private static ArrayList<ModelLearnerNoCourse> datasCombobox = new ArrayList<ModelLearnerNoCourse>();
 
-	ManagerLearnerCourseDAO dao = new ManagerLearnerCourseDAO();
+	private static ManagerLearnerCourseDAO dao = new ManagerLearnerCourseDAO();
 	public static JRadioButton rdbtnAll;
 	public static JRadioButton rdbtnScoreEntered;
 	public static JRadioButton rdbtnScoreHasNotBeenEntered;
@@ -72,9 +72,11 @@ public class PanelTableStudents extends JPanel {
 	private String codeCourse;
 	
 	private DialogQuestion question = new DialogQuestion(null);
+	private String role;
 	
-	public PanelTableStudents(String codeCourse) {
+	public PanelTableStudents(String codeCourse,String role) {
 		this.codeCourse =codeCourse;
+		this.role = role;
 		setOpaque(false);
 		setBackground(SystemColor.infoText);
 		setBorder(null);
@@ -115,6 +117,7 @@ public class PanelTableStudents extends JPanel {
 
 		cbbLearnerNoCourse = new JComboBox();
 		cbbLearnerNoCourse.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		cbbLearnerNoCourse.setFocusable(false);
 
 		btnAdd = new AnimationButtonAction("Thêm");
 		btnAdd.setBorder(null);
@@ -163,6 +166,7 @@ public class PanelTableStudents extends JPanel {
 		rdbtnAll.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		rdbtnAll.setForeground(new Color(200, 200, 200));
 		rdbtnAll.setFocusPainted(false);
+		rdbtnAll.setSelected(true);
 
 		rdbtnScoreEntered = new JRadioButton("Đã nhập điểm");
 		rdbtnScoreEntered.setBackground(new Color(60, 60, 60));
@@ -223,10 +227,8 @@ public class PanelTableStudents extends JPanel {
 		Action();
 	}
 
-	public void initCombobox() {
-		
+	public static void initCombobox() {
 		cbbModelLearner.addElement("");
-
 		datasCombobox = dao.addLearnerNoCourse();
 		for (ModelLearnerNoCourse data : datasCombobox) {
 			cbbModelLearner.addElement(data.getName());
@@ -294,8 +296,14 @@ public class PanelTableStudents extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(cbbLearnerNoCourse.getSelectedIndex() == 0) {
+					getDialogPosition();
+					question.lblQuestion.setText("Không thể thêm");
+					question.lblTextMessage.setText("\"Chưa chọn học viên để thêm\"");
+					return;
+				}
+				
 				datas = dao.SelectAll();
-
 				String student = datas.get(datas.size() - 1).getCodeStudent().toString();
 				String code = student.substring(0, 2);
 				int number = Integer.parseInt(student.substring(2, student.length()));
@@ -354,7 +362,7 @@ public class PanelTableStudents extends JPanel {
 		table.addTableCell(new CellSex(), 4);
 		table.addTableCell(new CellAge(), 5);
 		table.addTableCell(new CellGrade(), 6);
-		table.addTableCell(new CellAction(), 7);
+		table.addTableCell(new CellAction(role), 7);
 	
 		initData();
 	}

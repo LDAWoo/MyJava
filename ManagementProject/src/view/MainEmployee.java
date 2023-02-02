@@ -185,15 +185,15 @@ public class MainEmployee extends JFrame {
 			@Override
 			public void menuSelected(int index) {
 				if (index == 1) {
-					showForm(new Learner());
+					showForm(new Learner(role));
 				}
 
 				if (index == 2) {
-					showForm(new Topic());
+					showForm(new Topic(role));
 				}
 
 				if (index == 3) {
-					showForm(new Course());
+					showForm(new Course(role));
 				}
 
 				if (index == 4) {

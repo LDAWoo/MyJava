@@ -43,15 +43,17 @@ public class Topic extends JPanel {
 	private TopicDAO dao = new TopicDAO();
 	public EventHandler<ArrayList<ModelTopic>> ModelTopicChanged = new EventHandler<ArrayList<ModelTopic>>();
 	private img img = new img();
+	private String role;
 	
-	public Topic() {
+	public Topic(String role) {
+		this.role = role;
 		setOpaque(false);
 		JPanel panelNorth = new JPanel();
 		panelNorth.setOpaque(false);
 		panelCenter = new JPanel();
 		panelCenter.setBackground(new Color(50,50,50));
 
-		panelUpdate = new PanelTopicUpdate(this);
+		panelUpdate = new PanelTopicUpdate(this,role);
 
 		panelList = new PanelTopicList(this);	
 		

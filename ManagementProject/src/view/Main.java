@@ -59,7 +59,6 @@ public class Main extends JFrame {
 	public static String email;
 	private JButton btnMinimize;
 	private JButton btnExit;
-	private JButton btnSetting;
 	
 	private Point currCoords;
 	private Point mouseDownCompCoords = null;
@@ -120,13 +119,6 @@ public class Main extends JFrame {
 		btnExit.setForeground(new Color(200, 200, 200));
 		btnExit.setFont(new Font("SansSerif", Font.BOLD, 15));
 
-		btnSetting = new JButton(img.iconSetting());
-		btnSetting.setFont(new Font("SansSerif", Font.BOLD, 15));
-		btnSetting.setFocusPainted(false);
-		btnSetting.setOpaque(false);
-		btnSetting.setBorder(null);
-		btnSetting.setForeground(new Color(200, 200, 200));
-
 		btnMinimize = new JButton("—");
 		btnMinimize.setFont(new Font("SansSerif", Font.BOLD, 15));
 		btnMinimize.setFocusPainted(false);
@@ -146,9 +138,7 @@ public class Main extends JFrame {
 							.addContainerGap())
 						.addGroup(gl_jPanelCenter.createSequentialGroup()
 							.addComponent(btnMinimize, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnSetting, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))))
 		);
 		gl_jPanelCenter.setVerticalGroup(
@@ -156,7 +146,6 @@ public class Main extends JFrame {
 				.addGroup(gl_jPanelCenter.createSequentialGroup()
 					.addGroup(gl_jPanelCenter.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnSetting, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnMinimize, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_jPanelCenter.createParallelGroup(Alignment.LEADING)
@@ -188,15 +177,15 @@ public class Main extends JFrame {
 				}
 
 				if (index == 2) {
-					showForm(new Learner());
+					showForm(new Learner(role));
 				}
 
 				if (index == 3) {
-					showForm(new Topic());
+					showForm(new Topic(role));
 				}
 
 				if (index == 4) {
-					showForm(new Course());
+					showForm(new Course(role));
 				}
 
 				if (index == 5) {
@@ -218,24 +207,11 @@ public class Main extends JFrame {
 				if (index == 9) {
 					showForm(new CurrendarCustom());
 				}
-
+				
 				if (index == 10) {
-
+					LoginUserView.setVisible(true, null);
+					setVisible(false);
 				}
-
-				if (index == 11) {
-
-				}
-
-				if (index == 12) {
-
-				}
-
-				if (index == 13) {
-				
-				}
-
-				
 
 			}
 		};
@@ -294,7 +270,7 @@ public class Main extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnMinimize.setOpaque(false);
-
+ 
 			}
 		});
 		
@@ -363,29 +339,6 @@ public class Main extends JFrame {
 				if(confirm.option == 1) {
 					System.exit(0);
 				}
-			}
-		});
-		
-			
-		btnSetting.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
-		btnSetting.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnSetting.setOpaque(true);
-				btnSetting.setBackground(new Color(70, 70, 70));
-				
-				
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnSetting.setOpaque(false);
-				
 			}
 		});
 	}

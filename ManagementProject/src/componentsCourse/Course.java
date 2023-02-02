@@ -44,15 +44,16 @@ public class Course extends JPanel {
 	public EventHandler<ArrayList<ModelCourse>> ModelCourseChanged = new EventHandler<ArrayList<ModelCourse>>();
 	
 	private CourseDAO dao = new CourseDAO();
+	private String role;
 	
-	public Course() {
+	public Course(String role) {
 		setOpaque(false);
 		JPanel panelNorth = new JPanel();
 		panelNorth.setOpaque(false);
 		panelCenter = new JPanel();
 		panelCenter.setBackground(new Color(50,50,50));
 
-		panelUpdate = new PanelCourseUpdate(this);
+		panelUpdate = new PanelCourseUpdate(this,role);
 
 		panelList = new PanelCourseList(this);	
 		

@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -16,14 +18,13 @@ import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.animation.timing.Animator;
 
+import color.ColorBackground;
+
 public class MenuButton extends JButton {
 	private int index;
 	private Animator animator;
-	private int targetSize;
-	private float animatSize;
-	private Point pressedPoint;
-	private float alpha;
-	private Color effectColor = new Color(26, 29, 31,255);
+
+	private static Color effectColor = ColorBackground.colorDark;
 
 	private Color color = new Color(200, 200, 200);
 
@@ -45,7 +46,7 @@ public class MenuButton extends JButton {
 	public MenuButton(String text) {
 		super(text);
 		init();
-		setBorder(null);
+		setBorder(new EmptyBorder(1, 20, 1, 1));
 	}
 
 	public MenuButton(String text, boolean subMenu) {
@@ -57,7 +58,7 @@ public class MenuButton extends JButton {
 		setOpaque(false);
 		setFocusPainted(false);
 		setContentAreaFilled(false);
-		setForeground(color);
+		setForeground(ColorBackground.colorLight);
 		setFont(new Font("Roboto", Font.PLAIN, 15));
 		setHorizontalAlignment(JButton.LEFT);
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -69,14 +70,46 @@ public class MenuButton extends JButton {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				effectColor = new Color(70,70,70);
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				effectColor = new Color(26, 29, 31);
+				if (effectColor == ColorBackground.colorDark) {
+					setOpaque(true);
+					setBackground(ColorBackground.colorGRB707070);
+				}
+				if (effectColor == ColorBackground.colorLight) {
+					setOpaque(true);
+					setBackground(ColorBackground.colorGRB239239239);
+				}
+
 			}
 
+			@Override
+			public void mouseExited(MouseEvent e) {
+				setOpaque(false);
+
+			}
+
+		});
+		actionButtonMode();
+	}
+
+	public void actionButtonMode() {
+		PanelMode.actionButonModeDark(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				effectColor = ColorBackground.colorDark;
+				setForeground(ColorBackground.colorLight);
+				repaint();
+			}
+		});
+
+		PanelMode.actionButonModeLight(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				effectColor = ColorBackground.colorLight;
+				setForeground(ColorBackground.colorDark);
+				repaint();
+			}
 		});
 	}
 
@@ -89,6 +122,10 @@ public class MenuButton extends JButton {
 
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		super.paintComponent(g);
+	}
+
+	public Color getEffectColor() {
+		return effectColor;
 	}
 
 }

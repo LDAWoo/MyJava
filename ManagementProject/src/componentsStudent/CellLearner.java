@@ -63,8 +63,8 @@ public class CellLearner extends TableCustomCell {
 	@Override
 	public void setData(Object o) {
 		if(o !=null) {
-			ModelLearner l = (ModelLearner)o;
-			txtCodeLearner.setText(l.getCodeLerner());
+			ModelLearner learner = (ModelLearner)o;
+			txtCodeLearner.setText(learner.getCodeLerner());
 		}
 		
 	}

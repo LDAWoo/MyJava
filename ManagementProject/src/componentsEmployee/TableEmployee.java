@@ -86,10 +86,10 @@ public class TableEmployee extends JTable {
         getColumnModel().getColumn(1).setPreferredWidth(100);
         getColumnModel().getColumn(2).setPreferredWidth(30);
         getColumnModel().getColumn(3).setPreferredWidth(10);
-        getColumnModel().getColumn(4).setPreferredWidth(20);
+        getColumnModel().getColumn(4).setPreferredWidth(150);
         getColumnModel().getColumn(5).setPreferredWidth(50);
         getColumnModel().getColumn(6).setPreferredWidth(30);
-        getColumnModel().getColumn(7).setPreferredWidth(200);
+        getColumnModel().getColumn(7).setPreferredWidth(50);
 	}
 	
 	public void addRow(Object[] row) {

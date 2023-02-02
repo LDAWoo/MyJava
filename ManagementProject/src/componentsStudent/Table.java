@@ -29,11 +29,9 @@ public class Table extends TableCustom{
 		
 		setModel(new DefaultTableModel(new Object[][] {
 		}, new String[] {"MÃ HỌC VIÊN","MÃ KHÓA HỌC", "MÃ NGƯỜI HỌC", "HỌ VÀ TÊN","GIỚI TÍNH","TUỔI","ĐIỂM",
-				"ACTION"
-
+				"CHỈNH SỬA"
 		}));
 		tableModel = (DefaultTableModel) getModel();
-	
 	}
 	
 	

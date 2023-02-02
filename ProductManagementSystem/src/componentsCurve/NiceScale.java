@@ -1,5 +1,6 @@
 package componentsCurve;
 import java.lang.Math;
+
 public class NiceScale {
 
     private double min;

@@ -141,7 +141,6 @@ public class DialogNotification extends JDialog {
 
 	public void initData() {
 		try {
-
 			DatabaseConnection.getInstance().connectToDatabase();
 			String sql = "SELECT TOP(4)* FROM MESSAGE ORDER BY TIME DESC";
 			PreparedStatement p;
@@ -202,6 +201,7 @@ public class DialogNotification extends JDialog {
 			PreparedStatement p;
 			p = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
 			p.executeUpdate();
+			
 			panelBody.removeAll();
 			panelBody.repaint();
 			panelBody.revalidate();
