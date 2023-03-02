@@ -13,6 +13,9 @@ public class DAOProducts implements DAOProductList<ModelProductList, Object> {
 	final String SELECT_ALL_SQL = "SELECT IMAGE,SANPHAM.MASANPHAM,TENHANG,TENSANPHAM,TRANGTHAI,GIASANPHAM,SOLUONGSANPHAM,SUM(LIKEORNOLIKE) LUOTTHICH FROM dbo.SANPHAM LEFT JOIN dbo.HANG ON HANG.HANGID = SANPHAM.HANGID LEFT JOIN dbo.LIKECOMMENT ON LIKECOMMENT.MASANPHAM = SANPHAM.MASANPHAM GROUP BY IMAGE, SANPHAM.MASANPHAM,TENHANG, TENSANPHAM,TRANGTHAI,GIASANPHAM,SOLUONGSANPHAM,LIKEORNOLIKE ORDER BY SANPHAM.MASANPHAM ASC";
 
 	final String DELETE_SQL = "DELETE dbo.SANPHAM WHERE MASANPHAM = ?";
+	
+	String SELECT_BY_NAME = "SELECT IMAGE,SANPHAM.MASANPHAM,TENHANG,TENSANPHAM,TRANGTHAI,GIASANPHAM,SOLUONGSANPHAM,SUM(LIKEORNOLIKE) LUOTTHICH FROM dbo.SANPHAM LEFT JOIN dbo.HANG ON HANG.HANGID = SANPHAM.HANGID LEFT JOIN dbo.LIKECOMMENT ON LIKECOMMENT.MASANPHAM = SANPHAM.MASANPHAM GROUP BY IMAGE, SANPHAM.MASANPHAM,TENHANG, TENSANPHAM,TRANGTHAI,GIASANPHAM,SOLUONGSANPHAM,LIKEORNOLIKE HAVING TENSANPHAM LIKE '%%' ORDER BY SANPHAM.MASANPHAM ASC";
+	
 	@Override
 	public ArrayList<ModelProductList> SelectAll() {
 		ArrayList<ModelProductList> datas = new ArrayList<ModelProductList>();
@@ -35,10 +38,50 @@ public class DAOProducts implements DAOProductList<ModelProductList, Object> {
 
 	@Override
 	public ArrayList<ModelProductList> SelectByName(Object k) {
-		// TODO Auto-generated method stub
+		ArrayList<ModelProductList> datas = new ArrayList<ModelProductList>();
+		String SELECT_BY_NAME = "SELECT IMAGE,SANPHAM.MASANPHAM,TENHANG,TENSANPHAM,TRANGTHAI,GIASANPHAM,SOLUONGSANPHAM,SUM(LIKEORNOLIKE) LUOTTHICH FROM dbo.SANPHAM LEFT JOIN dbo.HANG ON HANG.HANGID = SANPHAM.HANGID LEFT JOIN dbo.LIKECOMMENT ON LIKECOMMENT.MASANPHAM = SANPHAM.MASANPHAM GROUP BY IMAGE, SANPHAM.MASANPHAM,TENHANG, TENSANPHAM,TRANGTHAI,GIASANPHAM,SOLUONGSANPHAM,LIKEORNOLIKE HAVING TENSANPHAM LIKE '%"+k+"%' ORDER BY SANPHAM.MASANPHAM ASC";
+		
+		ResultSet rs = null;
+		try {
+			
+			rs = JDBCHelper.executeQuery(SELECT_BY_NAME);
+
+			while (rs.next()) {
+				ModelProductList data = new ModelProductList(rs.getInt("MASANPHAM"), rs.getString("IMAGE"), rs.getString("TENSANPHAM"), rs.getString("TENHANG"), rs.getBoolean("TRANGTHAI"), rs.getDouble("GIASANPHAM"), rs.getInt("SOLUONGSANPHAM"), rs.getInt("LUOTTHICH"));
+				datas.add(data);
+			}
+			rs.close();
+			return datas;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
+	public ArrayList<ModelProductList> moveData(Object k) {
+		ArrayList<ModelProductList> datas = new ArrayList<ModelProductList>();
+		String SELECT_BY_NAME = "SELECT IMAGE,SANPHAM.MASANPHAM,TENHANG,TENSANPHAM,TRANGTHAI,GIASANPHAM,SOLUONGSANPHAM,SUM(LIKEORNOLIKE) LUOTTHICH FROM dbo.SANPHAM LEFT JOIN dbo.HANG ON HANG.HANGID = SANPHAM.HANGID LEFT JOIN dbo.LIKECOMMENT ON LIKECOMMENT.MASANPHAM = SANPHAM.MASANPHAM GROUP BY IMAGE, SANPHAM.MASANPHAM,TENHANG, TENSANPHAM,TRANGTHAI,GIASANPHAM,SOLUONGSANPHAM,LIKEORNOLIKE ORDER BY SANPHAM.MASANPHAM ASC OFFSET "+k+" ROWS";
+		
+		ResultSet rs = null;
+		try {
+			
+			rs = JDBCHelper.executeQuery(SELECT_BY_NAME);
+
+			while (rs.next()) {
+				ModelProductList data = new ModelProductList(rs.getInt("MASANPHAM"), rs.getString("IMAGE"), rs.getString("TENSANPHAM"), rs.getString("TENHANG"), rs.getBoolean("TRANGTHAI"), rs.getDouble("GIASANPHAM"), rs.getInt("SOLUONGSANPHAM"), rs.getInt("LUOTTHICH"));
+				datas.add(data);
+			}
+			rs.close();
+			return datas;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	} 
+	
+	
 	@Override
 	public int delete(Object k) {
 		return JDBCHelper.executeUpdate(DELETE_SQL, k);

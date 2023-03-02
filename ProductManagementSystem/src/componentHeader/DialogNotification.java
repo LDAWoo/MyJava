@@ -25,8 +25,11 @@ import java.util.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
+import view.PanelMode;
 import view.PanelProfile;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import color.ColorBackground;
 
 public class DialogNotification extends JDialog {
 
@@ -39,10 +42,11 @@ public class DialogNotification extends JDialog {
 
 	
 	
-	private PanelDialogNotification panel;
+	private  PanelDialogNotification panel;
 	private MigLayout layout;
 	private ButtonNotificationOption header;
 	private JPanel panelBody;
+	private  JLabel lblNotification;
 
 	public DialogNotification(JFrame parent) {
 		super(parent, false);
@@ -51,6 +55,7 @@ public class DialogNotification extends JDialog {
 		setBackground(new Color(17, 19, 21, 0));
 		setPreferredSize(new Dimension(470, 550)); // 465
 		pack();
+		
 	}
 
 	public void init() {
@@ -83,7 +88,7 @@ public class DialogNotification extends JDialog {
 		JPanel panelHeader = new JPanel();
 		panelHeader.setOpaque(false);
 
-		JLabel lblNotification = new JLabel("Thông báo");
+		lblNotification = new JLabel("Thông báo");
 		lblNotification.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNotification.setForeground(color2);
 		lblNotification.setFont(new Font("Roboto", Font.BOLD, 22));
@@ -210,6 +215,34 @@ public class DialogNotification extends JDialog {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void action() {
+		PanelMode.btnDark.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblNotification.setForeground(ColorBackground.colorLight);
+				panel.setColor(ColorBackground.colorDark);
+				panel.setColorDialog(ColorBackground.colorDark);
+				
+				header.setColor(ColorBackground.colorGRB394348);
+				header.getLblOption().setForeground(ColorBackground.colorLight);
+			}
+			
+		});
+		
+		PanelMode.btnLight.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblNotification.setForeground(ColorBackground.colorDark);
+				panel.setColor(ColorBackground.colorGRB181228202);
+				panel.setColorDialog(ColorBackground.colorLight);
+				
+				header.setColor(ColorBackground.colorGRB181228202);
+				header.getLblOption().setForeground(ColorBackground.colorGRB394348);
+			}
+			
+		});
 	}
 
 	public void actionButton(ActionListener event) {

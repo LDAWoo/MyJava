@@ -201,7 +201,6 @@ public class MainLogin extends JFrame {
 		panelEast.add(lblLogoShop);
 		
 		panelWest = new PanelWest();
-		panelWest.setOpaque(false);
 		panelWest.setBounds(0, 30, 370, 540);
 		panel.add(panelWest);
 		panelWest.setLayout(null);

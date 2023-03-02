@@ -6,9 +6,6 @@ import java.awt.Font;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
-import componentsStudent.TableHeaderCustom;
-
 public class TableTuitionStudent extends JTable {
 
 	public TableTuitionStudent() {

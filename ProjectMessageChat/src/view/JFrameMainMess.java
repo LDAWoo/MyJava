@@ -56,7 +56,7 @@ public class JFrameMainMess extends JFrame implements Runnable {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				Start();
+//				Start();
 			}
 		});
 

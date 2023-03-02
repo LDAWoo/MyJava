@@ -31,8 +31,7 @@ public class PanelBody extends JPanel {
 		add(com);
 		repaint();
 		revalidate();
-		
-		
+
 	}
 	
 	@Override
@@ -43,4 +42,16 @@ public class PanelBody extends JPanel {
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		super.paintComponent(g);
 	}
+
+	public Color getColorBody() {
+		return colorBody;
+	}
+
+	public void setColorBody(Color colorBody) {
+		this.colorBody = colorBody;
+		repaint();
+	}
+	
+	
+	
 }

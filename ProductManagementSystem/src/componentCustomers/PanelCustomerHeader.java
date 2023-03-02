@@ -26,12 +26,17 @@ import componentsCurve.CurveLineChart;
 import componentsCurve.DatabaseConnection;
 import componentsCurve.ModelChart;
 import model.ModelData;
+import view.MainForm;
+import view.PanelMode;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.CaretListener;
 
 import componentProduct.PanelCustomers;
 import javax.swing.SwingConstants;
 import animation.TextField;
+import color.ColorBackground;
+
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 
@@ -44,17 +49,19 @@ public class PanelCustomerHeader extends JPanel {
 	private Color color3 = new Color(0, 0, 0);
 	
 	private TextField txtSearch;
+	private JLabel lblCustomer;
+	private PanelCustomers panelFind;
 	
 
 	
 	public PanelCustomerHeader() {
 		setOpaque(false);
 
-		JLabel lblOverview = new JLabel("Khách hàng");
-		lblOverview.setForeground(color);
-		lblOverview.setFont(new Font("Roboto", Font.BOLD, 18));
+		lblCustomer = new JLabel("Khách hàng");
+		lblCustomer.setForeground(color);
+		lblCustomer.setFont(new Font("Roboto", Font.BOLD, 18));
 		
-		PanelCustomers panelFind = new PanelCustomers();
+		panelFind = new PanelCustomers();
 		panelFind.setOpaque(false);
 		panelFind.setColorCustomers(new Color(39, 43, 48));
 		
@@ -69,6 +76,7 @@ public class PanelCustomerHeader extends JPanel {
 		txtSearch.setCaretColor(new Color(252, 252, 252));
 		txtSearch.setBorder(null);
 		txtSearch.setBackground(new Color(39, 43, 48));
+		
 		GroupLayout gl_panelFind = new GroupLayout(panelFind);
 		gl_panelFind.setHorizontalGroup(
 			gl_panelFind.createParallelGroup(Alignment.TRAILING)
@@ -141,7 +149,7 @@ public class PanelCustomerHeader extends JPanel {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblLtThch, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblOverview)
+							.addComponent(lblCustomer)
 							.addGap(18)
 							.addComponent(panelFind, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
@@ -166,7 +174,7 @@ public class PanelCustomerHeader extends JPanel {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(23)
-									.addComponent(lblOverview))
+									.addComponent(lblCustomer))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addContainerGap()
 									.addComponent(panelFind, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)))
@@ -178,7 +186,47 @@ public class PanelCustomerHeader extends JPanel {
 		
 		
 		setLayout(groupLayout);
+		
+		if(MainForm.mode == "Light") {
+			setColorModeLight();
+		}else {
+			setColorModeDark();
+		}
+		
+		action();
+	}
 	
+	
+	public void action() {
+		PanelMode.actionButonModeLight(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setColorModeLight();
+			}
+		});
+		
+		PanelMode.actionButonModeDark(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setColorModeDark();
+			}
+		});
+	}
+	
+	private void setColorModeLight() {
+		lblCustomer.setForeground(ColorBackground.colorDark);
+		txtSearch.setColor(ColorBackground.colorGRB147147147);
+		txtSearch.setCaretColor(ColorBackground.colorGRB707070);
+		panelFind.setColorCustomers(ColorBackground.colorGRB239239239);
+	}
+	
+	private void setColorModeDark() {
+		lblCustomer.setForeground(ColorBackground.colorLight);
+		txtSearch.setColor(ColorBackground.colorLight);
+		txtSearch.setCaretColor(ColorBackground.colorLight);
+		panelFind.setColorCustomers(ColorBackground.colorGRB394348);
 	}
 	
 	public void addCaretListenerTextField(CaretListener event) {

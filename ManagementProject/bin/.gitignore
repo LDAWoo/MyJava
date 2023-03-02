@@ -1,2 +1,10 @@
-/view/
+/animation/
+/controller/
+/dao/
+/date/
+/event/
+/interfaces/
 /jdbc/
+/model/
+/view/
+/img/

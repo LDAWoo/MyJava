@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
@@ -39,16 +41,19 @@ public class PanelHeader extends JPanel {
 	private Color color3 = new Color(252,252,252);
 	private PanelCustomers panelFind;
 	private JLabel lblIcon;
-	private JLabel lblMessage;
 	private JLabel lblNotification;
+	private JLabel lblMessage;
 	private ImageAvatar avatar;
 	private ButtonShowAllNotification btnAddProduct;
+	private DialogMessage dialogMessage;
 	
-	Icon iconMessageB = new ImageIcon(PanelHeader.class.getResource("/icon/message-black.png"));
-	Icon iconMessageW = new ImageIcon(PanelHeader.class.getResource("/icon/notification-white.png"));
+	Icon iconMessageB = new ImageIcon(PanelHeader.class.getResource("/icon/message-gray.png"));
+	Icon iconMessageW = new ImageIcon(PanelHeader.class.getResource("/icon/message-white.png"));
+	Icon iconMessageBlue = new ImageIcon(PanelHeader.class.getResource("/icon/message-blue.png"));	
 	
-	Icon iconNotificationB = new ImageIcon(PanelHeader.class.getResource("/icon/notification-black.png"));
+	Icon iconNotificationB = new ImageIcon(PanelHeader.class.getResource("/icon/notification-gray.png"));
 	Icon iconNotificationW = new ImageIcon(PanelHeader.class.getResource("/icon/notification-white.png"));
+	Icon iconNotificationBlue = new ImageIcon(PanelHeader.class.getResource("/icon/notification-blue.png"));
 	
 	public PanelHeader() {
 		setOpaque(false);
@@ -57,21 +62,16 @@ public class PanelHeader extends JPanel {
 		panelFind.setOpaque(false);
 		avatar = new ImageAvatar();
 		avatar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		avatar.setBorderSize(3);
-		avatar.setBorderSpace(2);
 
-		avatar.setGradientColor1(new java.awt.Color(63, 109, 217));
-		avatar.setGradientColor2(new java.awt.Color(199, 42, 42));
+		lblNotification = new JLabel("");
+		lblNotification.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblNotification.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNotification.setIcon(new ImageIcon(PanelHeader.class.getResource("/icon/notification-white.png")));
 		
 		lblMessage = new JLabel("");
 		lblMessage.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblMessage.setIcon(new ImageIcon(PanelHeader.class.getResource("/icon/message-white.png")));
 		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMessage.setIcon(new ImageIcon(PanelHeader.class.getResource("/icon/notification-white.png")));
-		
-		lblNotification = new JLabel("");
-		lblNotification.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNotification.setIcon(new ImageIcon(PanelHeader.class.getResource("/icon/message-white.png")));
-		lblNotification.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		btnAddProduct = new ButtonShowAllNotification("Thêm sản phẩm");
 		btnAddProduct.setIcon(new ImageIcon(PanelHeader.class.getResource("/icon/plus-white.png")));
@@ -86,9 +86,9 @@ public class PanelHeader extends JPanel {
 					.addPreferredGap(ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
 					.addComponent(btnAddProduct, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(lblNotification, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
 					.addComponent(lblMessage, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addGap(30)
+					.addComponent(lblNotification, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(avatar, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -102,12 +102,12 @@ public class PanelHeader extends JPanel {
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addComponent(avatar, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
 								.addComponent(panelFind, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE)
-								.addComponent(lblMessage, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+								.addComponent(lblNotification, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
 							.addGap(94))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 								.addComponent(btnAddProduct, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblNotification, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+								.addComponent(lblMessage, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
 							.addContainerGap())))
 		);
 		
@@ -149,7 +149,7 @@ public class PanelHeader extends JPanel {
 		
 	}
 	public void addActionNotification(MouseListener event) {
-		lblMessage.addMouseListener(event);
+		lblNotification.addMouseListener(event);
 	}
 	
 	public void addActionAvatar(MouseListener event) {
@@ -166,8 +166,10 @@ public class PanelHeader extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				colorHeader = ColorBackground.colorLight;
 				panelFind.setColorCustomers(ColorBackground.colorGRB244244244);
-				lblMessage.setIcon(iconMessageB);
+				
 				lblNotification.setIcon(iconNotificationB);
+				lblMessage.setIcon(iconMessageB);
+				
 				repaint();
 			}
 		});
@@ -177,9 +179,63 @@ public class PanelHeader extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				colorHeader = ColorBackground.colorDark;
 				panelFind.setColorCustomers(ColorBackground.colorGRB394348);
-				lblMessage.setIcon(iconMessageW);
+				
 				lblNotification.setIcon(iconNotificationW);
+				lblMessage.setIcon(iconMessageW);
+				
 				repaint();
+			}
+		});
+		
+		lblMessage.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblMessage.setIcon(iconMessageBlue);
+				dialogMessage = new DialogMessage(null, "Messenger");
+				dialogMessage.setLocation(MainForm.xScreenMessenger, MainForm.yScreenMessenger);
+				if(MainForm.mode == "Dark") {
+					dialogMessage.setBackgroundDialog(ColorBackground.colorGRB000,ColorBackground.colorDark,ColorBackground.colorLight);
+				}else {
+					dialogMessage.setBackgroundDialog(ColorBackground.colorLight,ColorBackground.colorGRB181228202,ColorBackground.colorDark);
+				}
+				dialogMessage.setVisible(true);
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				if(MainForm.mode == "Dark") {
+					lblMessage.setIcon(iconMessageW);
+				}else {
+					lblMessage.setIcon(iconMessageB);
+				}
+				
+				dialogMessage.setVisible(false);
+			}
+		});
+		
+		lblNotification.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblNotification.setIcon(iconNotificationBlue);
+				dialogMessage = new DialogMessage(null, "Thông báo");
+				dialogMessage.setLocation(MainForm.xScreenNotification2, MainForm.yScreenNotification2);
+				if(MainForm.mode == "Dark") {
+					dialogMessage.setBackgroundDialog(ColorBackground.colorGRB000,ColorBackground.colorDark,ColorBackground.colorLight);
+				}else {
+					dialogMessage.setBackgroundDialog(ColorBackground.colorLight,ColorBackground.colorGRB181228202,ColorBackground.colorDark);
+				}
+				dialogMessage.setVisible(true);
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				if(MainForm.mode == "Dark") {
+					lblNotification.setIcon(iconNotificationW);
+				}else {
+					lblNotification.setIcon(iconNotificationB);
+				}
+				dialogMessage.setVisible(false);
 			}
 		});
 	}

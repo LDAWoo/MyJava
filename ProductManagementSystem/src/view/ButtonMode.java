@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import color.ColorBackground;
+
 public class ButtonMode extends JButton {
 
 	private Color colorButtonMode = new Color(39,43,48);
@@ -21,8 +23,8 @@ public class ButtonMode extends JButton {
 		setFocusPainted(false);
 		setFont(new Font("Roboto",Font.PLAIN,15));
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
-	
 	}
+	
 
 	@Override
 	protected void paintComponent(Graphics g){

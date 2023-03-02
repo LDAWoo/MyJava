@@ -1,6 +1,6 @@
 package interfaces;
 
-import componentsStudent.ModelStudents;
+import model.ModelStudents;
 
 public interface EventAction {
 	

@@ -1,14 +1,12 @@
 package view;
 
-import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
+
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+
+
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,44 +16,28 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.border.EmptyBorder;
 
-import componentTableScore.PanelTableScoreStudents;
-import componentTableShedule.PanelTableSheduleStudent;
-import components.Menu;
-import components.MenuEvent;
-import components.MenuStudent;
-import components.PanelHomeStudent;
-import componentsAttendance.PanelAttendanceStudent;
-import componentsCourse.Course;
-import componentsEmployee.Employee;
-import componentsForgot.DialogForgotPassword;
-import componentsLearner.Learner;
-import componentsStudent.PanelTableStudents;
-import componentsTopic.Topic;
 import date.CurrendarCustom;
 import img.img;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
+
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingUtilities;
 
 import java.awt.SystemColor;
-import java.awt.Window;
+
 import java.awt.Dialog.ModalityType;
-import javax.swing.ImageIcon;
+
 
 public class MainStudent extends JFrame {
 	private static javax.swing.JPanel body;
-	private javax.swing.JPanel jPanelCenter;
-	private components.MenuStudent menu;
+	private JPanel jPanelCenter;
+	private MenuStudent menu;
 	private LoginUserView login;
 	private ForgotPasswordView forgot;
 

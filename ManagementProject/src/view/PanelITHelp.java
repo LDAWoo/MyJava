@@ -16,9 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
-import componentsForgot.DialogForgotPassword;
-import componentsForgot.DialogQuestion;
 import date.CurrendarCustom;
 
 import javax.swing.LayoutStyle.ComponentPlacement;

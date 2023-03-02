@@ -30,6 +30,7 @@ public class PanelCustomers extends JPanel {
 
 	public void setColorCustomers(Color colorCustomers) {
 		this.colorCustomers = colorCustomers;
+		repaint();
 	}
 
 	

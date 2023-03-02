@@ -25,17 +25,7 @@ public class PanelManufacturerProduct extends JPanel {
 	private Color colorBackground = new Color(39, 43, 48);
 	private Color colorBackground1 = new Color(252, 252, 252);
 
-	private int indexSelectedButtonSizeS = 1;
-	private int indexSelectedButtonSizeM = 1;
-	private int indexSelectedButtonSizeL = 1;
-	private int indexSelectedButtonSizeXL = 1;
-	private int indexSelectedButtonSize38 = 1;
-	private int indexSelectedButtonSize39 = 1;
-	private int indexSelectedButtonSize40 = 1;
-	private int indexSelectedButtonSize41 = 1;
-
-	private int indexSelectedButtonWhite = 1;
-	private int indexSelectedButtonBlack = 1;
+	
 
 	private Color colorBackgroundButton = new Color(42, 133, 255);
 	private ButtonCheckedSizeAndColor btnWhite;
@@ -258,31 +248,31 @@ public class PanelManufacturerProduct extends JPanel {
 
 	public void action() {
 		ButtonCheckedSizeAndColor[] btn1 = new ButtonCheckedSizeAndColor[] { btnSizeM, btnSizeL, btnSizeXL };
-		actionButtonSize(btnSizeS, btn1, indexSelectedButtonSizeS);
+		actionButtonSize(btnSizeS, btn1);
 
 		ButtonCheckedSizeAndColor[] btn2 = new ButtonCheckedSizeAndColor[] { btnSizeS, btnSizeL, btnSizeXL };
-		actionButtonSize(btnSizeM, btn2, indexSelectedButtonSizeM);
+		actionButtonSize(btnSizeM, btn2);
 
 		ButtonCheckedSizeAndColor[] btn3 = new ButtonCheckedSizeAndColor[] { btnSizeS, btnSizeM, btnSizeXL };
-		actionButtonSize(btnSizeL, btn3, indexSelectedButtonSizeL);
+		actionButtonSize(btnSizeL, btn3);
 
 		ButtonCheckedSizeAndColor[] btn4 = new ButtonCheckedSizeAndColor[] { btnSizeS, btnSizeM, btnSizeL };
-		actionButtonSize(btnSizeXL, btn4, indexSelectedButtonSizeXL);
+		actionButtonSize(btnSizeXL, btn4);
 
 		ButtonCheckedSizeAndColor[] btn5 = new ButtonCheckedSizeAndColor[] { btnSize39, btnSize40, btnSize41 };
-		actionButtonSize(btnSize38, btn5, indexSelectedButtonSize38);
+		actionButtonSize(btnSize38, btn5);
 
 		ButtonCheckedSizeAndColor[] btn6 = new ButtonCheckedSizeAndColor[] { btnSize38, btnSize40, btnSize41 };
-		actionButtonSize(btnSize39, btn6, indexSelectedButtonSize39);
+		actionButtonSize(btnSize39, btn6);
 
 		ButtonCheckedSizeAndColor[] btn7 = new ButtonCheckedSizeAndColor[] { btnSize38, btnSize39, btnSize41 };
-		actionButtonSize(btnSize40, btn7, indexSelectedButtonSize40);
+		actionButtonSize(btnSize40, btn7);
 
 		ButtonCheckedSizeAndColor[] btn8 = new ButtonCheckedSizeAndColor[] { btnSize38, btnSize39, btnSize40 };
-		actionButtonSize(btnSize41, btn8, indexSelectedButtonSize41);
+		actionButtonSize(btnSize41, btn8);
 
-		actionButtonColor(btnWhite, btnBlack, indexSelectedButtonWhite);
-		actionButtonColor(btnBlack, btnWhite, indexSelectedButtonBlack);
+		actionButtonColor(btnWhite, btnBlack);
+		actionButtonColor(btnBlack, btnWhite);
 
 	}
 
@@ -367,9 +357,9 @@ public class PanelManufacturerProduct extends JPanel {
 
 	}
 
-	public void actionButtonSize(ButtonCheckedSizeAndColor button, ButtonCheckedSizeAndColor[] buttons,
-			int indexButton) {
-		index = indexButton;
+	public void actionButtonSize(ButtonCheckedSizeAndColor button, ButtonCheckedSizeAndColor[] buttons
+			) {
+		index = 1;
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -389,20 +379,15 @@ public class PanelManufacturerProduct extends JPanel {
 
 					index = 1;
 				}
-//				else {
-//					button.setIcon(null);
-//					button.setColorBackground(color);
-//
-//				}
+
 
 			}
 		});
 
 	}
 
-	public void actionButtonColor(ButtonCheckedSizeAndColor button1, ButtonCheckedSizeAndColor button2,
-			int indexButton) {
-		index = indexButton;
+	public void actionButtonColor(ButtonCheckedSizeAndColor button1, ButtonCheckedSizeAndColor button2) {
+		index = 1;
 
 		button1.addActionListener(new ActionListener() {
 			@Override

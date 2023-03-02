@@ -24,6 +24,8 @@ public class PanelProductDashboard extends JPanel {
 		PanelOverviewProductDashboard panel = new PanelOverviewProductDashboard();
 		
 		PanelProductList panelListProduct = new PanelProductList();
+		panelListProduct.revalidate();
+		panelListProduct.repaint();
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(

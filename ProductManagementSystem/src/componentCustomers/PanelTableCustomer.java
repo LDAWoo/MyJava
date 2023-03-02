@@ -76,8 +76,6 @@ public class PanelTableCustomer extends JPanel {
 		
 		bottom = createPanelBottom();
 		
-		
-		
 		panel.add(panelHeader);
 		panel.add(scrollPane);
 		panel.add(bottom);

@@ -51,21 +51,12 @@ public class MenuButtonItem extends JButton {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				if (effectColor == ColorBackground.colorDark) {
-					setOpaque(true);
-					setBackground(ColorBackground.colorGRB707070);
-				}
-				if (effectColor == ColorBackground.colorLight) {
-					setOpaque(true);
-					setBackground(ColorBackground.colorGRB239239239);
-				}
-				setForeground(colorButton);
+				
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				setOpaque(false);
-				setForeground(colorButton);
+				
 			}
 		});
 		actionButtonMode();

@@ -5,22 +5,31 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import color.ColorBackground;
+import view.MainForm;
+import view.PanelMode;
+
 import javax.swing.JTextField;
 
 public class PanelCustomerlList extends JPanel {
 	private Color color1 = new Color(252, 252, 252);
+	private JLabel lblTitle;
+	private PanelCustomerGraphics panelBody;
 	
 
 	public PanelCustomerlList() {
 		setOpaque(false);
 		
-		JLabel lblTitle = new JLabel("Danh Sách Khách Hàng");
+		lblTitle = new JLabel("Danh Sách Khách Hàng");
 		lblTitle.setForeground(color1);
 		lblTitle.setFont(new Font("Roboto", Font.BOLD, 30));
 		
-		PanelCustomerGraphics panelBody = new PanelCustomerGraphics();
+		panelBody = new PanelCustomerGraphics();
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -61,5 +70,35 @@ public class PanelCustomerlList extends JPanel {
 		panelBody.setLayout(gl_panelBody);
 		setLayout(groupLayout);
 		
+		
+		if(MainForm.mode == "Light") {
+			lblTitle.setForeground(ColorBackground.colorDark);
+			panelBody.setColorCustomers(ColorBackground.colorLight);
+		}else {
+			lblTitle.setForeground(ColorBackground.colorLight);
+			panelBody.setColorCustomers(ColorBackground.colorDark);
+		}
+		
+		action();
+	}
+	
+	public void action() {
+		PanelMode.actionButonModeLight(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblTitle.setForeground(ColorBackground.colorDark);
+				panelBody.setColorCustomers(ColorBackground.colorLight);
+			}
+		});
+		
+		PanelMode.actionButonModeDark(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblTitle.setForeground(ColorBackground.colorLight);
+				panelBody.setColorCustomers(ColorBackground.colorDark);
+			}
+		});
 	}
 }

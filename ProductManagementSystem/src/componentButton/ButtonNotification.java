@@ -59,9 +59,6 @@ public class ButtonNotification extends JButton {
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		ImageAvatar avatar = new ImageAvatar();
-		avatar.setGradientColor1(color3);
-		avatar.setGradientColor2(color3);
-		avatar.setBorderSize(5);
 		avatar.setImage(icon);
 		
 		JLabel lblComment = new JLabel(comment);
@@ -125,15 +122,11 @@ public class ButtonNotification extends JButton {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setOpaque(true);
-				avatar.setGradientColor1(color4);
-				avatar.setGradientColor2(color4);
 				setBackground(color4);
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				avatar.setGradientColor1(color3);
-				avatar.setGradientColor2(color3);
 				setOpaque(false);
 			}
 		});

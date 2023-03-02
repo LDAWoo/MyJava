@@ -7,9 +7,11 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+import color.ColorBackground;
+
 public class PanelCustomerGraphics extends JPanel {
 	
-	private Color colorCustomers = new Color(26,29,31);
+	private Color colorCustomers = ColorBackground.colorDark;
 	
 	
 	public PanelCustomerGraphics() {
@@ -25,4 +27,15 @@ public class PanelCustomerGraphics extends JPanel {
 		super.paintComponent(g);
 	}
 
+	public Color getColorCustomers() {
+		return colorCustomers;
+	}
+
+	public void setColorCustomers(Color colorCustomers) {
+		this.colorCustomers = colorCustomers;
+		repaint();
+	}
+
+	
+	
 }

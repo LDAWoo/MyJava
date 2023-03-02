@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -21,6 +23,7 @@ import icon.ImageAvatar;
 import model.ModelProductList;
 import view.MainForm;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
@@ -162,26 +165,34 @@ public class ButtonProductList extends JPanel {
 		lblManufacturer.setFont(new Font("Roboto", Font.BOLD, 14));
 		lblManufacturer.setText(manufacturer);
 
-		lblProductName = new JLabel("Áo Thun Sweater Đơn Giản Ngân Hà Space Ver29");
+		lblProductName = new JLabel();
+		lblProductName.setOpaque(false);
+		lblProductName.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblProductName.setForeground(color1);
 		lblProductName.setFont(new Font("Roboto", Font.BOLD, 14));
 		lblProductName.setText(productName);
 
 		GroupLayout gl_panelProfile = new GroupLayout(panelProfile);
-		gl_panelProfile.setHorizontalGroup(gl_panelProfile.createParallelGroup(Alignment.LEADING)
+		gl_panelProfile.setHorizontalGroup(
+			gl_panelProfile.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelProfile.createSequentialGroup()
-						.addComponent(lblImg, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addGroup(gl_panelProfile.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblProductName, GroupLayout.PREFERRED_SIZE, 280, Short.MAX_VALUE)
-								.addComponent(lblManufacturer, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
-						.addContainerGap()));
-		gl_panelProfile.setVerticalGroup(gl_panelProfile.createParallelGroup(Alignment.TRAILING)
+					.addComponent(lblImg, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panelProfile.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblManufacturer, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+						.addComponent(lblProductName, GroupLayout.PREFERRED_SIZE, 280, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_panelProfile.setVerticalGroup(
+			gl_panelProfile.createParallelGroup(Alignment.LEADING)
 				.addComponent(lblImg, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				.addGroup(gl_panelProfile.createSequentialGroup()
-						.addComponent(lblProductName, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE).addComponent(lblManufacturer)
-						.addGap(11)));
+					.addGap(18)
+					.addComponent(lblProductName, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblManufacturer)
+					.addContainerGap(25, Short.MAX_VALUE))
+		);
 		panelProfile.setLayout(gl_panelProfile);
 
 		btnEdit = new IconEditProduct(iconEdit);
@@ -212,6 +223,20 @@ public class ButtonProductList extends JPanel {
 	}
 
 	public void action() {
+		
+		lblProductName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				color = color4;
+				btnEdit.setVisible(true);
+				btnDelete.setVisible(true);
+				lblProductName.setForeground(ColorBackground.colorGRB43122222);
+				repaint();
+			}
+			
+			
+		});
+		
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -288,7 +313,6 @@ public class ButtonProductList extends JPanel {
 				btnEdit.setVisible(true);
 				btnDelete.setVisible(true);
 				lblProductName.setForeground(ColorBackground.colorGRB43122222);
-
 				repaint();
 			}
 
@@ -303,6 +327,8 @@ public class ButtonProductList extends JPanel {
 
 		});
 
+
+		
 	}
 
 	@Override

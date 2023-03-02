@@ -14,6 +14,7 @@ public class LablePurchase extends JLabel {
 	public LablePurchase(String text) {
 		setText(text);
 		setOpaque(false);
+
 	}
 
 	@Override

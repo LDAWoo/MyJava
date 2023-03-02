@@ -24,15 +24,19 @@ public class MenuItem extends JPanel {
 	private int index;
 	private Color colorMenuItem = ColorBackground.colorDark;
 	private Color colorArrow= new Color(100, 100, 100);
+	private MenuButtonItem buttonItem;
+	private MenuButton item;
 
 
-	public MenuItem(ModelMenu menu, EventMenu event, EventMenuSelected eventMenuSelected, int index) {
+	public MenuItem(ModelMenu menu, EventMenu event, EventMenuSelected eventMenuSelected, int index,Color color) {
 		this.menu = menu;
 		this.eventMenuSelected = eventMenuSelected;
 		this.index = index;
 		setOpaque(false);
 		setLayout(new MigLayout("wrap, fillx, insets 0", "[fill]", "[fill, 40!]0[fill, 50!]"));
-		MenuButton item = new MenuButton(menu.getIcon(), "   " + menu.getMenuName());
+		item = new MenuButton(menu.getIcon(), "   " + menu.getMenuName(),color,index);
+		
+		
 		item.addActionListener(new ActionListener() {
 
 			@Override
@@ -50,7 +54,7 @@ public class MenuItem extends JPanel {
 		int subMenuIndex = -1;
 		for (String st : menu.getSubMenu()) {
 
-			MenuButtonItem buttonItem = new MenuButtonItem(st);
+			buttonItem = new MenuButtonItem(st);
 			buttonItem.setIndex(++subMenuIndex);
 			buttonItem.addActionListener(new ActionListener() {
 
@@ -80,7 +84,6 @@ public class MenuItem extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				colorMenuItem = ColorBackground.colorLight;
-				colorArrow = ColorBackground.colorGRB239239239;
 				repaint();
 			}
 		});
@@ -104,23 +107,8 @@ public class MenuItem extends JPanel {
 			int y = ((i + 1) * 50 + 32) - 17;
 			g2.drawLine(31, y, 40, y);
 		}
-		if (menu.getSubMenu().length > 0) {
-			createArrowButton(g2);
-		}
 
 		super.paintComponent(g);
-	}
-
-	private void createArrowButton(Graphics2D g2) {
-		int size = 4;
-		int y = 19;
-		int x = 205;
-		g2.setColor(new Color(230, 230, 230));
-		float ay = alpha * size;
-		float ay1 = (1f - alpha) * size;
-		g2.drawLine(x, (int) (y + ay), x + 4, (int) (y + ay1));
-		g2.drawLine(x + 4, (int) (y + ay1), x + 8, (int) (y + ay));
-
 	}
 
 	public ModelMenu getMenu() {

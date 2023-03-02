@@ -21,11 +21,6 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-
-import componentTableScore.PanelTableScoreStudents;
-import componentTableShedule.PanelTableSheduleStudent;
-import componentsForgot.DialogForgotPassword;
-import componetInformation.PanelInformation;
 import date.CurrendarCustom;
 
 import javax.swing.JLabel;

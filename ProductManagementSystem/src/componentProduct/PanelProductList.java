@@ -6,17 +6,24 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import color.ColorBackground;
 import componentScrollPane.ScrollBarMenu;
 import dao.DAOProducts;
+import dialog.DialogSearchProduct;
 import model.ModelProductList;
 import net.miginfocom.swing.MigLayout;
+import view.MainForm;
 
 public class PanelProductList extends JPanel {
 	private Color color = ColorBackground.colorDark;
@@ -30,6 +37,7 @@ public class PanelProductList extends JPanel {
 	private static ArrayList<ModelProductList> datas = new ArrayList<ModelProductList>();
 	private static DAOProducts dao = new DAOProducts();
 	private static ButtonProductList btnProduct;
+	public static DialogSearchProduct dialogSearchProduct = new DialogSearchProduct(null);
 
 	public PanelProductList() {
 		setOpaque(false);
@@ -48,6 +56,8 @@ public class PanelProductList extends JPanel {
 //		panel.add(bottom);
 
 		add(panel, "push,grow");
+		action();
+		searchProduct();
 	}
 
 	public JPanel createPanelBody() {
@@ -91,6 +101,51 @@ public class PanelProductList extends JPanel {
 			}
 			panelBody.add(btnProduct, "wrap, h 120!");
 		}
+	}
+
+	public void action() {
+
+		MainForm.scrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			private int oldValues;
+
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				int value = MainForm.scrollPane.getVerticalScrollBar().getValue();
+				int extent = MainForm.scrollPane.getVerticalScrollBar().getModel().getExtent();
+
+				if (MainForm.menuIndexSelected == 1) {
+					if (MainForm.subMenuIndexSelected == 0) {
+						if ((value + extent) > MainForm.scrollPane.getVerticalScrollBar().getMaximum() - 100) {
+							dialogSearchProduct.setLocation(MainForm.xScreenSearchProduct,
+									MainForm.yScreenSearchProduct);
+							dialogSearchProduct.setVisible(true);
+
+						} else if (oldValues <= e.getValue()) {
+							dialogSearchProduct.setVisible(false);
+						}
+					}
+				}
+			}
+		});
+
+	}
+
+	public void searchProduct() {
+		dialogSearchProduct.getTxtSearch().addCaretListener(new CaretListener() {
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				String productName = dialogSearchProduct.getTxtSearch().getText();
+				if (productName == "") {
+
+					initData();
+				} else {
+					datas = dao.SelectByName(productName);
+					fillPanelBody();
+				}
+
+			}
+		});
+
 	}
 
 	@Override

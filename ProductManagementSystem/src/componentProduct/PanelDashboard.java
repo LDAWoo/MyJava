@@ -7,17 +7,25 @@ import javax.swing.JLabel;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import color.ColorBackground;
+import view.MainForm;
+import view.PanelMode;
 
 public class PanelDashboard extends JPanel {
 
 	private Color color1 = new Color(252, 252, 252);
+	private JLabel lblTitle;
 	
 	public PanelDashboard() {
 		setOpaque(false);
 		
-		JLabel lblTitle = new JLabel("Bảng Điều Khiển");
+		lblTitle = new JLabel("Bảng Điều Khiển");
 		lblTitle.setForeground(color1);
 		lblTitle.setFont(new Font("Roboto", Font.BOLD, 30));
 		
@@ -43,8 +51,31 @@ public class PanelDashboard extends JPanel {
 					.addContainerGap(40, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
+		
+		if(MainForm.mode == "Dark") {
+			lblTitle.setForeground(ColorBackground.colorLight);
+		}else {
+			lblTitle.setForeground(ColorBackground.colorDark);
+		}
+		action();
 	}
-	
+	public void action() {
+		PanelMode.actionButonModeLight(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblTitle.setForeground(ColorBackground.colorDark);
+				
+			}
+		});
+		
+		PanelMode.actionButonModeDark(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblTitle.setForeground(ColorBackground.colorLight);
+				
+			}
+		});
+	}
 	
 	
 }

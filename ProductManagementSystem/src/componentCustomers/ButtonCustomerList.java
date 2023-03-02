@@ -11,10 +11,13 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import color.ColorBackground;
 import componentHeader.DialogProfile;
 import componentLogin.MainLogin;
 import icon.ImageAvatar;
 import view.MainForm;
+import view.PanelMode;
+
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -32,11 +35,11 @@ import net.miginfocom.swing.MigLayout;
 public class ButtonCustomerList extends JButton {
 
 	private int indexSelected;
-	private Color color1 = new Color(252,252,239);
-	private Color color2 = new Color(111,118,113);
+	private Color color1 = ColorBackground.colorLight;
+	private Color color2 = new Color(111, 118, 113);
+
 	
-	private Color color3 = new Color(17,19,21);
-	private Color color4 = new Color(51,56,63);
+	private int option = -1;
 	
 	private Icon icon;
 	private String username;
@@ -46,9 +49,13 @@ public class ButtonCustomerList extends JButton {
 	private String total;
 	private String comment;
 	private String like;
-	
+	private JLabel lblUsername;
+	private JLabel lblLikes;
+	private JLabel lblComment;
+	private JLabel lblBuys;
 
-	public ButtonCustomerList(Icon icon,String username,String email, String phone, String buys, String total, String comment, String like) {
+	public ButtonCustomerList(Icon icon, String username, String email, String phone, String buys, String total,
+			String comment, String like) {
 		this.icon = icon;
 		this.username = username;
 		this.phone = phone;
@@ -57,122 +64,108 @@ public class ButtonCustomerList extends JButton {
 		this.total = total;
 		this.comment = comment;
 		this.like = like;
-		
+
 		setOpaque(false);
 		setFocusPainted(false);
 		setContentAreaFilled(false);
-		
-		
+
 		setHorizontalAlignment(SwingConstants.LEFT);
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
-		
+
 		ImageAvatar avatar = new ImageAvatar();
-//		avatar.setGradientColor1(color3);
-//		avatar.setGradientColor2(color3);
-		avatar.setBorderSize(5);
+
 		avatar.setImage(icon);
-		
-		JLabel lblUsername = new JLabel(username);
+
+		lblUsername = new JLabel(username);
 		lblUsername.setForeground(color1);
 		lblUsername.setFont(new Font("Roboto", Font.BOLD, 14));
-		
+
 		JLabel lblEmail = new JLabel(email);
 		lblEmail.setForeground(color2);
 		lblEmail.setFont(new Font("Roboto", Font.PLAIN, 14));
-		
-		JLabel lblBuys = new JLabel(buys);
+
+		lblBuys = new JLabel(buys);
 		lblBuys.setHorizontalAlignment(SwingConstants.LEFT);
 		lblBuys.setForeground(color1);
 		lblBuys.setFont(new Font("Roboto", Font.BOLD, 14));
-		
-		LablePurchase lblTotal = new LablePurchase("$"+total);
+
+		LablePurchase lblTotal = new LablePurchase("$" + total);
 		lblTotal.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTotal.setForeground(color4);
+		lblTotal.setForeground(ColorBackground.colorGRB585961);
 		lblTotal.setFont(new Font("Roboto", Font.PLAIN, 14));
-		
-		JLabel lblComment = new JLabel(comment);
+
+		lblComment = new JLabel(comment);
 		lblComment.setHorizontalAlignment(SwingConstants.LEFT);
 		lblComment.setForeground(color1);
 		lblComment.setFont(new Font("Roboto", Font.BOLD, 14));
-		
-		JLabel lblLikes = new JLabel(like);
+
+		lblLikes = new JLabel(like);
 		lblLikes.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLikes.setForeground(color1);
 		lblLikes.setFont(new Font("Roboto", Font.BOLD, 14));
-		
+
 		JLabel lblPhone = new JLabel(phone);
 		lblPhone.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPhone.setForeground(color2);
 		lblPhone.setFont(new Font("Roboto", Font.PLAIN, 14));
-		
+
 		JLabel lblUsername_1 = new JLabel("");
 		lblUsername_1.setForeground(new Color(103, 118, 126));
 		lblUsername_1.setFont(new Font("Roboto", Font.PLAIN, 14));
-		
-		
+
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(avatar, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addComponent(avatar, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblPhone, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblBuys, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblComment, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblLikes, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblPhone, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblBuys, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblComment, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblLikes, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
 						.addComponent(lblUsername_1, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblUsername)
-						.addComponent(lblBuys, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblLikes, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblPhone, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblComment, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblEmail)
-						.addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblUsername_1, GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
-					.addGap(13))
-				.addComponent(avatar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-		);
+				.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblUsername)
+								.addComponent(lblBuys, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblLikes, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblPhone, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblComment, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblEmail)
+								.addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblUsername_1, GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE).addGap(13))
+				.addComponent(avatar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE));
 		setLayout(groupLayout);
-		
-		
-		
-		
+
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setOpaque(true);
-				avatar.setGradientColor1(color4);
-				avatar.setGradientColor2(color4);
-				setBackground(color4);
+				if(option < 0) {
+					setBackground(ColorBackground.colorGRB585961);
+				}else {
+					setBackground(ColorBackground.colorGRB239239239);
+				}
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
-				avatar.setGradientColor1(color3);
-				avatar.setGradientColor2(color3);
 				setOpaque(false);
 			}
 		});
-		
+
 //		addActionListener(new ActionListener() {		
 //			@Override
 //			public void actionPerformed(ActionEvent e) {
@@ -180,8 +173,51 @@ public class ButtonCustomerList extends JButton {
 //	
 //			}
 //		});
+		
+		if(MainForm.mode == "Light") {
+			setColorModeLight();
+		}else {
+			setColorModeDark();
+		}
+
+		action();
 	}
 
+	public void action() {
+		PanelMode.actionButonModeLight(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setColorModeLight();
+
+			}
+		});
+
+		PanelMode.actionButonModeDark(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setColorModeDark();
+			}
+		});
+	}
+	
+	private void setColorModeDark() {
+		option = -1;
+		lblUsername.setForeground(ColorBackground.colorLight);
+		lblBuys.setForeground(ColorBackground.colorLight);
+		lblComment.setForeground(ColorBackground.colorLight);
+		lblLikes.setForeground(ColorBackground.colorLight);
+	}
+	
+	private void setColorModeLight() {
+		option = 1;
+		lblUsername.setForeground(ColorBackground.colorGRB147147147);
+		lblBuys.setForeground(ColorBackground.colorGRB147147147);
+		lblComment.setForeground(ColorBackground.colorGRB147147147);
+		lblLikes.setForeground(ColorBackground.colorGRB147147147);
+	}
+	
 	public int getIndexSelected() {
 		return indexSelected;
 	}

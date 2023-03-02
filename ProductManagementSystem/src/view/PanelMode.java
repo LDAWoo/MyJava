@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
+
+import color.ColorBackground;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
@@ -23,52 +26,20 @@ public class PanelMode extends JPanel {
 	public static ButtonMode btnLight;
 	public static ButtonMode btnDark;
 	
-	public Icon iconLight = new ImageIcon(PanelMode.class.getResource("/icon/sun-white.png"));
-	public Icon iconDark = new ImageIcon(PanelMode.class.getResource("/icon/moon-white.png"));
-//	public Icon iconLightB = new ImageIcon(MainForm.class.getResource("/icon/sun-black.png"));
-//	public Icon iconDarkB = new ImageIcon(MainForm.class.getResource("/icon/moon-black.png"));
+	
+	
+	public Icon iconLightB = new ImageIcon(MainForm.class.getResource("/icon/sun-black.png"));
+	public Icon iconDarkB = new ImageIcon(MainForm.class.getResource("/icon/moon-black.png"));
+	
 	public Icon iconLightW = new ImageIcon(MainForm.class.getResource("/icon/sun-white.png"));
 	public Icon iconDarkW = new ImageIcon(MainForm.class.getResource("/icon/moon-white.png"));
 
-	public static void setMode(Color colorMode) {
-		PanelMode mode = new PanelMode(null,null);
-		mode.colorMode = colorMode;
-		mode.repaint();
-	}
 	
-	
-	
-	public Icon getIconLight() {
-		return iconLight;
-	}
-
-
-
-	public void setIconLight(Icon iconLight) {
-		this.iconLight = iconLight;
-	}
-
-
-
-	public Icon getIconDark() {
-		return iconDark;
-	}
-
-
-
-	public void setIconDark(Icon iconDark) {
-		this.iconDark = iconDark;
-	}
-
-
-
-	public PanelMode(Icon iconLight, Icon iconDark) {
-		this.iconLight = iconLight;
-		this.iconDark = iconDark;
+	public PanelMode() {
 		setOpaque(false);
 		setLayout(null);
 		btnLight = new ButtonMode();
-		btnLight.setIcon(iconLight);
+		btnLight.setIcon(iconLightW);
 		btnLight.setBounds(5, 5, 125, 30);
 		btnLight.setColorMenu(colorMode);
 		btnLight.setForeground(color1);
@@ -76,12 +47,49 @@ public class PanelMode extends JPanel {
 		add(btnLight);
 
 		btnDark = new ButtonMode();
-		btnDark.setIcon(iconDark);
+		btnDark.setIcon(iconDarkW);
 		btnDark.setText("Tối");
 		btnDark.setBounds(135, 5, 125, 30);
 		btnDark.setForeground(color2);
 		add(btnDark);
+		
+		
+		btnLight.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnLight.setIcon(iconLightB);
+				btnDark.setIcon(iconDarkB);
+				colorMode = ColorBackground.colorGRB240242245;
+				
+				btnLight.setForeground(ColorBackground.colorDark);
+				btnDark.setForeground(ColorBackground.colorDark);
+				
+				
+				btnLight.setColorMenu(ColorBackground.colorLight);
+				btnDark.setColorMenu(ColorBackground.colorGRB240242245);
+				
+				
+				repaint();
+			}
+		});
 
+		
+		btnDark.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnDark.setIcon(iconDarkW);
+				btnLight.setIcon(iconLightW);
+				colorMode = ColorBackground.colorGRB171921;
+				
+				btnLight.setForeground(color1);
+				btnDark.setForeground(color2);	
+				
+				btnLight.setColorMenu(ColorBackground.colorGRB171921);
+				btnDark.setColorMenu(ColorBackground.colorGRB394348);
+				
+				repaint();
+			}
+		});
 	}
 	
 	

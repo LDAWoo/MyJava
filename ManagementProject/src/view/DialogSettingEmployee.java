@@ -5,12 +5,9 @@ import java.awt.*;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import componetInformation.PanelInformation;
-import componetInformation.PanelInformationEmployee;
 import date.CurrendarCustom;
 
 public class DialogSettingEmployee extends JDialog {

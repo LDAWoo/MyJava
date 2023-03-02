@@ -19,6 +19,7 @@ public class ScrollBarMenu extends JScrollBar{
 		setPreferredSize(new Dimension(0,8));
 		setForeground(new Color(144,144,144));
 		setUnitIncrement(50);
+		
 		setOpaque(true);
 		
 		 

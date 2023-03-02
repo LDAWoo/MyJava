@@ -15,7 +15,7 @@ import color.ColorBackground;
 
 
 public class IconEditProduct extends JButton {
-	private Color color1 = new Color(39,43,48);
+	private Color color = new Color(39,43,48);
 	
 	private Icon icon;
 	
@@ -38,9 +38,18 @@ public class IconEditProduct extends JButton {
 		int y = getHeight() ;
 		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setColor(color1);
+		g2.setColor(color);
 		g2.fillOval(0, 0, x, y);
 		super.paintComponent(g);
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+		repaint();
 	}
 
 	

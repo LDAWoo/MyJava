@@ -3,6 +3,8 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
@@ -32,8 +34,23 @@ public class Menu extends JPanel {
 	private ShowPopup showPopup;
 	private PanelMode panelMode;
 	public JScrollPane scrollPane;
-	public Icon iconLightW = new ImageIcon(MainForm.class.getResource("/icon/sun-white.png"));
-	public Icon iconDarkW = new ImageIcon(MainForm.class.getResource("/icon/moon-white.png"));
+	
+	Icon iconHomeWhite = new ImageIcon(Menu.class.getResource("/icon/home-white.png"));
+	Icon iconProductWhite = new ImageIcon(Menu.class.getResource("/icon/diamond-white.png"));
+	Icon iconCustomerWhite = new ImageIcon(Menu.class.getResource("/icon/user-white.png"));
+	Icon iconStoreWhite = new ImageIcon(Menu.class.getResource("/icon/store-white.png"));
+	Icon iconIncomeWhite = new ImageIcon(Menu.class.getResource("/icon/income-white.png"));
+	Icon iconCaledarWhite = new ImageIcon(Menu.class.getResource("/icon/calendar-white.png"));
+	Icon iconHelpWhite = new ImageIcon(Menu.class.getResource("/icon/help-white.png"));
+	
+	Icon iconHomeGray = new ImageIcon(Menu.class.getResource("/icon/home-gray.png"));
+	Icon iconProductGray = new ImageIcon(Menu.class.getResource("/icon/diamond-gray.png"));
+	Icon iconCustomerGray = new ImageIcon(Menu.class.getResource("/icon/user-gray.png"));
+	Icon iconStoreGray = new ImageIcon(Menu.class.getResource("/icon/store-gray.png"));
+	Icon iconIncomeGray = new ImageIcon(Menu.class.getResource("/icon/income-gray.png"));
+	Icon iconCaledarGray = new ImageIcon(Menu.class.getResource("/icon/calendar-gray.png"));
+	Icon iconHelpGray = new ImageIcon(Menu.class.getResource("/icon/help-gray.png"));
+
 	
 	public void setColorMenu(Color colorMenu) {
 		this.colorMenu = colorMenu;
@@ -43,7 +60,7 @@ public class Menu extends JPanel {
 	public Menu() {
 		setOpaque(false);
 		PanelProfile panelProfile = new PanelProfile();
-		panelMode = new PanelMode(iconLightW,iconDarkW);
+		panelMode = new PanelMode();
 		panelMenu = new JPanel();
 		panelMenu.setOpaque(false);
 		scrollPane = new JScrollPane(panelMenu);
@@ -68,25 +85,24 @@ public class Menu extends JPanel {
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)));
 		setLayout(groupLayout);
-		
+		action();
 	}
 	
 
-	public void initMenuItem(Icon iconHome, Icon iconProduct, Icon iconCustomer, Icon iconStore, Icon income,
-			Icon iconcaledar) {
-		addMenu(new ModelMenu(iconHome, "Trang Chủ"));
-		addMenu(new ModelMenu(iconProduct, "Sản Phẩm", "Bảng điều khiển", "Drafts", "Released"));
-		addMenu(new ModelMenu(iconCustomer, "Khách Hàng", "Tổng quan", "Danh sách khách hàng"));
-		addMenu(new ModelMenu(iconStore, "Cửa Hàng"));
-		addMenu(new ModelMenu(income, "Thu Nhập", "Hoàn Lại Tiền", "Doanh Thu"));
-		addMenu(new ModelMenu(iconcaledar, "Calendar"));
+	public void initMenuItem(Color color) {
+		addMenu(new ModelMenu(iconHomeWhite, "Trang Chủ",0),color);
+		addMenu(new ModelMenu(iconProductWhite, "Sản Phẩm",1, "Bảng điều khiển", "Drafts", "Released"),color);
+		addMenu(new ModelMenu(iconCustomerWhite, "Khách Hàng",2, "Tổng quan", "Danh sách khách hàng"),color);
+		addMenu(new ModelMenu(iconStoreWhite, "Cửa Hàng",3),color);
+		addMenu(new ModelMenu(iconIncomeWhite, "Thu Nhập",4, "Hoàn Lại Tiền", "Doanh Thu"),color);
+		addMenu(new ModelMenu(iconCaledarWhite, "Calendar",5),color);
 
 		JPanel panel1 = new JPanel();
 		panel1.setOpaque(false);
 		panel1.setLayout(null);
 		panelMenu.add(panel1, "w 265,h 220!, pushy");
 
-		addMenu(new ModelMenu(new ImageIcon(Menu.class.getResource("/icon/help-white.png")), "Trợ Giúp & Bắt Đầu"));
+		addMenu(new ModelMenu(iconHelpWhite, "Trợ Giúp & Bắt Đầu",6),color);
 		JPanel panel2 = new JPanel();
 		panel2.setOpaque(false);
 		panel2.setLayout(null);
@@ -96,10 +112,67 @@ public class Menu extends JPanel {
 
 		panelMode.setBounds(0, 0, 265, 40);
 		panel2.add(panelMode);
+		
+		
+	}
+	
+	public void initMenuItem2(Color color) {
+		addMenu(new ModelMenu(iconHomeGray, "Trang Chủ",0),color);
+		addMenu(new ModelMenu(iconProductGray, "Sản Phẩm",1, "Bảng điều khiển", "Drafts", "Released"),color);
+		addMenu(new ModelMenu(iconCustomerGray, "Khách Hàng",2, "Tổng quan", "Danh sách khách hàng"),color);
+		addMenu(new ModelMenu(iconStoreGray, "Cửa Hàng",3),color);
+		addMenu(new ModelMenu(iconIncomeGray, "Thu Nhập",4, "Hoàn Lại Tiền", "Doanh Thu"),color);
+		addMenu(new ModelMenu(iconCaledarGray, "Calendar",5),color);
+
+		JPanel panel1 = new JPanel();
+		panel1.setOpaque(false);
+		panel1.setLayout(null);
+		panelMenu.add(panel1, "w 265,h 220!, pushy");
+
+		addMenu(new ModelMenu(iconHelpGray, "Trợ Giúp & Bắt Đầu",6),color);
+		JPanel panel2 = new JPanel();
+		panel2.setOpaque(false);
+		panel2.setLayout(null);
+
+		panel2.setBackground(colorMenu);
+		panelMenu.add(panel2, "w 265, h 40,pushy");
+
+		panelMode.setBounds(0, 0, 265, 40);
+		panel2.add(panelMode);
+		
+		
+	}
+	
+	public void action() {
+		PanelMode.btnLight.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.removeAll();
+				panelMenu.revalidate();
+				panelMenu.repaint();
+				Color color = ColorBackground.colorGRB147147147;
+				initMenuItem2(color);
+				
+				
+			}
+		});
+		
+		PanelMode.btnDark.addActionListener(new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.removeAll();
+				panelMenu.revalidate();
+				panelMenu.repaint();
+				Color color = ColorBackground.colorLight;
+				initMenuItem(color);
+				
+				
+			}
+		});
 	}
 
-	public void addMenu(ModelMenu menu) {
-		panelMenu.add(new MenuItem(menu, getEventMenu(), event, panelMenu.getComponentCount()), " h 40!");
+	public void addMenu(ModelMenu menu,Color color) {
+		panelMenu.add(new MenuItem(menu, getEventMenu(), event, panelMenu.getComponentCount(),color), " h 40!");
 	}
 
 	public EventMenu getEventMenu() {

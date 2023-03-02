@@ -67,6 +67,7 @@ public class PanelChat extends JPanel {
 		scrollBody.setVerticalScrollBar(new ScrollBarMessenger());
 		scrollBody.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollBody.getViewport().setOpaque(false);
+		
 		scrollBody.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
 			private int oldValues;
 

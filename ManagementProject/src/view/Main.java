@@ -13,19 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-
-import componentStatistical.PanelStaticaRevenue;
-import componentStatistical.PanelStaticalStudent;
-import componentStatistical.PanelStaticalTableScore;
-import componentStatistical.PanelStaticalTotalScore;
-import components.Menu;
-import components.MenuEvent;
-import components.MenuStudent;
-import componentsCourse.Course;
-import componentsEmployee.Employee;
-import componentsLearner.Learner;
-import componentsStudent.PanelTableStudents;
-import componentsTopic.Topic;
 import date.CurrendarCustom;
 import img.img;
 
@@ -52,7 +39,7 @@ import java.awt.Dialog.ModalityType;
 public class Main extends JFrame {
 	private static javax.swing.JPanel body;
 	private javax.swing.JPanel jPanelCenter;
-	private components.Menu menu;
+	private Menu menu;
 	private LoginUserView login;
 	private ForgotPasswordView forgot;
 

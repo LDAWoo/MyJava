@@ -15,7 +15,13 @@ public class ModelCustomerList {
 	public ModelCustomerList() {
 		// TODO Auto-generated constructor stub
 	}
-
+	 
+	public ModelCustomerList(String name, String email, String phone, String image) {
+		this.image = image;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+	}
 
 	public ModelCustomerList(String image, String name, String email, String phone, String buys, double totalMonney,
 			int views, int likes) {
@@ -28,10 +34,6 @@ public class ModelCustomerList {
 		this.comment = views;
 		this.likes = likes;
 	}
-
-
-
-
 
 	public String getImage() {
 		return image;

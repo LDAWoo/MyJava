@@ -5,17 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import componentsStudent.ModelAge;
-import componentsStudent.ModelCourse;
-import componentsStudent.ModelGrade;
-import componentsStudent.ModelLearner;
-import componentsStudent.ModelLearnerNoCourse;
-import componentsStudent.ModelName;
-import componentsStudent.ModelSex;
-import componentsStudent.ModelStudent;
-import componentsStudent.ModelStudents;
 import interfaces.DAOManagerLearner;
 import jdbc.JDBCHelper;
+import model.ModelCourses;
+import model.ModelGrade;
+import model.ModelLearners;
+import model.ModelName;
+import model.ModelSex;
+import model.ModelStudent;
+import model.ModelAge;
+import model.ModelLearnerNoCourse;
+import model.ModelStudents;
 
 public class ManagerLearnerCourseDAO implements DAOManagerLearner<ModelStudents, Object>{
 	
@@ -116,8 +116,8 @@ public class ManagerLearnerCourseDAO implements DAOManagerLearner<ModelStudents,
 				ModelStudents data = new ModelStudents(
 						rs.getInt("ID"),
 						new ModelStudent(rs.getString("MAHOCVIEN")),
-						new ModelCourse(rs.getString("MAKHOAHOC")), 
-						new ModelLearner(rs.getString("MANGUOIHOC")), 
+						new ModelCourses(rs.getString("MAKHOAHOC")), 
+						new ModelLearners(rs.getString("MANGUOIHOC")), 
 						new ModelName(rs.getString("HOVATEN")), 
 						new ModelSex(rs.getBoolean("GIOITINH")), 
 						new ModelAge(rs.getString("NGAYSINH")), 

@@ -5,10 +5,12 @@ import javax.swing.Icon;
 public class ModelMenu {
 	private Icon icon;
 	private String menuName;
+	private int index;
 	private String[] subMenu;
 	
-	public ModelMenu(Icon icon, String menuName, String... subMenu) {
+	public ModelMenu(Icon icon, String menuName,int index, String... subMenu) {
 		this.icon = icon;
+		this.index = index;
 		this.menuName = menuName;
 		this.subMenu = subMenu;
 	}
@@ -40,6 +42,15 @@ public class ModelMenu {
 	public void setSubMenu(String[] subMenu) {
 		this.subMenu = subMenu;
 	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
 	
 	
 }

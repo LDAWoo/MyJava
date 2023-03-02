@@ -13,18 +13,6 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import componentStatistical.PanelStaticaRevenue;
-import componentStatistical.PanelStaticalStudent;
-import componentStatistical.PanelStaticalTableScore;
-import componentStatistical.PanelStaticalTotalScore;
-import components.Menu;
-import components.MenuEmployee;
-import components.MenuEvent;
-import componentsCourse.Course;
-import componentsEmployee.Employee;
-import componentsLearner.Learner;
-import componentsStudent.PanelTableStudents;
-import componentsTopic.Topic;
 import date.CurrendarCustom;
 import img.img;
 
@@ -49,9 +37,9 @@ import java.awt.Toolkit;
 import java.awt.Dialog.ModalityType;
 
 public class MainEmployee extends JFrame {
-	private static javax.swing.JPanel body;
+	private static JPanel body;
 	private javax.swing.JPanel jPanelCenter;
-	private components.MenuEmployee menu;
+	private MenuEmployee menu;
 	private LoginUserView login;
 	private ForgotPasswordView forgot;
 
@@ -68,8 +56,8 @@ public class MainEmployee extends JFrame {
 	private int y;
 	private int x;
 	
-	private int xHelp;
 	private int yHelp;
+	private int xHelp;
 	
 	public static int xScreen ;
 	public static int yScreen ;

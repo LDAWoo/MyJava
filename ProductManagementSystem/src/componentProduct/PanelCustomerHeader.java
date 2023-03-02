@@ -13,6 +13,8 @@ import javax.swing.ImageIcon;
 
 public class PanelCustomerHeader extends JPanel {
 
+	public static TextField txtSearch;
+
 	public PanelCustomerHeader() {
 		setOpaque(false);
 		JLabel lblDanhSchSn = new JLabel("Sản phẩm");
@@ -20,6 +22,7 @@ public class PanelCustomerHeader extends JPanel {
 		lblDanhSchSn.setFont(new Font("Roboto", Font.BOLD, 18));
 		
 		PanelCustomers panelFind = new PanelCustomers();
+		panelFind.setVisible(false);
 		panelFind.setOpaque(false);
 		panelFind.setColorCustomers(new Color(39, 43, 48));
 		
@@ -27,7 +30,7 @@ public class PanelCustomerHeader extends JPanel {
 		lblIcon.setIcon(new ImageIcon(PanelCustomerHeader.class.getResource("/icon/search.png")));
 		lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		TextField txtSearch = new TextField();
+		txtSearch = new TextField();
 		txtSearch.setHint("Tìm kiếm sản phẩm");
 		txtSearch.setForeground(new Color(191, 191, 191));
 		txtSearch.setFont(new Font("Roboto", Font.PLAIN, 16));
@@ -124,8 +127,11 @@ public class PanelCustomerHeader extends JPanel {
 					.addComponent(lblNewLabel_1)
 					.addContainerGap(55, Short.MAX_VALUE))
 		);
-		setLayout(groupLayout);
-		
-		
+		setLayout(groupLayout);	
 	}
+
+	
+
+	
+	
 }
